@@ -10,22 +10,28 @@ import {FormAdd} from "./components/forms/RegisterForm";
 import {Header} from "./components/Header";
 import {Footer} from "./components/Footer";
 import {LoginComponent} from "./components/LoginComponent";
+import {LoginForm} from "./components/forms/LoginForm";
+import {UserMainPage} from "./components/user/UserMainPage";
 
 function App() {
 const [id,setId]=useState('');
 
     return (
-
-        <>
+<>
+        <div className={'mainBox'}>
      <Header/>
             <UserContext.Provider value={{id,setId}}>
       <Routes>
-        <Route path={'/log'} element={<LoginComponent/>}/>
+          <Route path={'/'} element={<LoginComponent/>}/>
+        <Route path={'/log'} element={<LoginForm/>}/>
           <Route path={'/register'} element={<FormAdd/>}/>
+          <Route path={'/userMain'} element={<UserMainPage/>}/>
       </Routes>
             </UserContext.Provider>
-<Footer/>
-        </>
+            <Footer/>
+        </div>
+
+</>
   );
 }
 

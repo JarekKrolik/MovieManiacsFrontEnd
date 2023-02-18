@@ -1,0 +1,19 @@
+.footer{
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*bottom: 0;*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    z-index: 2;
+    color:cornflowerblue;
+    background-color: #3f3a3a;
+    height: 3em;
+    box-shadow:0 0 15px cornflowerblue;
+}
+
+.footer p {
+    font-size: 2rem;
+    padding: 1em;
+}

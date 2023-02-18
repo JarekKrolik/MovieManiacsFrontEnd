@@ -3,11 +3,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: cornflowerblue;
+
 
 }
 
 form.register{
-
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -16,4 +17,110 @@ form.register{
 form.register label{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0.8em;
+    font-size: 2rem;
+    text-transform: uppercase;
+    line-height: 200%;
+}
+
+form.register input{
+    padding: 0.6em;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #363636;
+    font-size: 1.6rem;
+    color: cornflowerblue;
+}
+form.register input:focus{
+    outline: none;
+    box-shadow: 0 0 15px cornflowerblue;
+}
+
+form.register button {
+    display: block;
+    width:100%;
+    text-transform: uppercase;
+    margin: 0.5em auto;
+    border: none;
+    padding: 0.7em 0;
+    border-radius: 12px;
+    background-color: cornflowerblue;
+    color: #363636;
+    font-size: 2.2rem;
+    text-align: center;
+    line-height: 100%;
+
+}
+
+p.textInfo{
+    position: absolute;
+    background-color: rgba(0,0,0,0.8);
+    top:50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    left: 0%;
+    font-size: 1.8rem;
+    color: cornflowerblue;
+    text-transform: uppercase;
+    padding: 7em 1em;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 0 12px darkred;
+    width: 100%;
+    cursor: pointer;
+    transition: box-shadow 0.3s,opacity 0.3s;
+}
+
+p.textInfo:hover{
+    box-shadow: 5px 5px 122px darkred;
+    opacity: 0.75;
+}
+
+span.error{
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+
+}
+
+
+
+@media (min-width: 1024px) {
+
+ form.register.loginForm{flex-direction: column}
+    form.register.loginForm button{
+        width: 100%;
+    }
+    form.register{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+
+    form.register button {
+        cursor: pointer;
+        transition: transform 0.3s,color 0.3s,background-color 0.3s;
+
+    }
+
+    form.register button:hover{
+        background-color: #1c1b1b;
+        color:cornflowerblue;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px cornflowerblue;
+    }
+
+    form.register button {
+
+        width:30%;
+
+
+    }
+
 }

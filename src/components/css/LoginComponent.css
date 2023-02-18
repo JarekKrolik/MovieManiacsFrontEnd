@@ -1,0 +1,45 @@
+
+.loginBox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 95%;
+    margin: 1em auto;
+    overflow: hidden;
+
+
+}
+
+.loginBox a {
+    display: block;
+    color: cornflowerblue;
+    text-align: center;
+    width: 85%;
+    text-decoration: none;
+    border-radius: 25px;
+    box-shadow:0 0 15px cornflowerblue;
+    padding: 1.5em;
+    margin: 2.5em auto;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+}
+
+@media (min-width: 1024px) {
+    .loginBox{
+        flex-direction: row;
+    }
+
+    .loginBox a {
+        width: 40%;
+        transition: transform 0.3s,color 0.3s,background-color 0.3s;
+    }
+
+    .loginBox a:hover{
+        background-color: cornflowerblue;
+        color:#1c1b1b;
+        transform: scale(1.1);
+    }
+
+}

@@ -3,6 +3,8 @@ import {UserContext} from "../../contexts/userContext";
 import '../css/RegisterForm.css'
 import {apiUrl} from "../../config/api";
 import {UserEntity} from 'types'
+import {GoBackBtn} from "../GoBackBtn";
+import {Navigate} from "react-router-dom";
 
 export const FormAdd = ()=>{
     const{id,setId}=useContext(UserContext)
@@ -13,11 +15,20 @@ export const FormAdd = ()=>{
         password:'',
         passwordCheck:'',
     })
+
      const[errorMsg,setErrormsg] = useState({
          passwordCheck:false,
          responseErrorMessage:'',
          responseOk:false,
      })
+
+    const hadleErrorMessage =()=>{
+        setErrormsg(prev=>({
+            ...prev,
+            responseErrorMessage: '',
+        }))
+    }
+
     const handleInputsChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
         setRegisterData(prev=>({
             ...prev,
@@ -60,7 +71,13 @@ if(registerData.password===registerData.passwordCheck){
             body:JSON.stringify(newUser)
         });
         const data = await res.json()
-        console.log(data)
+        if(!data.userVerified){
+            setErrormsg(prev=>({
+                ...prev,
+                responseErrorMessage: 'użytkownik nie zweryfikowany',
+                notVerified: true,
+            }))
+        }
         if(data.message){
             if(data.message.includes('Duplicate')){data.message="Użytkownik o tej nazwie już istnieje"}
             setErrormsg(prev=>({
@@ -69,7 +86,6 @@ if(registerData.password===registerData.passwordCheck){
                 responseOk: false,
             }))
         }else{
-            setId(data.id)
             setLoggedIn(true)
             setRegisterData({
                 name:'',
@@ -82,7 +98,8 @@ if(registerData.password===registerData.passwordCheck){
                 ...prev,
                 responseOk: true,
                 responseErrorMessage: '',
-            }))
+            }));
+
         }
     })()
 
@@ -103,11 +120,13 @@ if(registerData.password===registerData.passwordCheck){
             <label>Podaj login <input name={'name'} required onChange={handleInputsChange} min={3} max={36} value={registerData.name} type="text"/></label>
             <label>Podaj email <input name={'email'} required onChange={handleInputsChange} value={registerData.email} type="email"/></label>
             <label>Podaj hasło <input name={'password'} required onChange={handleInputsChange} min={6} max={36}  value={registerData.password} type="password"/></label>
-            <label>Powtórz hasło <input name={'passwordCheck'}required  onChange={handleInputsChange} min={6} max={36} value={registerData.passwordCheck} type="password"/></label>{errorMsg.passwordCheck?<span>hasła nie są identyczne</span>:null}
+            <label>Powtórz hasło <input name={'passwordCheck'}required  onChange={handleInputsChange} min={6} max={36} value={registerData.passwordCheck} type="password"/></label>{errorMsg.passwordCheck?<span className={'error'}>hasła nie są identyczne</span>:null}
             <button type={"submit"} >Zarejestruj</button>
-            {!errorMsg.responseErrorMessage?null:<p>{errorMsg.responseErrorMessage}</p>}
-            {!errorMsg.responseOk?null:(!loggedIn?<p>logowanie...</p>:<p>użytkownik zarejestrowany</p>)}
+            {!errorMsg.responseErrorMessage?null:<p onClick={hadleErrorMessage} className={'textInfo'}>{errorMsg.responseErrorMessage}</p>}
+            {!errorMsg.responseOk?null:(!loggedIn?<p className={'textInfo'}>logowanie...</p>:<Navigate to={'/userMain'}/>)}
+            <GoBackBtn/>
         </form>
+
         </div>
     )
 }

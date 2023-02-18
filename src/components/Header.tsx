@@ -1,6 +1,11 @@
 import React from "react";
-
+import  './css/Header.css'
 export const Header=()=>{
 
-    return <h1>MovieManiac</h1>
+    return (
+        <header className={'header'}>
+            <div className="shade"></div>
+        <h1>MovieManiac</h1>
+            <div className="user"></div>
+        </header>)
 }
