@@ -12,6 +12,8 @@ import {Footer} from "./components/Footer";
 import {LoginComponent} from "./components/LoginComponent";
 import {LoginForm} from "./components/forms/LoginForm";
 import {UserMainPage} from "./components/user/UserMainPage";
+import {BackGroundPicture} from "./components/pictures/BackGroundPicture";
+import {Spinner} from "./components/Spinner";
 
 function App() {
 const [id,setId]=useState('');
@@ -19,11 +21,12 @@ const [id,setId]=useState('');
     return (
 <>
         <div className={'mainBox'}>
+            <BackGroundPicture/>
      <Header/>
             <UserContext.Provider value={{id,setId}}>
       <Routes>
           <Route path={'/'} element={<LoginComponent/>}/>
-        <Route path={'/log'} element={<LoginForm/>}/>
+        <Route path={'/log'} element={<LoginForm login={''} password={''}/>}/>
           <Route path={'/register'} element={<FormAdd/>}/>
           <Route path={'/userMain'} element={<UserMainPage/>}/>
       </Routes>

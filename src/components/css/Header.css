@@ -2,7 +2,7 @@
     position: relative;
     width: 95%;
     height: 30vh;
-    background-image: url("../../img/cinema-strip-2713352_640.jpg");
+    background-image: url("../../assets/img/cinema-strip-2713352_640.jpg");
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: contain;
@@ -26,7 +26,7 @@
 
 @media (min-width: 1024px) {
    .header{
-       background-image: url("../../img/cinema-strip-2713352_1280.jpg");
+       background-image: url("../../assets/img/cinema-strip-2713352_1280.jpg");
        background-size: cover;
        background-attachment: fixed;
        background-position: 50%;

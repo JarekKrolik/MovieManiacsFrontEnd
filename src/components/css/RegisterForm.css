@@ -1,4 +1,6 @@
 .formContainer{
+    position: relative;
+    z-index: 1;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -23,6 +25,7 @@ form.register label{
     font-size: 2rem;
     text-transform: uppercase;
     line-height: 200%;
+    color: cornflowerblue;
 }
 
 form.register input{
@@ -36,6 +39,10 @@ form.register input{
 form.register input:focus{
     outline: none;
     box-shadow: 0 0 15px cornflowerblue;
+    }
+
+form.register input:-webkit-autofill{
+    background-color: gray;
 }
 
 form.register button {
@@ -87,7 +94,16 @@ span.error{
 
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px #1c1b1b inset !important;
+}
 
+input:-webkit-autofill{
+    -webkit-text-fill-color: cornflowerblue !important;
+}
 
 @media (min-width: 1024px) {
 

@@ -1,0 +1,31 @@
+@keyframes pics {
+    from{
+        transform: rotate(0);
+        top: 20%;
+        left:20%;
+    }
+
+    to{
+        transform: rotate(360deg);
+        top: calc(90% - 20rem);
+        left:calc(90% - 20rem);
+    }
+}
+
+
+.picContainer{
+    position: absolute;
+    z-index: 0;
+    left: 45%;
+    top: 35%;
+    width: 20rem;
+    height: 20rem;
+  animation: pics 20s linear infinite alternate;
+    opacity: .7;
+
+
+}
+
+.picContainer img{
+    width: 100%;
+}

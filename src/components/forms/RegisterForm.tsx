@@ -5,10 +5,12 @@ import {apiUrl} from "../../config/api";
 import {UserEntity} from 'types'
 import {GoBackBtn} from "../GoBackBtn";
 import {Navigate} from "react-router-dom";
+import {LoginForm} from "./LoginForm";
 
 export const FormAdd = ()=>{
     const{id,setId}=useContext(UserContext)
     const[loggedIn,setLoggedIn]=useState(false)
+    const[redirect,setRedirect]=useState(false)
     const[registerData,setRegisterData]=useState({
         name:'',
         email:'',
@@ -35,6 +37,10 @@ export const FormAdd = ()=>{
             [e.target.name]:e.target.value,
         }))
     }
+const handleLoggedIn = ()=>{
+       setRedirect(true)
+
+}
 
 const handleNewUser = (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
@@ -87,12 +93,10 @@ if(registerData.password===registerData.passwordCheck){
             }))
         }else{
             setLoggedIn(true)
-            setRegisterData({
-                name:'',
-                email:'',
-                password:'',
+            setRegisterData(prev=>({
+               ...prev,
                 passwordCheck:'',
-                }
+                })
                 )
             setErrormsg(prev=>({
                 ...prev,
@@ -123,9 +127,10 @@ if(registerData.password===registerData.passwordCheck){
             <label>Powtórz hasło <input name={'passwordCheck'}required  onChange={handleInputsChange} min={6} max={36} value={registerData.passwordCheck} type="password"/></label>{errorMsg.passwordCheck?<span className={'error'}>hasła nie są identyczne</span>:null}
             <button type={"submit"} >Zarejestruj</button>
             {!errorMsg.responseErrorMessage?null:<p onClick={hadleErrorMessage} className={'textInfo'}>{errorMsg.responseErrorMessage}</p>}
-            {!errorMsg.responseOk?null:(!loggedIn?<p className={'textInfo'}>logowanie...</p>:<Navigate to={'/userMain'}/>)}
+            {!errorMsg.responseOk?null:(!loggedIn?<p className={'textInfo'}>logowanie...</p>:<p onClick={handleLoggedIn} className={'textInfo'}>Na podany adres e-mail został wysłany kod weryfikacyjny. Proszę podać go przy pierwszym logowaniu.</p>)}
             <GoBackBtn/>
         </form>
+            {redirect?<Navigate to={'/log'}/>:null}
 
         </div>
     )
