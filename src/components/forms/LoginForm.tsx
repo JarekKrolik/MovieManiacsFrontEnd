@@ -5,6 +5,7 @@ import {UserEntity} from 'types'
 import {Navigate} from "react-router-dom";
 import {GoBackBtn} from "../GoBackBtn";
 import {Spinner} from "../Spinner";
+import {Header} from "../Header";
 
 interface Props {
     password:string;
@@ -137,6 +138,7 @@ export const LoginForm=(props:Props)=>{
     }
 
     return(<>
+            <Header/>
         <div className="formContainer">
             {loginData.spinnerOn?<Spinner/>:null}
             <form onSubmit={handleForm} className='register loginForm'>
@@ -149,7 +151,7 @@ export const LoginForm=(props:Props)=>{
 
 
                 <button>zaloguj</button>
-                <GoBackBtn/>
+                <GoBackBtn text={'strona główna'}/>
             </form>
 
 

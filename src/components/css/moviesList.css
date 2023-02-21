@@ -1,0 +1,9 @@
+
+.moviesList{
+    margin: 2em auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+    align-content: space-evenly;
+}

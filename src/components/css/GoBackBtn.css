@@ -1,4 +1,6 @@
 .goBack{
+    position: relative;
+    z-index: 2;
     text-decoration: none;
     width:60%;
     display: block;

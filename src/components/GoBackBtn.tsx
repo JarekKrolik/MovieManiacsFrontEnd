@@ -2,10 +2,13 @@ import React from "react";
 import {Link} from "react-router-dom";
 import './css/GoBackBtn.css'
 
+interface Props {
+    text:string
+}
 
 
-export const GoBackBtn=()=>{
+export const GoBackBtn=(props:Props)=>{
 
 
-    return <Link className={'goBack'} to={'/'}>strona główna</Link>
+    return <Link className={'goBack'} to={'/'}>{props.text}</Link>
 }

@@ -22,7 +22,7 @@ const [id,setId]=useState('');
 <>
         <div className={'mainBox'}>
             <BackGroundPicture/>
-     <Header/>
+     {/*<Header/>*/}
             <UserContext.Provider value={{id,setId}}>
       <Routes>
           <Route path={'/'} element={<LoginComponent/>}/>

@@ -6,6 +6,7 @@ import {UserEntity} from 'types'
 import {GoBackBtn} from "../GoBackBtn";
 import {Navigate} from "react-router-dom";
 import {LoginForm} from "./LoginForm";
+import {Header} from "../Header";
 
 export const FormAdd = ()=>{
     const{id,setId}=useContext(UserContext)
@@ -119,19 +120,22 @@ if(registerData.password===registerData.passwordCheck){
 }
 
     return(
+        <>
+            <Header/>
         <div className={'formContainer'}>
         <form className={'register'} onSubmit={handleNewUser}>
-            <label>Podaj login <input name={'name'} required onChange={handleInputsChange} min={3} max={36} value={registerData.name} type="text"/></label>
+            <label>Podaj login <input name={'name'} required onChange={handleInputsChange} min={3} max={10} value={registerData.name} type="text"/></label>
             <label>Podaj email <input name={'email'} required onChange={handleInputsChange} value={registerData.email} type="email"/></label>
             <label>Podaj hasło <input name={'password'} required onChange={handleInputsChange} min={6} max={36}  value={registerData.password} type="password"/></label>
             <label>Powtórz hasło <input name={'passwordCheck'}required  onChange={handleInputsChange} min={6} max={36} value={registerData.passwordCheck} type="password"/></label>{errorMsg.passwordCheck?<span className={'error'}>hasła nie są identyczne</span>:null}
             <button type={"submit"} >Zarejestruj</button>
             {!errorMsg.responseErrorMessage?null:<p onClick={hadleErrorMessage} className={'textInfo'}>{errorMsg.responseErrorMessage}</p>}
-            {!errorMsg.responseOk?null:(!loggedIn?<p className={'textInfo'}>logowanie...</p>:<p onClick={handleLoggedIn} className={'textInfo'}>Na podany adres e-mail został wysłany kod weryfikacyjny. Proszę podać go przy pierwszym logowaniu.</p>)}
-            <GoBackBtn/>
+            {!errorMsg.responseOk?null:(!loggedIn?<p className={'textInfo'}>logowanie...</p>:<p onClick={handleLoggedIn} className={'textInfo'}>Na podany adres e-mail został wysłany kod weryfikacyjny. Proszę podać go przy pierwszym logowaniu. Nie zweryfikowane konta są usuwane po upływie 7 dni.</p>)}
+            <GoBackBtn text={'strona główna'}/>
         </form>
             {redirect?<Navigate to={'/log'}/>:null}
 
         </div>
+            </>
     )
 }

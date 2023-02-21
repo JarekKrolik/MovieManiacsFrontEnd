@@ -1,0 +1,71 @@
+
+.userHeader{
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    background-color: #363636;
+    width: 98%;
+    border-radius: 25px;
+    box-shadow:0 0 15px cornflowerblue;
+    margin: 1em auto;
+}
+
+.avatar{
+    margin: 2em;
+    display: flex;
+    flex-direction: column;
+    width: 8.5rem;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: 1.3em;
+    border-radius: 50%;
+    box-shadow:0 0 6px black;
+
+}
+
+.logout{
+    border-radius: unset;
+    box-shadow: none;
+
+}
+
+
+
+.avatar p {
+    font-size: 1.8rem;
+    color: cornflowerblue;
+    text-decoration:none;
+    text-align: center;
+}
+
+.avatar img{
+    width: 100%;
+
+}
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 60%;
+    margin-left: 0.9em;
+
+
+}
+
+.button{
+    padding: .7em;
+    font-size: 1.6rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: cornflowerblue;
+    border-radius: 25px;
+    box-shadow:0 0 15px cornflowerblue;
+
+
+
+}
