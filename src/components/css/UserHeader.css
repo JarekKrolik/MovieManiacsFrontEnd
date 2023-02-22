@@ -60,6 +60,7 @@
 .button{
     padding: .7em;
     font-size: 1.6rem;
+    margin-top: 1em;
     text-align: center;
     text-transform: uppercase;
     color: cornflowerblue;
@@ -67,5 +68,51 @@
     box-shadow:0 0 15px cornflowerblue;
 
 
+
+}
+.links{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+@media (min-width: 1024px) {
+
+    .userHeader{
+        justify-content: space-around;
+    }
+
+    .links{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: flex-start;
+    }
+
+    .buttons{
+
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 70%;
+        margin-left: 0.9em;
+
+
+    }
+
+    .button{
+        flex-grow: 1;
+        cursor: pointer;
+        margin-top: 1em;
+        margin-right: 0.6em;
+        transition: color 0.3s, background-color 0.3s;
+
+    }
+
+    .button:hover{
+        color: #363636;
+        background-color: cornflowerblue;
+    }
 
 }

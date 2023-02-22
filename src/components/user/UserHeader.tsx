@@ -3,7 +3,15 @@ import {UserEntity} from 'types'
 import '../css/UserHeader.css'
 import {Link} from "react-router-dom";
 
-export const UserHeader = (props:UserEntity)=>{
+interface Props {
+    id:string,
+    name:string,
+    avatar:number,
+    date:string,
+    email:string,
+}
+
+export const UserHeader = (props:Props)=>{
 
 
 
@@ -16,7 +24,8 @@ export const UserHeader = (props:UserEntity)=>{
                 <div className="button">zapowiedzi</div>
                 <div className="button">teraz w kinach</div>
             </div>
-            <Link to={'/'}>
+            <div className="links">
+            <Link to={'/userPanel'}>
             <div className="avatar">
                 <img src={require(`../../assets/img/avatars/${props.avatar}.png`)} alt="widok awatara użytkownika"/>
                 <p >{props.name}</p>
@@ -28,6 +37,7 @@ export const UserHeader = (props:UserEntity)=>{
                     <p>wyloguj</p>
                 </div>
             </Link>
+            </div>
 
         </header>
 

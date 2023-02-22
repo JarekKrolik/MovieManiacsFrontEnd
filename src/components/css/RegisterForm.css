@@ -17,6 +17,20 @@ form.register{
     align-items: flex-end;
 }
 
+form.register select {
+    width: 100%;
+    background-color: cornflowerblue;
+    color: #363636;
+    border-radius: 12px;
+    padding: 0.8em;
+    font-size: 2rem;
+}
+
+form.register select:focus{
+    outline: none;
+    box-shadow: 0 0 15px cornflowerblue;
+}
+
 form.register label{
     display: flex;
     flex-direction: column;

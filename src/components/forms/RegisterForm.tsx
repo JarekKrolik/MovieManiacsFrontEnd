@@ -131,7 +131,7 @@ if(registerData.password===registerData.passwordCheck){
             <button type={"submit"} >Zarejestruj</button>
             {!errorMsg.responseErrorMessage?null:<p onClick={hadleErrorMessage} className={'textInfo'}>{errorMsg.responseErrorMessage}</p>}
             {!errorMsg.responseOk?null:(!loggedIn?<p className={'textInfo'}>logowanie...</p>:<p onClick={handleLoggedIn} className={'textInfo'}>Na podany adres e-mail został wysłany kod weryfikacyjny. Proszę podać go przy pierwszym logowaniu. Nie zweryfikowane konta są usuwane po upływie 7 dni.</p>)}
-            <GoBackBtn text={'strona główna'}/>
+            <GoBackBtn text={'strona główna'} path={'/'}/>
         </form>
             {redirect?<Navigate to={'/log'}/>:null}
 

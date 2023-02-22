@@ -6,6 +6,7 @@ import {Navigate} from "react-router-dom";
 import {GoBackBtn} from "../GoBackBtn";
 import {Spinner} from "../Spinner";
 import {Header} from "../Header";
+import {UserDataContext} from "../../contexts/UserDataContext";
 
 interface Props {
     password:string;
@@ -13,7 +14,9 @@ interface Props {
 }
 
 export const LoginForm=(props:Props)=>{
-    const {id,setId}=useContext(UserContext)
+    const{obj,setUserData}=useContext(UserDataContext)
+
+
     const [loginData,setLoginData]=useState({
         userName:props.login,
         password:props.password,
@@ -95,7 +98,7 @@ export const LoginForm=(props:Props)=>{
             })
 
             const data = await res.json()
-            console.log(data)
+
 
             if(!data){
                 setLoginData(prev=>({
@@ -124,7 +127,9 @@ export const LoginForm=(props:Props)=>{
             }
 
             if(data.id){
-                setId(data.id)
+                setUserData({
+                    id:data.id,
+                })
                 setLoginData(prev=>({
                     ...prev,
                     errorMessage: '',
@@ -151,7 +156,7 @@ export const LoginForm=(props:Props)=>{
 
 
                 <button>zaloguj</button>
-                <GoBackBtn text={'strona główna'}/>
+                <GoBackBtn text={'strona główna'} path={'/'}/>
             </form>
 
 

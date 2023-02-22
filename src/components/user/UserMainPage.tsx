@@ -7,30 +7,55 @@ import {UserHeader} from "./UserHeader";
 import {Spinner} from "../Spinner";
 import {GoBackBtn} from "../GoBackBtn";
 import {SearchComponent} from "./SearchComponent";
+import {getUser} from "../../utils/getUser";
+import {Navigate} from "react-router-dom";
+import {UserPanel} from "./UserPanel";
+import {UserDataContext} from "../../contexts/UserDataContext";
+
 export const UserMainPage= ()=>{
-const {id,setId} = useContext(UserContext);
+
+const{obj,setUserData}=useContext(UserDataContext)
+// const {id,setId} = useContext(UserContext);
 const[user,setUser]=useState<UserEntity>()
 
+
+const handleSwitches = (e:React.ChangeEvent<HTMLInputElement>)=>{
+  console.log(e.target.name);
+}
+
 useEffect(()=>{
-console.log(id);
+if(!obj.name){
+
     (async()=>{
+
        try{
-        const res = await (fetch(`${apiUrl}/user/${id}`,{
-
-            method:"GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-        }));
-        const data = await res.json()
+           const data = await getUser(obj.id)as UserEntity[]
            const downloadedUser = data[0] as UserEntity
-        setUser(downloadedUser)}catch (e){console.log(e)}
+        setUser(downloadedUser);
+           setUserData({
+               ...obj,
+               name:downloadedUser.name,
+               avatar:downloadedUser.avatar,
+               date:downloadedUser.date,
+               email:downloadedUser.email,
 
-    })()
+           })
+
+       }catch (e){console.log(e)}
+
+    })()}else setUser({
+    name:obj.name,
+    email:obj.email,
+    avatar:obj.avatar,
+    date:obj.date,
+    isverified:true,
+    id:obj.id,
+    passwordhash:'',
+
+})
 
 
-},[])
+},[]);
 
 
 
@@ -40,10 +65,11 @@ console.log(id);
 
     return(
         <>
-            {user?<UserHeader passwordhash={user.passwordhash} isverified={user.isverified} id={user.id} name={user.name} avatar={user.avatar} email={user.email }/>:<Spinner/>}
+            {obj.id?null:<Navigate to={'/'}/>}
+            {user?<UserHeader name={obj.name} avatar={obj.avatar} email={obj.email} date={obj.date} id={obj.id}/>:<Spinner/>}
              <SearchComponent/>
 
-            <GoBackBtn text={'wyloguj'}/>
+            <GoBackBtn text={'wyloguj'} path={'/'}/>
         </>
     )
 }

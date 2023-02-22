@@ -1,0 +1,60 @@
+.userPanel{
+    position: relative;
+    width: 98%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 25px;
+    box-shadow:0 0 15px cornflowerblue;
+    margin: 1em auto;
+    overflow: hidden;
+    background-color: #3f3a3a;
+
+
+}
+
+.form{
+    border-radius: 8px;
+    border:1px solid cornflowerblue;
+    overflow: hidden;
+}
+
+.userPanel h3,p{
+    text-align: center;
+    font-size: 2.2rem;
+    color: cornflowerblue;
+}
+
+.userPanel p{
+    font-size: 1.9rem;
+}
+
+.label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border:1px solid cornflowerblue;
+}
+
+.picture{
+    width: 4.5rem;
+    overflow: hidden;
+}
+
+.picture img{
+    width: 100%;
+    height: 100%;
+}
+
+button {
+    width: 100%;
+    color: #363636;
+    background-color: cornflowerblue;
+    border-radius: 12px;
+    line-height: 100%;
+    text-align: center;
+    font-size: 2rem;
+    text-transform: uppercase;
+    padding: 1em;
+}
