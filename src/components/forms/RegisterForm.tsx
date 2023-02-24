@@ -1,5 +1,4 @@
 import React, {ChangeEventHandler, ReactHTMLElement, useContext, useState} from "react";
-import {UserContext} from "../../contexts/userContext";
 import '../css/RegisterForm.css'
 import {apiUrl} from "../../config/api";
 import {UserEntity} from 'types'
@@ -7,9 +6,9 @@ import {GoBackBtn} from "../GoBackBtn";
 import {Navigate} from "react-router-dom";
 import {LoginForm} from "./LoginForm";
 import {Header} from "../Header";
+import {Spinner} from "../Spinner";
 
 export const FormAdd = ()=>{
-    const{id,setId}=useContext(UserContext)
     const[loggedIn,setLoggedIn]=useState(false)
     const[redirect,setRedirect]=useState(false)
     const[registerData,setRegisterData]=useState({
@@ -23,6 +22,7 @@ export const FormAdd = ()=>{
          passwordCheck:false,
          responseErrorMessage:'',
          responseOk:false,
+         spinnerOn:false,
      })
 
     const hadleErrorMessage =()=>{
@@ -49,6 +49,7 @@ const handleNewUser = (e: React.FormEvent<HTMLFormElement>)=>{
           setErrormsg((prev)=>({
               ...prev,
               passwordCheck: true,
+
           }));
       }else{
           setErrormsg(prev=>({
@@ -67,8 +68,10 @@ if(registerData.password===registerData.passwordCheck){
     setErrormsg(prev=>({
         ...prev,
         passwordCheck: false,
+        spinnerOn: true,
     }));
     (async()=>{
+
         const res =await fetch(`${apiUrl}/user`,{
             method:"POST",
             headers: {
@@ -78,6 +81,7 @@ if(registerData.password===registerData.passwordCheck){
             body:JSON.stringify(newUser)
         });
         const data = await res.json()
+
         if(!data.userVerified){
             setErrormsg(prev=>({
                 ...prev,
@@ -123,6 +127,7 @@ if(registerData.password===registerData.passwordCheck){
         <>
             <Header/>
         <div className={'formContainer'}>
+            {errorMsg.spinnerOn?<Spinner returnRoute={'/'}/>:null}
         <form className={'register'} onSubmit={handleNewUser}>
             <label>Podaj login <input name={'name'} required onChange={handleInputsChange} min={3} max={10} value={registerData.name} type="text"/></label>
             <label>Podaj email <input name={'email'} required onChange={handleInputsChange} value={registerData.email} type="email"/></label>

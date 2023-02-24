@@ -1,7 +1,18 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import '../components/css/Spinner.css'
+import {Navigate} from "react-router-dom";
 
-export const Spinner = ()=>{
+interface Props{
+    returnRoute:string,
+}
 
-    return <div className="lds-hourglass"></div>
+export const Spinner = (props:Props)=>{
+    const[time,setTime]=useState(false)
+    useEffect(()=>{
+        setTimeout(()=>{
+            setTime(true)
+        },50000)
+    },[])
+
+    return( time?<Navigate to={props.returnRoute}/>:<div className="lds-hourglass"></div>)
 }

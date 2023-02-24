@@ -1,0 +1,11 @@
+.allDataElementBox{
+    display: flex;
+    flex-direction: column;
+    width: 98%;
+    border-radius: 25px;
+    box-shadow:0 0 15px cornflowerblue;
+    color: cornflowerblue;
+
+
+}
+

@@ -37,12 +37,12 @@
     border:1px solid cornflowerblue;
 }
 
-.picture{
+.picture.input{
     width: 4.5rem;
     overflow: hidden;
 }
 
-.picture img{
+.picture.input img{
     width: 100%;
     height: 100%;
 }

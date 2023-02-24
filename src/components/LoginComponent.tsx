@@ -3,7 +3,10 @@ import {Link} from "react-router-dom";
 import {UserContext} from "../contexts/userContext";
 import "./css/LoginComponent.css"
 import {Header} from "./Header";
+import {UserDataContext} from "../contexts/UserDataContext";
 export const LoginComponent=()=>{
+const{obj,setUserData} = useContext(UserDataContext);
+
 
 
     return(<>

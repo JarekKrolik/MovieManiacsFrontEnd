@@ -55,15 +55,15 @@ const date =  new Date(obj.date)
             <div className="form">
                 <form className={'form'} onSubmit={handleAvatarSelect}>
                     <label className={'label'}>
-                        {<div className={'picture'}><img src={require('../../assets/img/avatars/0.png')} alt=""/></div>}
+                        {<div className={'picture input'}><img src={require('../../assets/img/avatars/0.png')} alt=""/></div>}
                         <input onChange={handleRadioChange} required value={'0'} name={'avatar'} type="radio"/>
                     </label>
                     <label className={'label'}>
-                        {<div className={'picture'}><img src={require('../../assets/img/avatars/1.png')} alt=""/></div>}
+                        {<div className={'picture input'}><img src={require('../../assets/img/avatars/1.png')} alt=""/></div>}
                         <input onChange={handleRadioChange} value={'1'} name={'avatar'} type="radio"/>
                     </label>
                     <label className={'label'}>
-                        {<div className={'picture'}><img src={require('../../assets/img/avatars/3.png')} alt=""/></div>}
+                        {<div className={'picture input'}><img src={require('../../assets/img/avatars/3.png')} alt=""/></div>}
                         <input onChange={handleRadioChange} value={'2'} name={'avatar'} type="radio"/>
                     </label>
 <button>wybierz swój avatar</button>

@@ -44,8 +44,8 @@ static async getOneMovieById(id:string,lang='en'):Promise<SingleMovieSpecific>{
         const res = await fetch(`https://imdb-api.com/en/API/SearchName/${imdbApiKey}/${name}`)  ;
         const data = await res.json();
 
-        console.log(data)
-        return data
+
+        return data.results
     }
 
     static async findActorById(id:string,lang='en'):Promise<any[]>{

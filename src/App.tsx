@@ -9,6 +9,9 @@ import {LoginForm} from "./components/forms/LoginForm";
 import {UserMainPage} from "./components/user/UserMainPage";
 import {BackGroundPicture} from "./components/pictures/BackGroundPicture";
 import {UserPanel} from "./components/user/UserPanel";
+import {DataDelayComponent} from "./components/movieComponents/DataDelayComponent";
+import {AllDataComponent} from "./components/movieComponents/AllDataComponent";
+
 
 
 function App() {
@@ -20,7 +23,8 @@ function App() {
         email:'',
         movieId: '',
     }
-const[userData,setUserData]=useState(obj)
+const[userData,setUserData]=useState(obj);
+
 
 
     return (
@@ -34,7 +38,11 @@ const[userData,setUserData]=useState(obj)
           <Route path={'/register'} element={<FormAdd/>}/>
           <Route path={'/userMain'} element={<UserMainPage/>}/>
           <Route path={'/userPanel'} element={<UserPanel/>} />
+          <Route path={'/delay'} element={<DataDelayComponent/>}/>
+          <Route path={'/allData'} element={<AllDataComponent/>}/>
+          <Route path={'/*'} element={<LoginComponent/>}/>
       </Routes>
+
 </UserDataContext.Provider>
 
 

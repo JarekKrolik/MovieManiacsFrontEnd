@@ -1,22 +1,32 @@
 import React, {useContext, useEffect, useState} from "react";
-import {UserContext} from "../../contexts/userContext";
-import {apiUrl} from "../../config/api";
-import {UserEntity} from 'types'
-import {Header} from "../Header";
+import {UserEntity,MovieListEntity,ActorsListEntity} from 'types'
+import {Link, useLocation} from "react-router-dom";
 import {UserHeader} from "./UserHeader";
 import {Spinner} from "../Spinner";
 import {GoBackBtn} from "../GoBackBtn";
 import {SearchComponent} from "./SearchComponent";
 import {getUser} from "../../utils/getUser";
 import {Navigate} from "react-router-dom";
-import {UserPanel} from "./UserPanel";
 import {UserDataContext} from "../../contexts/UserDataContext";
 
 export const UserMainPage= ()=>{
 
 const{obj,setUserData}=useContext(UserDataContext)
-// const {id,setId} = useContext(UserContext);
-const[user,setUser]=useState<UserEntity>()
+const[user,setUser]=useState<UserEntity>();
+const[returnData,setReturnData]=useState<MovieListEntity[]>()
+const location = useLocation();
+
+useEffect(()=>{
+    if(location.state){
+        const{returnData}=location.state
+        setReturnData(returnData)
+    }else{setReturnData(undefined)}
+
+
+},[])
+
+
+
 
 
 const handleSwitches = (e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -66,10 +76,10 @@ if(!obj.name){
     return(
         <>
             {obj.id?null:<Navigate to={'/'}/>}
-            {user?<UserHeader name={obj.name} avatar={obj.avatar} email={obj.email} date={obj.date} id={obj.id}/>:<Spinner/>}
-             <SearchComponent/>
+            {user?<UserHeader name={obj.name} avatar={obj.avatar} email={obj.email} date={obj.date} id={obj.id}/>:<Spinner returnRoute={'/'}/>}
+             <SearchComponent returnData={returnData}/>
 
-            <GoBackBtn text={'wyloguj'} path={'/'}/>
+            <GoBackBtn text={'odśwież'} path={'/'}/>
         </>
     )
 }

@@ -145,7 +145,7 @@ export const LoginForm=(props:Props)=>{
     return(<>
             <Header/>
         <div className="formContainer">
-            {loginData.spinnerOn?<Spinner/>:null}
+            {loginData.spinnerOn?<Spinner returnRoute={'/'}/>:null}
             <form onSubmit={handleForm} className='register loginForm'>
                 <label className={'loginLabels'}>
                     nazwa użytkownika <input onChange={handleInputData} name={'userName'} value={loginData.userName} required type="text"/>
