@@ -30,7 +30,7 @@ const[userData,setUserData]=useState(obj);
     return (
 <>
         <div className={'mainBox'}>
-            <BackGroundPicture/>
+            {/*<BackGroundPicture/>*/}
 <UserDataContext.Provider value={{obj: userData,setUserData}}>
       <Routes>
           <Route path={'/'} element={<LoginComponent/>}/>

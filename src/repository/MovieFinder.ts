@@ -12,7 +12,7 @@ export class MovieFinder {
 
     static async getAllSeriesByTitle (title:string,lang='en'):Promise<MovieListEntity[]>{
         const res = await fetch(`https://imdb-api.com/${lang}/API/SearchSeries/${imdbApiKey}/${title}`);
-        const data = await res.json()
+        const data = await res.json();
         return data.results as MovieListEntity[];
     };
 

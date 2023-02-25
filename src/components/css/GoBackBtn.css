@@ -3,6 +3,7 @@
     z-index: 2;
     text-decoration: none;
     width:60%;
+    cursor: pointer;
     display: block;
     text-transform: uppercase;
     margin: 0.5em auto;

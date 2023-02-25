@@ -1,11 +1,168 @@
 .allDataElementBox{
     display: flex;
     flex-direction: column;
-    width: 98%;
-    border-radius: 25px;
-    box-shadow:0 0 15px cornflowerblue;
-    color: cornflowerblue;
+    align-items: center;
+    justify-content: center;
 
+    width: 98%;
+    /*border-radius: 25px;*/
+    /*box-shadow:0 0 15px cornflowerblue;*/
+    color: cornflowerblue;
 
 }
 
+.basicInfo{
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    margin: 2em auto;
+    width: 100%;
+    padding: 2em;
+    border-radius: 25px;
+    box-shadow:0 0 15px cornflowerblue;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+.basicInfo h2{
+    position: relative;
+    z-index: 3;
+    font-size: 2.5rem;
+    font-weight: bolder;
+}
+
+.basicInfo h3{
+    position: relative;
+    z-index: 3;
+    font-size: 1.5rem;
+    padding: 0.3em;
+    font-weight: bolder;
+;
+}
+
+.basicInfo h3 span,.basicInfoh2 span{
+    font-weight: lighter;
+}
+
+
+
+
+.main-slide{
+    width: 98%;
+    margin: 2em auto;
+}
+.carousel .slider-wrapper{
+    margin: 1.2rem auto;
+    width: 80%;
+    overflow: hidden;
+    border-radius: 25px;
+    box-shadow: 0 0 10px cornflowerblue;
+}
+
+.carousel.carousel-slider .control-arrow.control-prev{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+}
+.carousel.carousel-slider .control-arrow.control-prev:before,.carousel-root.main-slide .control-arrow.control-prev:before{
+    border-right: 25px solid cornflowerblue;
+
+}
+
+.carousel.carousel-slider .control-arrow.control-next{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+}
+.carousel.carousel-slider .control-arrow.control-next:before,.carousel-root.main-slide .control-arrow.control-next:before{
+    border-left: 25px solid cornflowerblue;
+}
+
+.carousel-root.main-slide .control-arrow.control-prev{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+}
+
+.carousel-root.main-slide .control-arrow.control-next{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+}
+
+
+.carousel .slider-wrapper img{
+    width: 100%;
+}
+.carousel{
+    text-align: center;
+}
+
+.frameContainer{
+    /*padding-bottom:56.25%;*/
+    /*padding-bottom: 100%;*/
+    padding-bottom: 66.66%;
+    margin: 1rem auto;
+    /*padding-bottom: 75%;*/
+    position:relative;
+    display:block;
+    width: 100%;
+    height: 30vh;
+
+
+    /*width: 98%;*/
+    /*height: 30vh;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+}
+
+
+
+.frameContainer object{
+    z-index: 5;
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 15px cornflowerblue;
+
+
+    /*width: 100%;*/
+    /*display: block;*/
+}
+
+.carousel .control-dots .dot{
+    background-color: cornflowerblue;
+}
+.carousel p.carousel-status{
+    color: cornflowerblue;
+    font-size: 1.4rem;
+}
+.video-player-frame.video-player-embedded{
+
+    height: 500px;
+}
+
+@media (min-width: 1024px) {
+    .main-slide{
+        width: 70%;
+    }
+
+    .frameContainer{
+        width: 70%;
+    }
+
+}

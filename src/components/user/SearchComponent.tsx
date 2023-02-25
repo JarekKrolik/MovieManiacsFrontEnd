@@ -52,15 +52,17 @@ export const SearchComponent = (props:Props)=>{
 
         setShowList(true)
         if(select==='movie'){const result =await MovieFinder.getAllByTitle(searchText,'pl') as MovieListEntity[];
-            setFoundData(result);
+            const finalData = result.filter(el=>el.resultType==='Movie');
+            setFoundData(finalData);
 
         };
         if(select==='series'){const result =await MovieFinder.getAllSeriesByTitle(searchText,'pl') as MovieListEntity[];
-            setFoundData(result)};
+            const finalData = result.filter(el=>el.resultType==='Series');
+            setFoundData(finalData)};
 
         if(select==='actor'){const result =await MovieFinder.findActorByName(searchText,'pl') as ActorsListEntity[];
-
-            setFoundData(result)};}catch (err){
+            const finalData = result.filter(el=>el.resultType==='Name');
+            setFoundData(finalData)};}catch (err){
 
         }
 
