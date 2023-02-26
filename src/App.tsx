@@ -11,6 +11,7 @@ import {BackGroundPicture} from "./components/pictures/BackGroundPicture";
 import {UserPanel} from "./components/user/UserPanel";
 import {DataDelayComponent} from "./components/movieComponents/DataDelayComponent";
 import {AllDataComponent} from "./components/movieComponents/AllDataComponent";
+import {AllDataComponentActor} from "./components/movieComponents/AllDataComponentActor";
 
 
 
@@ -40,6 +41,7 @@ const[userData,setUserData]=useState(obj);
           <Route path={'/userPanel'} element={<UserPanel/>} />
           <Route path={'/delay'} element={<DataDelayComponent/>}/>
           <Route path={'/allData'} element={<AllDataComponent/>}/>
+          <Route path={'/allDataActor'} element={<AllDataComponentActor/>}/>
           <Route path={'/*'} element={<LoginComponent/>}/>
       </Routes>
 

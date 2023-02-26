@@ -16,6 +16,6 @@ const {id,description,image,title} = props
         <div className="picture">
             {image?(<img src={image} alt="plakat z filmu"/>):(<img src={require('../../assets/img/vecteezy_icon-image-not-found-vector_.jpg')} alt="symbol braku zdjęcia"/>)}
         </div>
-        <Link  to={'/allData'} state={{id:id,listOfData:props.listOfData,type:'actor'}} className={'seeMore'}>zobacz więcej</Link>
+        <Link  to={'/allDataActor'} state={{id:id,listOfData:props.listOfData,type:'actor'}} className={'seeMore'}>zobacz więcej</Link>
     </li>)
 }

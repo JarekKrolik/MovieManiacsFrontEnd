@@ -14,11 +14,13 @@ export const UserMainPage= ()=>{
 const{obj,setUserData}=useContext(UserDataContext)
 const[user,setUser]=useState<UserEntity>();
 const[returnData,setReturnData]=useState<MovieListEntity[]>()
+const[type,setType] = useState('')
 const location = useLocation();
 
 useEffect(()=>{
     if(location.state){
-        const{returnData}=location.state
+        const{returnData,type}=location.state;
+        setType(type)
         setReturnData(returnData)
     }else{setReturnData(undefined)}
 
@@ -77,7 +79,7 @@ if(!obj.name){
         <>
             {obj.id?null:<Navigate to={'/'}/>}
             {user?<UserHeader name={obj.name} avatar={obj.avatar} email={obj.email} date={obj.date} id={obj.id}/>:<Spinner returnRoute={'/'}/>}
-             <SearchComponent returnData={returnData}/>
+             <SearchComponent type={type} returnData={returnData}/>
 
             <GoBackBtn text={'odśwież'} path={'/'}/>
         </>

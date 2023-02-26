@@ -8,7 +8,8 @@ import {MovieListElement} from "../movieComponents/MovieListElement";
 import {ActorsListComponent} from "../movieComponents/ActorsListComponent";
 
 interface Props {
-    returnData:MovieListEntity[]|undefined,
+    returnData:MovieListEntity[]|ActorsListEntity[]|undefined,
+    type:string,
 }
 
 export const SearchComponent = (props:Props)=>{
@@ -16,6 +17,9 @@ export const SearchComponent = (props:Props)=>{
     const [foundData,setFoundData]=useState<MovieListEntity[]|ActorsListEntity[]>();
     const [showList,setShowList]=useState(false);
     const[select,setSelect]=useState<string>();
+    const[errors,setErrors]=useState({
+        notFound:false,
+    })
 
 
 
@@ -24,9 +28,13 @@ export const SearchComponent = (props:Props)=>{
 
  useEffect(()=>{
 
+if(!props.type){setSelect('movie')}
+
      if(props.returnData){
          setShowList(true);
-         setFoundData(props.returnData)
+         setFoundData(props.returnData);
+         setSelect(props.type)
+
      }
  },[props.returnData])
 
@@ -53,18 +61,31 @@ export const SearchComponent = (props:Props)=>{
         setShowList(true)
         if(select==='movie'){const result =await MovieFinder.getAllByTitle(searchText,'pl') as MovieListEntity[];
             const finalData = result.filter(el=>el.resultType==='Movie');
+            if(finalData.length===0){setErrors(prev=>({
+                ...prev,
+                notFound: true,
+            }))}
             setFoundData(finalData);
 
         };
         if(select==='series'){const result =await MovieFinder.getAllSeriesByTitle(searchText,'pl') as MovieListEntity[];
             const finalData = result.filter(el=>el.resultType==='Series');
+            if(finalData.length===0){setErrors(prev=>({
+                ...prev,
+                notFound: true,
+            }))}
             setFoundData(finalData)};
 
         if(select==='actor'){const result =await MovieFinder.findActorByName(searchText,'pl') as ActorsListEntity[];
             const finalData = result.filter(el=>el.resultType==='Name');
+            if(finalData.length===0){setErrors(prev=>({
+                ...prev,
+                notFound: true,
+            }))}
             setFoundData(finalData)};}catch (err){
 
         }
+
 
 
     }
@@ -76,10 +97,10 @@ export const SearchComponent = (props:Props)=>{
                 <label>wyszukaj :
                     <input required value={searchText} onChange={handleInput} type="text"/>
                 </label>
-                <select onChange={handleSelect} name="option" >
+                <select defaultValue={props.type?props.type:'movie'} onChange={handleSelect} name="option" >
 
+                    <option  value="movie">film</option>
                     <option  value="series">serial</option>
-                    <option value="movie">film</option>
                     <option value="actor">aktorka/aktor</option>
 
                 </select>
@@ -89,6 +110,7 @@ export const SearchComponent = (props:Props)=>{
             {foundData?.length?<p className="result">znaleziono <span>{foundData.length}</span> pasujących elementów</p>:null}
         </div>
             <ul className={'moviesList'}>
+                {errors.notFound?<p>Nie znaleziono...</p>:null}
             {(select==='actor'&&showList)?(!foundData)?<Spinner returnRoute={'/delay'}/>:foundData.map(el=>(
                 <ActorsListComponent listOfData={foundData} key={el.id} title={el.title} resultType={el.resultType} image={el.image} id={el.id} description={el.description}/>
                     ))
