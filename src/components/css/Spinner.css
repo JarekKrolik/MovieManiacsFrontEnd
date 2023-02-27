@@ -16,8 +16,8 @@
     height: 0;
     margin: 8px;
     box-sizing: border-box;
-    border: 32px solid #6495ed;
-    border-color: #6495ed transparent #6495ed transparent;
+    border: 42px solid #6495ed;
+    border-color: gray transparent gray transparent;
     animation: lds-hourglass 1.2s infinite;
     box-shadow: 0 0 6px black;
 }

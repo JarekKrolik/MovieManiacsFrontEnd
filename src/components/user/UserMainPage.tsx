@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {UserEntity,MovieListEntity,ActorsListEntity} from 'types'
+import {UserEntity, MovieListEntity, ActorsListEntity} from 'types'
 import {Link, useLocation} from "react-router-dom";
 import {UserHeader} from "./UserHeader";
 import {Spinner} from "../Spinner";
@@ -9,78 +9,75 @@ import {getUser} from "../../utils/getUser";
 import {Navigate} from "react-router-dom";
 import {UserDataContext} from "../../contexts/UserDataContext";
 
-export const UserMainPage= ()=>{
+export const UserMainPage = () => {
 
-const{obj,setUserData}=useContext(UserDataContext)
-const[user,setUser]=useState<UserEntity>();
-const[returnData,setReturnData]=useState<MovieListEntity[]>()
-const[type,setType] = useState('')
-const location = useLocation();
+    const {obj, setUserData} = useContext(UserDataContext)
+    const [user, setUser] = useState<UserEntity>();
+    const [returnData, setReturnData] = useState<MovieListEntity[]>()
+    const [type, setType] = useState('')
+    const location = useLocation();
 
-useEffect(()=>{
-    if(location.state){
-        const{returnData,type}=location.state;
-        setType(type)
-        setReturnData(returnData)
-    }else{setReturnData(undefined)}
-
-
-},[])
-
+    useEffect(() => {
+        if (location.state) {
+            const {returnData, type} = location.state;
+            setType(type)
+            setReturnData(returnData)
+        } else {
+            setReturnData(undefined)
+        }
 
 
+    }, [])
 
 
-const handleSwitches = (e:React.ChangeEvent<HTMLInputElement>)=>{
-  console.log(e.target.name);
-}
+    const handleSwitches = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target.name);
+    }
 
-useEffect(()=>{
-if(!obj.name){
+    useEffect(() => {
+        if (!obj.name) {
 
-    (async()=>{
+            (async () => {
 
-       try{
-           const data = await getUser(obj.id)as UserEntity[]
-           const downloadedUser = data[0] as UserEntity
-        setUser(downloadedUser);
-           setUserData({
-               ...obj,
-               name:downloadedUser.name,
-               avatar:downloadedUser.avatar,
-               date:downloadedUser.date,
-               email:downloadedUser.email,
+                try {
+                    const data = await getUser(obj.id) as UserEntity[]
+                    const downloadedUser = data[0] as UserEntity
+                    setUser(downloadedUser);
+                    setUserData({
+                        ...obj,
+                        name: downloadedUser.name,
+                        avatar: downloadedUser.avatar,
+                        date: downloadedUser.date,
+                        email: downloadedUser.email,
 
-           })
+                    })
 
-       }catch (e){console.log(e)}
+                } catch (e) {
+                    console.log(e)
+                }
 
-    })()}else setUser({
-    name:obj.name,
-    email:obj.email,
-    avatar:obj.avatar,
-    date:obj.date,
-    isverified:true,
-    id:obj.id,
-    passwordhash:'',
+            })()
+        } else setUser({
+            name: obj.name,
+            email: obj.email,
+            avatar: obj.avatar,
+            date: obj.date,
+            isverified: true,
+            id: obj.id,
+            passwordhash: '',
 
-})
-
-
-},[]);
-
-
+        })
 
 
+    }, []);
 
 
-
-    return(
+    return (
         <>
-            {obj.id?null:<Navigate to={'/'}/>}
-            {user?<UserHeader name={obj.name} avatar={obj.avatar} email={obj.email} date={obj.date} id={obj.id}/>:<Spinner returnRoute={'/'}/>}
-             <SearchComponent type={type} returnData={returnData}/>
-
+            {obj.id ? null : <Navigate to={'/'}/>}
+            {user ? <UserHeader name={obj.name} avatar={obj.avatar} email={obj.email} date={obj.date} id={obj.id}/> :
+                <Spinner returnRoute={'/'}/>}
+            <SearchComponent type={type} returnData={returnData}/>
             <GoBackBtn text={'odśwież'} path={'/'}/>
         </>
     )
