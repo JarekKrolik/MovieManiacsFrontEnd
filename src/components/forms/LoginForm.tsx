@@ -1,5 +1,4 @@
 import React, {useContext, useState} from "react";
-import {UserContext} from "../../contexts/userContext";
 import {apiUrl} from "../../config/api";
 import {UserEntity} from 'types'
 import {Navigate} from "react-router-dom";

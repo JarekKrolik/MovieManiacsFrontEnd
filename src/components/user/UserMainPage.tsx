@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {UserEntity, MovieListEntity, ActorsListEntity} from 'types'
+import {UserEntity, MovieListEntity, FavouriteMoviesList} from 'types'
 import {Link, useLocation} from "react-router-dom";
 import {UserHeader} from "./UserHeader";
 import {Spinner} from "../Spinner";
@@ -8,6 +8,7 @@ import {SearchComponent} from "./SearchComponent";
 import {getUser} from "../../utils/getUser";
 import {Navigate} from "react-router-dom";
 import {UserDataContext} from "../../contexts/UserDataContext";
+import {MovieFinder} from "../../repository/MovieFinder";
 
 export const UserMainPage = () => {
 
@@ -16,9 +17,11 @@ export const UserMainPage = () => {
     const [returnData, setReturnData] = useState<MovieListEntity[]>()
     const [type, setType] = useState('')
     const location = useLocation();
+    const[listOfFavMovies,setListOfFavMovies]=useState<FavouriteMoviesList[]>()
 
     useEffect(() => {
         if (location.state) {
+
             const {returnData, type} = location.state;
             setType(type)
             setReturnData(returnData)
@@ -30,9 +33,7 @@ export const UserMainPage = () => {
     }, [])
 
 
-    const handleSwitches = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.name);
-    }
+
 
     useEffect(() => {
         if (!obj.name) {
@@ -41,6 +42,7 @@ export const UserMainPage = () => {
 
                 try {
                     const data = await getUser(obj.id) as UserEntity[]
+                    const favList = await MovieFinder.getFavouritesMoviesList(data[0].name) as unknown as FavouriteMoviesList[]
                     const downloadedUser = data[0] as UserEntity
                     setUser(downloadedUser);
                     setUserData({
@@ -49,8 +51,11 @@ export const UserMainPage = () => {
                         avatar: downloadedUser.avatar,
                         date: downloadedUser.date,
                         email: downloadedUser.email,
+                        favMovies:favList,
 
                     })
+                    setListOfFavMovies(favList)
+
 
                 } catch (e) {
                     console.log(e)
@@ -66,7 +71,10 @@ export const UserMainPage = () => {
             id: obj.id,
             passwordhash: '',
 
-        })
+        });
+
+
+
 
 
     }, []);
@@ -77,7 +85,7 @@ export const UserMainPage = () => {
             {obj.id ? null : <Navigate to={'/'}/>}
             {user ? <UserHeader name={obj.name} avatar={obj.avatar} email={obj.email} date={obj.date} id={obj.id}/> :
                 <Spinner returnRoute={'/'}/>}
-            <SearchComponent type={type} returnData={returnData}/>
+            <SearchComponent type={type} returnData={returnData} favList={listOfFavMovies}/>
             <GoBackBtn text={'odśwież'} path={'/'}/>
         </>
     )

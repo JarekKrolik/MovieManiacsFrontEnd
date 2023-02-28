@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Link, Navigate, useLocation} from "react-router-dom";
 import {MovieFinder} from "../../repository/MovieFinder";
 import {SingleMovieSpecific} from 'types'
@@ -7,30 +7,34 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import {Carousel} from 'react-responsive-carousel';
 import '../css/AllDataComponent.css'
 import {PreviousPage} from "../PreviousPage";
+import {FavouriteIcon} from "../FavouriteIcon";
+import {UserDataContext} from "../../contexts/UserDataContext";
 
 
 export const AllDataComponent = () => {
 
 
     const location = useLocation();
+    const{obj}=useContext(UserDataContext)
     const {id, listOfData, type} = location.state;
-    const[badRequestRedirect,setBadRequestRedirect]=useState(false)
+    const [badRequestRedirect, setBadRequestRedirect] = useState(false)
     const [switches, setSwitches] = useState({
         fullCast: false,
         trailer: false,
         photos: false,
     });
     const [foundData, setFoundData] = useState<SingleMovieSpecific>()
-
+    const favActors = obj.favMovies.map(e=>e.movie_id)
 
     useEffect(() => {
 
+
         (async () => {
             const res = await MovieFinder.getOneMovieById(id) as SingleMovieSpecific
-            if(res.errorMessage.includes('Invalid')){
+            if (res.errorMessage.includes('Invalid')) {
                 setBadRequestRedirect(true)
             }
-            console.log(res);
+
             setFoundData(res);
         })()
 
@@ -42,7 +46,7 @@ export const AllDataComponent = () => {
         <>
 
             <div className="allDataElementBox">
-                {badRequestRedirect?<Navigate to={'/allDataActor'} state={{id,listOfData}}/>:null}
+                {badRequestRedirect ? <Navigate to={'/allDataActor'} state={{id, listOfData}}/> : null}
                 {!foundData ? <Spinner returnRoute={'/userMain'}/> : (
                     <>
                         <div className={'basicInfo'} style={{

@@ -91,7 +91,7 @@ if(foundData){
                                     {el.year ? <h3>Rok : <span>{el.year}</span></h3> : null}
                                     {el.description ? <h3>Opis : <span>{el.description}</span></h3> : null}
                                     <Link className={'goBack actor'} to={'/allData'}
-                                          state={{id: el.id, listOfData: listOfData, type}}>wstecz</Link>
+                                          state={{id: el.id, listOfData: listOfData, type}}>pokaż więcej</Link>
                                 </div>
                             )
                         })) : <p>Brak danych...</p>}

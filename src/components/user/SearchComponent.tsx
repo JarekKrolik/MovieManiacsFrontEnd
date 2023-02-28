@@ -2,17 +2,20 @@ import React, {createContext, ReactHTMLElement, useContext, useEffect, useState}
 import '../css/RegisterForm.css'
 import '../css/moviesList.css'
 import {MovieFinder} from "../../repository/MovieFinder";
-import {MovieListEntity, ActorsListEntity} from 'types'
+import {MovieListEntity, ActorsListEntity,FavouriteMoviesList} from 'types'
 import {Spinner} from "../Spinner";
 import {MovieListElement} from "../movieComponents/MovieListElement";
 import {ActorsListComponent} from "../movieComponents/ActorsListComponent";
+import {UserDataContext} from "../../contexts/UserDataContext";
 
 interface Props {
     returnData: MovieListEntity[] | ActorsListEntity[] | undefined,
     type: string,
+    favList:FavouriteMoviesList[]|undefined
 }
 
 export const SearchComponent = (props: Props) => {
+    const{obj}=useContext(UserDataContext)
     const [searchText, setSearchText] = useState('');
     const [foundData, setFoundData] = useState<MovieListEntity[] | ActorsListEntity[]>();
     const [showList, setShowList] = useState(false);
@@ -135,8 +138,8 @@ export const SearchComponent = (props: Props) => {
                         ))
                     : showList ? <ul className={'moviesList'}>
                         {!foundData ? <Spinner returnRoute={'/delay'}/> : foundData.map(el => (
-                            <MovieListElement listOfData={foundData} key={el.id} id={el.id} description={el.description}
-                                              image={el.image} title={el.title} resultType={el.resultType}/>
+                            <MovieListElement  listOfData={foundData} key={el.id} id={el.id} description={el.description}
+                                              image={el.image} title={el.title} resultType={el.resultType} favList={obj.favMovies}/>
                         ))}
                     </ul> : null}</ul>
 

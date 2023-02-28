@@ -1,20 +1,30 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {MovieListEntity}from 'types'
 import '../css/MovieListElement.css'
 
 import {Link, Navigate} from "react-router-dom";
+import {FavouriteIcon} from "../FavouriteIcon";
+import {UserDataContext} from "../../contexts/UserDataContext";
+import {MovieFinder} from "../../repository/MovieFinder";
+import{FavouriteMoviesList} from 'types'
 
 interface Props extends MovieListEntity {
     listOfData:MovieListEntity[];
+    favList:FavouriteMoviesList[]|undefined
 }
 
 export const MovieListElement = (props:Props)=>{
-    const{id,description,image,resultType,title}= props;
+    const {obj} = useContext(UserDataContext)
+    const{id,description,image,resultType,title,favList}= props;
+
+const list = favList?.map(e=>e.movie_id)
 
 
     return (
         <li className={'element'}  id={id}>
+            <FavouriteIcon  switchedOn={list?list.includes(id):false}  id={id} user={obj.name} type={'movie'} title={title}/>
         <h3>Tytuł : <span>{title}</span></h3>
+
         <p>Krótki opis : <span>{description}</span></p>
         <p>{resultType}</p>
         <div className="picture">

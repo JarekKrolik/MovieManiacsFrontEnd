@@ -16,6 +16,7 @@ import {AllDataComponentActor} from "./components/movieComponents/AllDataCompone
 
 
 function App() {
+
     const obj = {
         name:'',
         id:'',
@@ -23,6 +24,14 @@ function App() {
         date:'',
         email:'',
         movieId: '',
+        favMovies:[{
+            user:'',
+            movie_id:'',
+        }],
+        favActors:[{
+            user:'',
+            actor_id:'',
+        }]
     }
 const[userData,setUserData]=useState(obj);
 
@@ -44,7 +53,6 @@ const[userData,setUserData]=useState(obj);
           <Route path={'/allDataActor'} element={<AllDataComponentActor/>}/>
           <Route path={'/*'} element={<LoginComponent/>}/>
       </Routes>
-
 </UserDataContext.Provider>
 
 
