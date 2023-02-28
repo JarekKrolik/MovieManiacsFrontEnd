@@ -83,7 +83,7 @@ if(foundData){
                     }} className={'goBack actor'}>role
                     </button>
                     {switches.starredIn ? <div className={'starredIn'}>
-                        {foundData.castMovies?<form className={'register'}><label>filtruj wyniki po tytule <input onChange={handleFilterData} type="text"/></label></form>:null}
+                        {foundData.castMovies?<form className={'register actor'}><label>filtruj wyniki po tytule <input onChange={handleFilterData} type="text"/></label></form>:null}
                         {unFilteredData ? (unFilteredData.map(el => {
                             return (<div key={el.id + Math.random()} className={'roles'}>
                                     {el.title ? <h3>Tytuł : <span>{el.title}</span></h3> : null}
@@ -91,7 +91,7 @@ if(foundData){
                                     {el.year ? <h3>Rok : <span>{el.year}</span></h3> : null}
                                     {el.description ? <h3>Opis : <span>{el.description}</span></h3> : null}
                                     <Link className={'goBack actor'} to={'/allData'}
-                                          state={{id: el.id, listOfData: listOfData, type}}>zobacz</Link>
+                                          state={{id: el.id, listOfData: listOfData, type}}>wstecz</Link>
                                 </div>
                             )
                         })) : <p>Brak danych...</p>}
@@ -102,7 +102,7 @@ if(foundData){
             <PreviousPage/>
             <Link to={'/userMain'} className={'goBack'} state={{
                 returnData: listOfData, type: 'actor'
-            }}>powrót do wyszukiwarki</Link>
+            }}>strona główna</Link>
         </div>
     )
 }

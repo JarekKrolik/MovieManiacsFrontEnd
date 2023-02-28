@@ -148,8 +148,7 @@ export const AllDataComponent = () => {
                         </ul> : <p>Brak danych w bazie IMDb</p>) : null) : null}
                     </>)}
                 <PreviousPage/>
-                <Link className={'goBack'} to={'/userMain'} state={{returnData: listOfData, type}}>powrót do
-                    wyszukiwarki</Link>
+                <Link className={'goBack'} to={'/userMain'} state={{returnData: listOfData, type}}>strona główna</Link>
             </div>
 
         </>

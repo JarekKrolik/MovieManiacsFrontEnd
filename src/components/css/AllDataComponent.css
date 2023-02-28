@@ -186,8 +186,8 @@
 }
 
 .goBack.actor {
-    font-size: 1.5rem;
-    width: 100%;
+    font-size: 2.2rem;
+    width: 60%;
     margin: 0.5em auto;
 }
 
@@ -228,6 +228,10 @@
     border-bottom: 1px solid cornflowerblue;
 }
 
+form.register.actor label{
+    margin: 0.6em auto;
+}
+
 @media (min-width: 914px) {
     .cast {
         display: flex;
@@ -259,6 +263,13 @@
         flex-grow: 1;
         width: 45%;
     }
+
+    .goBack.actor {
+
+        width: 30%;
+
+    }
+
 
 
 }
