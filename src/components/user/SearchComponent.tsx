@@ -19,15 +19,14 @@ export const SearchComponent = (props: Props) => {
     const [select, setSelect] = useState<string>();
     const [errors, setErrors] = useState({
         notFound: false,
-        notSelected: false,
     })
 
 
     useEffect(() => {
-        //
-        // if (!props.type) {
-        //     setSelect('movie')
-        // }
+
+        if (!props.type) {
+            setSelect('movie')
+        }
 
         if (props.returnData) {
             setShowList(true);
@@ -56,19 +55,13 @@ export const SearchComponent = (props: Props) => {
     const handleFind = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if(!select){
-            setErrors(prev=>({
-                ...prev,
-                notSelected: true,
-            }));
-            return
-        }else{
+
         try {
 
-setErrors(prev=>({
-    ...prev,
-    notSelected: false,
-}))
+            setErrors(prev => ({
+                ...prev,
+                notSelected: false,
+            }))
             setShowList(true)
 
             if (select === 'movie') {
@@ -95,7 +88,7 @@ setErrors(prev=>({
                 }
                 setFoundData(finalData)
             }
-            ;
+
 
             if (select === 'actor') {
                 const result = await MovieFinder.findActorByName(searchText, 'pl') as ActorsListEntity[];
@@ -108,10 +101,10 @@ setErrors(prev=>({
                 }
                 setFoundData(finalData)
             }
-            ;
+
         } catch (err) {
         }
-    }}
+    }
     return (
         <>
             <div className="formContainer">
@@ -120,8 +113,7 @@ setErrors(prev=>({
                     <label>wyszukaj :
                         <input required value={searchText} onChange={handleInput} type="text"/>
                     </label>
-                    <select defaultValue={props.type ? props.type : 'default'} onChange={handleSelect} name="option">
-                        <option disabled={true} value="default">wybierz</option>
+                    <select defaultValue={props.type} onChange={handleSelect} name="option">
                         <option value="movie">film</option>
                         <option value="series">serial</option>
                         <option value="actor">aktorka/aktor</option>
@@ -129,7 +121,6 @@ setErrors(prev=>({
                     </select>
                     <button type={'submit'}>szukaj...</button>
                 </form>
-                {errors.notSelected?<p className={'result'}>wybierz rodzaj wyszukiwania</p>:null}
                 {searchText ? <p className="result">wyszukiwana fraza: <span>{searchText}</span></p> : null}
                 {foundData?.length ?
                     <p className="result">znaleziono <span>{foundData.length}</span> pasujących elementów</p> : null}

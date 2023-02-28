@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useLocation} from "react-router-dom";
+import {Link, Navigate, useLocation} from "react-router-dom";
 import {MovieFinder} from "../../repository/MovieFinder";
 import {SingleActorSpecific} from 'types'
 import {Spinner} from "../Spinner";
@@ -17,8 +17,8 @@ interface StarredIn {
 }
 
 export const AllDataComponentActor = () => {
-// const[filteredData,setFilteredData]=useState<StarredIn[]|null>()
     const[unFilteredData,setUnFilteredData]=useState<StarredIn[]|null>()
+    const[badRequestRedirect,setBadRequestRedirect]=useState(false)
     const [filter, setFilter] = useState('')
     const location = useLocation();
     const {id, listOfData, type} = location.state;
@@ -31,11 +31,13 @@ export const AllDataComponentActor = () => {
     const handleFilterData = (e:React.ChangeEvent<HTMLInputElement>)=>{
         setFilter(e.target.value.toUpperCase())
 if(foundData){
+
     if(!filter){setUnFilteredData(foundData.castMovies)}
     const dataFiltered =  foundData.castMovies.filter(el=>{return el.title.toUpperCase().includes(filter)});
     setUnFilteredData(dataFiltered)
-
 }
+
+
 
     }
 
@@ -44,6 +46,8 @@ if(foundData){
         (async () => {
 
             const res = await MovieFinder.findActorById(id) as unknown as SingleActorSpecific
+            if(res.errorMessage.includes('Invalid')){
+                setBadRequestRedirect(true)}
             setFoundData(res);
             setUnFilteredData(res.castMovies)
         })()
@@ -55,6 +59,7 @@ if(foundData){
     return (
 
         <div className="allDataElementBox">
+            {badRequestRedirect?<Navigate to={'/allData'} state={{id,listOfData}}/>:null}
             {!foundData ? <Spinner returnRoute={'/userMain'}/> : (<>
                     <div className="basicInfo actor">
                         <div className="text actor">

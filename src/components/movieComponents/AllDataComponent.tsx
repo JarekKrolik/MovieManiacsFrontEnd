@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useLocation} from "react-router-dom";
+import {Link, Navigate, useLocation} from "react-router-dom";
 import {MovieFinder} from "../../repository/MovieFinder";
 import {SingleMovieSpecific} from 'types'
 import {Spinner} from "../Spinner";
@@ -14,6 +14,7 @@ export const AllDataComponent = () => {
 
     const location = useLocation();
     const {id, listOfData, type} = location.state;
+    const[badRequestRedirect,setBadRequestRedirect]=useState(false)
     const [switches, setSwitches] = useState({
         fullCast: false,
         trailer: false,
@@ -26,6 +27,9 @@ export const AllDataComponent = () => {
 
         (async () => {
             const res = await MovieFinder.getOneMovieById(id) as SingleMovieSpecific
+            if(res.errorMessage.includes('Invalid')){
+                setBadRequestRedirect(true)
+            }
             console.log(res);
             setFoundData(res);
         })()
@@ -38,6 +42,7 @@ export const AllDataComponent = () => {
         <>
 
             <div className="allDataElementBox">
+                {badRequestRedirect?<Navigate to={'/allDataActor'} state={{id,listOfData}}/>:null}
                 {!foundData ? <Spinner returnRoute={'/userMain'}/> : (
                     <>
                         <div className={'basicInfo'} style={{
