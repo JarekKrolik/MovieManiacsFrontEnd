@@ -123,6 +123,13 @@
 
 }
 
+h2.poster{
+    text-transform: uppercase;
+    text-align: center;
+    padding: 1em;
+    margin: 1em;
+    font-size: 2.6rem;
+}
 
 .frameContainer object {
     z-index: 5;
@@ -233,6 +240,15 @@ form.register.actor label{
 }
 
 @media (min-width: 914px) {
+
+    .basicInfo h2 {
+        font-size: 3.2rem;
+    }
+
+    .basicInfo h3 {
+        font-size: 2.1rem;
+    }
+
     .cast {
         display: flex;
         flex-wrap: wrap;
@@ -259,14 +275,15 @@ form.register.actor label{
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        justify-content: space-evenly;
+        justify-content: flex-end;
         flex-grow: 1;
         width: 45%;
     }
 
     .goBack.actor {
 
-        width: 30%;
+        width: 95%;
+        font-size: 1.6rem;
 
     }
 

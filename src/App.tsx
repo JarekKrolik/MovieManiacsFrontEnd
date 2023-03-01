@@ -27,11 +27,17 @@ function App() {
         favMovies:[{
             user:'',
             movie_id:'',
+            name:'',
+            image:'',
         }],
         favActors:[{
             user:'',
             actor_id:'',
-        }]
+            name:'',
+            image:'',
+        }],
+
+
     }
 const[userData,setUserData]=useState(obj);
 

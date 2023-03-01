@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {UserEntity, MovieListEntity, FavouriteMoviesList} from 'types'
+import {UserEntity, MovieListEntity, FavouriteMoviesList,FavouriteActorsList} from 'types'
 import {Link, useLocation} from "react-router-dom";
 import {UserHeader} from "./UserHeader";
 import {Spinner} from "../Spinner";
@@ -18,6 +18,7 @@ export const UserMainPage = () => {
     const [type, setType] = useState('')
     const location = useLocation();
     const[listOfFavMovies,setListOfFavMovies]=useState<FavouriteMoviesList[]>()
+    const[listOfFavActors,setListOfFavActors]=useState<FavouriteActorsList[]>()
 
     useEffect(() => {
         if (location.state) {
@@ -43,6 +44,7 @@ export const UserMainPage = () => {
                 try {
                     const data = await getUser(obj.id) as UserEntity[]
                     const favList = await MovieFinder.getFavouritesMoviesList(data[0].name) as unknown as FavouriteMoviesList[]
+                    const favActorsList = await MovieFinder.getFavouritesActorsList((data[0].name)) as unknown as FavouriteActorsList[]
                     const downloadedUser = data[0] as UserEntity
                     setUser(downloadedUser);
                     setUserData({
@@ -52,9 +54,11 @@ export const UserMainPage = () => {
                         date: downloadedUser.date,
                         email: downloadedUser.email,
                         favMovies:favList,
+                        favActors:favActorsList,
 
                     })
                     setListOfFavMovies(favList)
+                    setListOfFavActors(favActorsList)
 
 
                 } catch (e) {
@@ -85,7 +89,7 @@ export const UserMainPage = () => {
             {obj.id ? null : <Navigate to={'/'}/>}
             {user ? <UserHeader name={obj.name} avatar={obj.avatar} email={obj.email} date={obj.date} id={obj.id}/> :
                 <Spinner returnRoute={'/'}/>}
-            <SearchComponent type={type} returnData={returnData} favList={listOfFavMovies}/>
+            <SearchComponent type={type} returnData={returnData} favList={listOfFavMovies} favActorsList={listOfFavActors}/>
             <GoBackBtn text={'odśwież'} path={'/'}/>
         </>
     )

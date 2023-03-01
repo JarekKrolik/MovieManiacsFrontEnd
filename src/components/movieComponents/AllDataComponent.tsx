@@ -22,6 +22,7 @@ export const AllDataComponent = () => {
         fullCast: false,
         trailer: false,
         photos: false,
+        posters:false,
     });
     const [foundData, setFoundData] = useState<SingleMovieSpecific>()
     const favActors = obj.favMovies.map(e=>e.movie_id)
@@ -34,7 +35,7 @@ export const AllDataComponent = () => {
             if (res.errorMessage.includes('Invalid')) {
                 setBadRequestRedirect(true)
             }
-
+console.log(res)
             setFoundData(res);
         })()
 
@@ -126,6 +127,36 @@ export const AllDataComponent = () => {
                                     )
                                 })}
                             </Carousel> : <p>brak zdjęć w bazie IMDb</p>) : null}
+                        <button className={'goBack'} onClick={() => {
+                            setSwitches(prev => ({
+                                ...prev,
+                                posters: !prev.posters,
+                            }))
+                        }}>{switches.posters ? 'ukryj postery' : 'pokaż postery'}</button>
+                        {switches.posters ? (foundData.posters ?<>
+                            <h2 className={'poster'}>Przednie postery:</h2>
+                            <Carousel showArrows={true} emulateTouch={true} useKeyboardArrows={true}
+                                      dynamicHeight={true} infiniteLoop={true} className={'main-slide'}>
+                                {foundData.posters.posters.map(e => {
+                                    return (
+                                        <div key={e.id}>
+                                            <img loading={'lazy'} src={e.link}/>
+                                        </div>
+                                    )
+                                })}
+                            </Carousel>
+                            <h2 className={'poster'}>okładki:</h2>
+                            <Carousel showArrows={true} emulateTouch={true} useKeyboardArrows={true}
+                                      dynamicHeight={true} infiniteLoop={true} className={'main-slide'}>
+                                {foundData.posters.backdrops.map(e => {
+                                    return (
+                                        <div key={e.id}>
+                                            <img loading={'lazy'} src={e.link}/>
+                                        </div>
+                                    )
+                                })}
+                            </Carousel>
+                        </>: <p>brak zdjęć w bazie IMDb</p>) : null}
                         <button className={'goBack'} onClick={() => {
                             setSwitches((prev) => ({
                                 ...prev,

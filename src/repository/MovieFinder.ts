@@ -1,10 +1,10 @@
 import {imdbApiKey} from "../config/apiKeyConfig";
-import {MovieListEntity, NowInCinemasMovieEntity, SingleMovieSpecific} from 'types'
+import {ActorsListEntity, MovieListEntity, NowInCinemasMovieEntity, Response, SingleMovieSpecific} from 'types'
 import {apiUrl} from "../config/api";
 
 export class MovieFinder {
 
-    static async addToFavouriteList(id: string, user: string,type:string,title:string): Promise<void> {
+    static async addToFavouriteList(id: string, user: string,type:string,title:string,image:string): Promise<void> {
         await fetch(`${apiUrl}/favourite`, {
                 method: 'POST',
                 headers: {
@@ -12,15 +12,20 @@ export class MovieFinder {
 
                 },
                 body: JSON.stringify({
-                    id, user,type,title
+                    id, user,type,title,image
                 })
             }
         )    }
     static async getFavouritesMoviesList(id:string):Promise<MovieListEntity[]|null>{
         const res = await fetch(`${apiUrl}/favourite/${id}`)
-        const data = await res.json()
-        return data
+        return await res.json()
     }
+    static async getFavouritesActorsList(id:string):Promise<ActorsListEntity[]|null>{
+        const res = await fetch(`${apiUrl}/favourite/actor/${id}`)
+        return await res.json()
+
+    }
+
 
     static async removeFromFavouriteList(id: string, user: string,type:string): Promise<void> {
         await fetch(`${apiUrl}/favourite`, {
@@ -36,16 +41,16 @@ export class MovieFinder {
         )    }
 
 
-    static async getAllByTitle(title: string, lang = 'en'): Promise<MovieListEntity[]> {
+    static async getAllByTitle(title: string, lang = 'en'): Promise<Response> {
         const res = await fetch(`https://imdb-api.com/${lang}/API/SearchMovie/${imdbApiKey}/${title}`);
         const data = await res.json()
-        return data.results as MovieListEntity[]
+        return data as Response
     };
 
-    static async getAllSeriesByTitle(title: string, lang = 'en'): Promise<MovieListEntity[]> {
+    static async getAllSeriesByTitle(title: string, lang = 'en'): Promise<Response> {
         const res = await fetch(`https://imdb-api.com/${lang}/API/SearchSeries/${imdbApiKey}/${title}`);
         const data = await res.json();
-        return data.results as MovieListEntity[];
+        return data as Response
     };
 
     static async getComingSoonMovies(lang = 'en'): Promise<NowInCinemasMovieEntity[]> {
@@ -70,12 +75,12 @@ export class MovieFinder {
     }
 
 
-    static async findActorByName(name: string, lang = 'en'): Promise<any[]> {
-        const res = await fetch(`https://imdb-api.com/en/API/SearchName/${imdbApiKey}/${name}`);
+    static async findActorByName(name: string, lang = 'en'): Promise<Response> {
+        const res = await fetch(`https://imdb-api.com/en/API/SearchName/${imdbApiKey}/${name}`)
         const data = await res.json();
 
 
-        return data.results
+        return data as Response
     }
 
     static async findActorById(id: string, lang = 'en'): Promise<any[]> {

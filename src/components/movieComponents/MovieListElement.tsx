@@ -5,7 +5,6 @@ import '../css/MovieListElement.css'
 import {Link, Navigate} from "react-router-dom";
 import {FavouriteIcon} from "../FavouriteIcon";
 import {UserDataContext} from "../../contexts/UserDataContext";
-import {MovieFinder} from "../../repository/MovieFinder";
 import{FavouriteMoviesList} from 'types'
 
 interface Props extends MovieListEntity {
@@ -22,7 +21,7 @@ const list = favList?.map(e=>e.movie_id)
 
     return (
         <li className={'element'}  id={id}>
-            <FavouriteIcon  switchedOn={list?list.includes(id):false}  id={id} user={obj.name} type={'movie'} title={title}/>
+            <FavouriteIcon  switchedOn={list?list.includes(id):false}  id={id} user={obj.name} type={'movie'} image={image} title={title}/>
         <h3>Tytuł : <span>{title}</span></h3>
 
         <p>Krótki opis : <span>{description}</span></p>

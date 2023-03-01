@@ -9,6 +9,7 @@ interface Props {
     type: string,
     title: string,
     switchedOn: boolean,
+    image: string
 }
 
 
@@ -22,25 +23,45 @@ export const FavouriteIcon = (props: Props) => {
 
     const handleIconClick = async () => {
 
-
         if (!switchOn) {
             setSwitch(true)
-            setUserData((prev: any) => ({
-                ...prev,
-                favMovies: [...prev.favMovies, {user: '', movie_id: props.id}]
-            }));
-            await MovieFinder.addToFavouriteList(props.id, props.user, props.type, props.title);
+            if (props.type === 'movie') {
+                setUserData((prev: any) => ({
+                    ...prev,
+                    favMovies: [...prev.favMovies, {
+                        user: '',
+                        movie_id: props.id,
+                        image: props.image,
+                        name: props.title,
+                    }]
+                }));
+            }
+            if (props.type === 'actor') {
+                setUserData((prev: any) => ({
+                    ...prev,
+                    favActors: [...prev.favActors,
+                        {
+                            user: '',
+                            actor_id: props.id,
+                            image: props.image,
+                            name:props.title,
 
-
+                        }]
+                }));
+            }
         }
+        await MovieFinder.addToFavouriteList(props.id, props.user, props.type, props.title, props.image);
+
         if (switchOn) {
-            setSwitch(false)
-            const newArr = obj.favMovies.filter(e => e.movie_id !== props.id)
-            setUserData((prev: any) => ({
-                ...prev,
-                favMovies: newArr,
-            }));
-             await MovieFinder.removeFromFavouriteList(props.id, props.user, props.type)
+
+                setSwitch(false)
+            if(props.type==='actor'){
+                const newArr = obj.favActors.filter(e => e.actor_id !== props.id)
+                setUserData((prev: any) => ({
+                    ...prev,
+                    favActors: newArr,
+                }))}
+                await MovieFinder.removeFromFavouriteList(props.id, props.user, props.type)
 
         }
 

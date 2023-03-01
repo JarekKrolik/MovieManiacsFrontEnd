@@ -2,7 +2,7 @@ import React, {createContext, ReactHTMLElement, useContext, useEffect, useState}
 import '../css/RegisterForm.css'
 import '../css/moviesList.css'
 import {MovieFinder} from "../../repository/MovieFinder";
-import {MovieListEntity, ActorsListEntity,FavouriteMoviesList} from 'types'
+import {MovieListEntity, ActorsListEntity, FavouriteMoviesList, Response,FavouriteActorsList} from 'types'
 import {Spinner} from "../Spinner";
 import {MovieListElement} from "../movieComponents/MovieListElement";
 import {ActorsListComponent} from "../movieComponents/ActorsListComponent";
@@ -11,17 +11,20 @@ import {UserDataContext} from "../../contexts/UserDataContext";
 interface Props {
     returnData: MovieListEntity[] | ActorsListEntity[] | undefined,
     type: string,
-    favList:FavouriteMoviesList[]|undefined
+    favList: FavouriteMoviesList[]| undefined,
+    favActorsList:FavouriteActorsList[]|undefined,
 }
 
 export const SearchComponent = (props: Props) => {
-    const{obj}=useContext(UserDataContext)
+    const {obj} = useContext(UserDataContext)
     const [searchText, setSearchText] = useState('');
     const [foundData, setFoundData] = useState<MovieListEntity[] | ActorsListEntity[]>();
     const [showList, setShowList] = useState(false);
     const [select, setSelect] = useState<string>();
+
     const [errors, setErrors] = useState({
         notFound: false,
+        errorMessage: '',
     })
 
 
@@ -68,40 +71,67 @@ export const SearchComponent = (props: Props) => {
             setShowList(true)
 
             if (select === 'movie') {
-                const result = await MovieFinder.getAllByTitle(searchText, 'pl') as MovieListEntity[];
-                const finalData = result.filter(el => el.resultType === 'Movie');
-                if (finalData.length === 0) {
+                const result = await MovieFinder.getAllByTitle(searchText, 'pl') as unknown as Response;
+                if (result.errorMessage) {
                     setErrors(prev => ({
                         ...prev,
                         notFound: true,
+                        errorMessage: result.errorMessage,
                     }))
                 }
+
+
+                const finalData = result.results.filter(el => el.resultType === 'Movie') as MovieListEntity[]
                 setFoundData(finalData);
 
             }
-            ;
+
             if (select === 'series') {
-                const result = await MovieFinder.getAllSeriesByTitle(searchText, 'pl') as MovieListEntity[];
-                const finalData = result.filter(el => el.resultType === 'Series');
+                const result = await MovieFinder.getAllSeriesByTitle(searchText, 'pl') as unknown as Response;
+                if (result.errorMessage) {
+                    setErrors(prev => ({
+                        ...prev,
+                        notFound: true,
+                        errorMessage: result.errorMessage,
+                    }))
+                }
+                const finalData = result.results.filter(el => el.resultType === 'Series');
                 if (finalData.length === 0) {
                     setErrors(prev => ({
                         ...prev,
                         notFound: true,
                     }))
                 }
+                setErrors(prev => ({
+                    ...prev,
+                    notFound: false,
+                }))
                 setFoundData(finalData)
             }
 
 
             if (select === 'actor') {
-                const result = await MovieFinder.findActorByName(searchText, 'pl') as ActorsListEntity[];
-                const finalData = result.filter(el => el.resultType === 'Name');
+                const result = await MovieFinder.findActorByName(searchText, 'pl') as Response;
+                if (result.errorMessage) {
+                    setErrors(prev => ({
+                        ...prev,
+                        notFound: true,
+                        errorMessage: result.errorMessage,
+                    }))
+                }
+
+                const finalData = result.results.filter(el => el.resultType === 'Name') as ActorsListEntity[]
                 if (finalData.length === 0) {
                     setErrors(prev => ({
                         ...prev,
                         notFound: true,
                     }))
                 }
+
+                setErrors(prev => ({
+                    ...prev,
+                    notFound: false,
+                }))
                 setFoundData(finalData)
             }
 
@@ -126,20 +156,21 @@ export const SearchComponent = (props: Props) => {
                 </form>
                 {searchText ? <p className="result">wyszukiwana fraza: <span>{searchText}</span></p> : null}
                 {foundData?.length ?
-                    <p className="result">znaleziono <span>{foundData.length}</span> pasujących elementów</p> : null}
+                    <p className="result">znaleziono <span>{foundData.length}</span> pasujących wyników</p> : null}
             </div>
             <ul className={'moviesList'}>
-                {errors.notFound ? <p>Nie znaleziono...</p> : null}
+                {errors.notFound ? <p>{errors.errorMessage}</p> : null}
                 {(select === 'actor' && showList) ? (!foundData) ?
                         <Spinner returnRoute={'/delay'}/> : foundData.map(el => (
                             <ActorsListComponent listOfData={foundData} key={el.id} title={el.title}
                                                  resultType={el.resultType} image={el.image} id={el.id}
-                                                 description={el.description}/>
+                                                 description={el.description} errorMessage={""}  favList={obj.favActors}/>
                         ))
                     : showList ? <ul className={'moviesList'}>
                         {!foundData ? <Spinner returnRoute={'/delay'}/> : foundData.map(el => (
-                            <MovieListElement  listOfData={foundData} key={el.id} id={el.id} description={el.description}
-                                              image={el.image} title={el.title} resultType={el.resultType} favList={obj.favMovies}/>
+                            <MovieListElement listOfData={foundData} key={el.id} id={el.id} description={el.description}
+                                              image={el.image} title={el.title} resultType={el.resultType}
+                                              favList={obj.favMovies} errorMessage={""}/>
                         ))}
                     </ul> : null}</ul>
 

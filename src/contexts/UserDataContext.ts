@@ -11,11 +11,16 @@ export const UserDataContext = createContext({
         favMovies: [{
             movie_id:'',
             user:'',
+            name:'',
+            image:'',
         }],
-        favActors:[{
+        favActors: [{
             actor_id:'',
             user:'',
-        }]
+            name:'',
+            image:'',
+        }],
+
     },
     setUserData: (obj: any) => {
     }
