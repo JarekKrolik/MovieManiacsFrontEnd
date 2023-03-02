@@ -110,6 +110,23 @@
     text-align: center;
 }
 
+.youtubeContainer{
+    width: 98%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 0 0  15px cornflowerblue;
+    overflow: hidden;
+
+}
+
+.youtubeContainer iframe{
+    width: 100%;
+    height: 40vh;
+
+}
+
 .frameContainer {
     /*padding-bottom:56.25%;*/
     /*padding-bottom: 100%;*/
@@ -240,6 +257,16 @@ form.register.actor label{
 }
 
 @media (min-width: 914px) {
+
+    .youtubeContainer{
+        width: 70%;
+    }
+
+    .youtubeContainer iframe{
+        width: 100%;
+        height: 70vh;
+
+    }
 
     .basicInfo h2 {
         font-size: 3.2rem;

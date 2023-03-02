@@ -1,5 +1,5 @@
 import {imdbApiKey} from "../config/apiKeyConfig";
-import {ActorsListEntity, MovieListEntity, NowInCinemasMovieEntity, Response, SingleMovieSpecific} from 'types'
+import {ActorsListEntity, MovieListEntity, NowInCinemasMovieEntity, Response, SingleMovieSpecific,YoutubeTrailer} from 'types'
 import {apiUrl} from "../config/api";
 
 export class MovieFinder {
@@ -72,6 +72,12 @@ export class MovieFinder {
         const res = await fetch(`https://imdb-api.com/${lang}/API/Title/${imdbApiKey}/${id}/FullActor, FullCast, Posters, Images, Trailer, Ratings, Wikipedia`);
         const data = await res.json()
         return data as SingleMovieSpecific;
+    }
+    static async getYouTubeTrailer(id:string):Promise<YoutubeTrailer>{
+        const res = await  fetch(`https://imdb-api.com/en/API/YouTubeTrailer/${imdbApiKey}/${id}`);
+        const data = res.json()
+        return data as unknown as YoutubeTrailer
+
     }
 
 

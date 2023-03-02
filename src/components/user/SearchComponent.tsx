@@ -2,7 +2,7 @@ import React, {createContext, ReactHTMLElement, useContext, useEffect, useState}
 import '../css/RegisterForm.css'
 import '../css/moviesList.css'
 import {MovieFinder} from "../../repository/MovieFinder";
-import {MovieListEntity, ActorsListEntity, FavouriteMoviesList, Response,FavouriteActorsList} from 'types'
+import {MovieListEntity, ActorsListEntity, FavouriteMoviesList, Response, FavouriteActorsList} from 'types'
 import {Spinner} from "../Spinner";
 import {MovieListElement} from "../movieComponents/MovieListElement";
 import {ActorsListComponent} from "../movieComponents/ActorsListComponent";
@@ -11,8 +11,8 @@ import {UserDataContext} from "../../contexts/UserDataContext";
 interface Props {
     returnData: MovieListEntity[] | ActorsListEntity[] | undefined,
     type: string,
-    favList: FavouriteMoviesList[]| undefined,
-    favActorsList:FavouriteActorsList[]|undefined,
+    favList: FavouriteMoviesList[] | undefined,
+    favActorsList: FavouriteActorsList[] | undefined,
 }
 
 export const SearchComponent = (props: Props) => {
@@ -146,12 +146,11 @@ export const SearchComponent = (props: Props) => {
                     <label>wyszukaj :
                         <input required value={searchText} onChange={handleInput} type="text"/>
                     </label>
-                    <select defaultValue={props.type} onChange={handleSelect} name="option">
-                        <option value="movie">film</option>
-                        <option value="series">serial</option>
-                        <option value="actor">aktorka/aktor</option>
-
-                    </select>
+                        <select defaultValue={props.type} onChange={handleSelect} name="option">
+                            <option value="movie">film</option>
+                            <option value="series">serial</option>
+                            <option value="actor">aktorka/aktor</option>
+                        </select>
                     <button type={'submit'}>szukaj...</button>
                 </form>
                 {searchText ? <p className="result">wyszukiwana fraza: <span>{searchText}</span></p> : null}
@@ -164,7 +163,7 @@ export const SearchComponent = (props: Props) => {
                         <Spinner returnRoute={'/delay'}/> : foundData.map(el => (
                             <ActorsListComponent listOfData={foundData} key={el.id} title={el.title}
                                                  resultType={el.resultType} image={el.image} id={el.id}
-                                                 description={el.description} errorMessage={""}  favList={obj.favActors}/>
+                                                 description={el.description} errorMessage={""} favList={obj.favActors}/>
                         ))
                     : showList ? <ul className={'moviesList'}>
                         {!foundData ? <Spinner returnRoute={'/delay'}/> : foundData.map(el => (

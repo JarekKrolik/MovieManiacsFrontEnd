@@ -1,42 +1,47 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Link, Navigate, useLocation} from "react-router-dom";
 import {MovieFinder} from "../../repository/MovieFinder";
-import {SingleMovieSpecific} from 'types'
+import {SingleMovieSpecific, YoutubeTrailer} from 'types'
 import {Spinner} from "../Spinner";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import {Carousel} from 'react-responsive-carousel';
 import '../css/AllDataComponent.css'
 import {PreviousPage} from "../PreviousPage";
-import {FavouriteIcon} from "../FavouriteIcon";
 import {UserDataContext} from "../../contexts/UserDataContext";
+import {BasicMovieInfo} from "./BasicMovieInfo";
 
 
 export const AllDataComponent = () => {
 
 
     const location = useLocation();
-    const{obj}=useContext(UserDataContext)
+    const {obj} = useContext(UserDataContext)
     const {id, listOfData, type} = location.state;
     const [badRequestRedirect, setBadRequestRedirect] = useState(false)
     const [switches, setSwitches] = useState({
         fullCast: false,
         trailer: false,
         photos: false,
-        posters:false,
+        posters: false,
     });
     const [foundData, setFoundData] = useState<SingleMovieSpecific>()
-    const favActors = obj.favMovies.map(e=>e.movie_id)
+    const [youTubeTrailer, setYouTubeTrailer] = useState<YoutubeTrailer>()
+
 
     useEffect(() => {
 
 
         (async () => {
-            const res = await MovieFinder.getOneMovieById(id) as SingleMovieSpecific
+            const res = await MovieFinder.getOneMovieById(id) as SingleMovieSpecific;
+            const youTubeTrailerRes = await MovieFinder.getYouTubeTrailer(id) as YoutubeTrailer;
             if (res.errorMessage.includes('Invalid')) {
                 setBadRequestRedirect(true)
             }
-console.log(res)
-            setFoundData(res);
+            if (youTubeTrailerRes.videoUrl) {
+                setYouTubeTrailer(youTubeTrailerRes)
+            }
+            console.log(res, youTubeTrailerRes)
+            setFoundData(res)
         })()
 
 
@@ -45,51 +50,11 @@ console.log(res)
 
     return (
         <>
-
+            <BasicMovieInfo foundData={foundData}  />
             <div className="allDataElementBox">
                 {badRequestRedirect ? <Navigate to={'/allDataActor'} state={{id, listOfData}}/> : null}
                 {!foundData ? <Spinner returnRoute={'/userMain'}/> : (
                     <>
-                        <div className={'basicInfo'} style={{
-                            backgroundImage: `url(${foundData.image})`
-                        }}>
-                            <div className="shade"></div>
-                            {foundData.fullTitle ? <h2>Tytuł : <span>{foundData.fullTitle}</span></h2> :
-                                <h2>Brak danych w bazie IMDb...</h2>}
-                            {foundData.year ? <h3>Rok : <span>{foundData.year}</span></h3> : null}
-                            {foundData.genres ? <h3>Gatunek : <span>{foundData.genres}</span></h3> : null}
-                            {foundData.contentRating ? <h3>Rating : <span>{foundData.contentRating}</span></h3> : null}
-                            {foundData.companies ?
-                                <h3>Produkcja : <span>{foundData.companies}</span> - <span>{foundData.countries}</span>
-                                </h3> : null}
-                            {foundData.releaseDate ?
-                                <h3>Data premiery : <span>{foundData.releaseDate}</span></h3> : null}
-                            {foundData.writers ? <h3>Scenariusz : <span>{foundData.writers}</span></h3> : null}
-                            {foundData.directors ? <h3>Reżyseria : <span>{foundData.directors}</span></h3> : null}
-                            {foundData.awards ? <h3>Nagrody i nominacje : <span>{foundData.awards}</span></h3> : null}
-                            {foundData.stars ? <h3>Występują : <span>{foundData.stars}</span></h3> : null}
-                            {foundData.runtimeStr ? <h3>Czas trwania : <span>{foundData.runtimeStr}</span></h3> : null}
-                            {foundData.stars ? <h3>Występują : <span>{foundData.stars}</span></h3> : null}
-                            {foundData.boxOffice ? <div> {foundData.boxOffice.budget ?
-                                <h3>Budżet : <span>{foundData.boxOffice.budget}</span></h3> : null}
-                                {foundData.boxOffice.cumulativeWorldwideGross ?
-                                    <h3>Zarobił : <span>{foundData.boxOffice.cumulativeWorldwideGross}</span>
-                                    </h3> : null}</div> : null}
-
-                            {foundData.plot ? <h3>Fabuła : <span>{foundData.plot}</span></h3> : null}
-                            {foundData.ratings ? <h3>Oceny:
-                                <div>{foundData.ratings.imDb ? <h3>ImDb:{foundData.ratings.imDb}</h3> : null}
-                                    {foundData.ratings.filmAffinity ?
-                                        <h3>filmAffinity:{foundData.ratings.filmAffinity}</h3> : null}
-                                    {foundData.ratings.metacritic ?
-                                        <h3>Metacritic:{foundData.ratings.metacritic}</h3> : null}
-                                    {foundData.ratings.rottenTomatoes ?
-                                        <h3>rottenTomatoes:{foundData.ratings.rottenTomatoes}</h3> : null}
-                                    {foundData.ratings.theMovieDb ?
-                                        <h3>theMovieDb:{foundData.ratings.theMovieDb}</h3> : null}</div>
-                            </h3> : null}
-
-                        </div>
                         <button name={'trailer'} className={'goBack'} onClick={() => {
                             setSwitches(prev => ({
                                 ...prev,
@@ -97,18 +62,22 @@ console.log(res)
                             }))
                         }}
                         >{switches.trailer ? 'ukryj trailer' : 'pokaż trailer'}</button>
-                        {switches.trailer ? (foundData.trailer ? (foundData.trailer.linkEmbed ?
-                            <div className="frameContainer">
+                        {switches.trailer ? (
+                            youTubeTrailer ? <div className={'youtubeContainer'}>
+                                <iframe src={`https://www.youtube.com/embed/${youTubeTrailer.videoId}`}
+                                        title="YouTube video player" frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowFullScreen></iframe>
+                            </div> : foundData.trailer ? (foundData.trailer.linkEmbed ?
+                                <div className="frameContainer">
+                                    <object
+                                        type="video/mp4"
+                                        data={foundData.trailer.linkEmbed}
+                                        width="100%"
+                                        height="100%"></object>
 
-                                <object
-                                    type="video/mp4"
-                                    data={foundData.trailer.linkEmbed}
-
-
-                                    width="100%"
-                                    height="100%"></object>
-
-                            </div> : <p>Brak trailera w bazie IMDb</p>) : <p>Brak trailera w bazie IMDb</p>) : null}
+                                </div> : <p>Brak trailera w bazie IMDb</p>) : <p>Brak trailera w bazie IMDb</p>
+                        ) : null}
                         <button className={'goBack'} onClick={() => {
                             setSwitches(prev => ({
                                 ...prev,
@@ -133,30 +102,32 @@ console.log(res)
                                 posters: !prev.posters,
                             }))
                         }}>{switches.posters ? 'ukryj postery' : 'pokaż postery'}</button>
-                        {switches.posters ? (foundData.posters ?<>
+                        {switches.posters ? (foundData.posters ? <>
                             <h2 className={'poster'}>Przednie postery:</h2>
-                            <Carousel showArrows={true} emulateTouch={true} useKeyboardArrows={true}
-                                      dynamicHeight={true} infiniteLoop={true} className={'main-slide'}>
-                                {foundData.posters.posters.map(e => {
-                                    return (
-                                        <div key={e.id}>
-                                            <img loading={'lazy'} src={e.link}/>
-                                        </div>
-                                    )
-                                })}
-                            </Carousel>
+                            {foundData.posters.posters.length !== 0 ?
+                                <Carousel showArrows={true} emulateTouch={true} useKeyboardArrows={true}
+                                          dynamicHeight={true} infiniteLoop={true} className={'main-slide'}>
+                                    {foundData.posters.posters.map(e => {
+                                        return (
+                                            <div key={e.id}>
+                                                <img loading={'lazy'} src={e.link}/>
+                                            </div>
+                                        )
+                                    })}
+                                </Carousel> : <p>Brak w bazie IMDb</p>}
                             <h2 className={'poster'}>okładki:</h2>
-                            <Carousel showArrows={true} emulateTouch={true} useKeyboardArrows={true}
-                                      dynamicHeight={true} infiniteLoop={true} className={'main-slide'}>
-                                {foundData.posters.backdrops.map(e => {
-                                    return (
-                                        <div key={e.id}>
-                                            <img loading={'lazy'} src={e.link}/>
-                                        </div>
-                                    )
-                                })}
-                            </Carousel>
-                        </>: <p>brak zdjęć w bazie IMDb</p>) : null}
+                            {foundData.posters.backdrops.length !== 0 ?
+                                <Carousel showArrows={true} emulateTouch={true} useKeyboardArrows={true}
+                                          dynamicHeight={true} infiniteLoop={true} className={'main-slide'}>
+                                    {foundData.posters.backdrops.map(e => {
+                                        return (
+                                            <div key={e.id}>
+                                                <img loading={'lazy'} src={e.link}/>
+                                            </div>
+                                        )
+                                    })}
+                                </Carousel> : <p>Brak w bazie IMDb</p>}
+                        </> : <p>brak zdjęć w bazie IMDb</p>) : null}
                         <button className={'goBack'} onClick={() => {
                             setSwitches((prev) => ({
                                 ...prev,
