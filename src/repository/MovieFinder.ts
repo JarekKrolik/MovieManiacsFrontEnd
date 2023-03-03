@@ -75,8 +75,8 @@ export class MovieFinder {
     }
     static async getYouTubeTrailer(id:string):Promise<YoutubeTrailer>{
         const res = await  fetch(`https://imdb-api.com/en/API/YouTubeTrailer/${imdbApiKey}/${id}`);
-        const data = res.json()
-        return data as unknown as YoutubeTrailer
+        const data = await res.json()
+        return data as YoutubeTrailer;
 
     }
 

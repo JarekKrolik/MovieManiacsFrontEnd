@@ -3,10 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     width: 98%;
-    /*border-radius: 25px;*/
-    /*box-shadow:0 0 15px cornflowerblue;*/
     color: cornflowerblue;
 
 }
@@ -20,6 +17,7 @@
     padding: 2em;
     border-radius: 25px;
     box-shadow: 0 0 15px cornflowerblue;
+    background-attachment: fixed;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -210,7 +208,7 @@ h2.poster {
 }
 
 .goBack.actor {
-    font-size: 2.2rem;
+    font-size: 1.6rem;
     width: 60%;
     margin: 0.5em auto;
 }
@@ -250,7 +248,13 @@ h2.poster {
 .roles {
     padding: 2em;
     border-bottom: 1px solid cornflowerblue;
+
 }
+.roles h3{
+    font-size: 1.7rem;
+}
+
+
 
 form.register.actor label {
     margin: 0.6em auto;
@@ -265,6 +269,7 @@ text.actor.similars {
 
 .similars.picture.actor {
     font-size: 2.3rem;
+
 
 }
 
@@ -284,22 +289,32 @@ text.actor.similars {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: stretch;
-        align-items:stretch;
+        align-items: stretch;
         list-style: none;
         font-size: 1.5rem;
     }
 
     text.actor.similars {
+        width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-start;
     }
 
+    .seeMore{
+       width: auto;
+
+    }
+
     .similars.picture.actor li {
         width: 33.3%;
-        border: 1px solid cornflowerblue;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
 
+        border-bottom: none;
     }
 
     .youtubeContainer {
@@ -334,26 +349,29 @@ text.actor.similars {
     .basicInfo.actor {
         display: flex;
         flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
     }
 
 
     .picture.actor {
         width: 45%;
+        flex-grow: 0;
 
     }
 
     .text.actor {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         justify-content: flex-end;
         flex-grow: 1;
-        width: 45%;
+
     }
 
     .goBack.actor {
 
-        width: 95%;
+        width: 60%;
         font-size: 1.6rem;
 
     }
@@ -363,6 +381,18 @@ text.actor.similars {
 
 
 @media (min-width: 1024px) {
+
+    .roles {
+        padding: 2em;
+        border-bottom: 1px solid cornflowerblue;
+
+    }
+    .roles h3{
+        font-size: 2.2rem;
+        text-align: center;
+    }
+
+
     .main-slide {
         width: 70%;
     }
@@ -370,5 +400,17 @@ text.actor.similars {
     .frameContainer {
         width: 70%;
     }
+    .basicInfo.actor {
+
+        flex-wrap: nowrap;
+    }
+    .goBack.actor {
+
+        width: 30%;
+        font-size: 2.2rem;
+
+    }
+
+
 
 }

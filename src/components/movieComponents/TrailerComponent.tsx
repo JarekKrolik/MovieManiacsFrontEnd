@@ -2,7 +2,7 @@ import React from "react";
 import {YoutubeTrailer,SingleMovieSpecific} from 'types'
 
 interface Props {
-    youTubeTrailer:YoutubeTrailer|undefined,
+    youTubeTrailer:YoutubeTrailer,
     foundData:SingleMovieSpecific,
 }
 
@@ -14,13 +14,14 @@ export const TrailerComponent = (props:Props)=>{
 
     return(
 
-        youTubeTrailer ? <div className={'youtubeContainer'}>
+        youTubeTrailer.videoUrl ? <div className={'youtubeContainer'}>
             <iframe src={`https://www.youtube.com/embed/${youTubeTrailer.videoId}`}
                     title="YouTube video player" frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen></iframe>
         </div> : foundData.trailer ? (foundData.trailer.linkEmbed ?
             <div className="frameContainer">
+
                 <object
                     type="video/mp4"
                     data={foundData.trailer.linkEmbed}

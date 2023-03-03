@@ -13,6 +13,7 @@ import {TrailerComponent} from "./TrailerComponent";
 import {ImagesComponent} from "./ImagesComponent";
 import {FullCastComponent} from "./FullCastComponent";
 import {SimilarsComponent} from "./SimilarsComponent";
+import {WikiDataComponent} from "./WikiDataComponent";
 
 
 export const AllDataComponent = () => {
@@ -27,7 +28,8 @@ export const AllDataComponent = () => {
         trailer: false,
         photos: false,
         posters: false,
-        similars:false,
+        similars: false,
+        wiki:false,
     });
     const [foundData, setFoundData] = useState<SingleMovieSpecific>()
     const [youTubeTrailer, setYouTubeTrailer] = useState<YoutubeTrailer>()
@@ -42,25 +44,38 @@ export const AllDataComponent = () => {
             if (res.errorMessage.includes('Invalid')) {
                 setBadRequestRedirect(true)
             }
-            if (youTubeTrailerRes.videoUrl) {
-                setYouTubeTrailer(youTubeTrailerRes)
+
+            if(youTubeTrailerRes.errorMessage){
+                setYouTubeTrailer(undefined)
             }
-            console.log(res, youTubeTrailerRes)
+            setYouTubeTrailer(youTubeTrailerRes)
             setFoundData(res)
+            console.log(res)
         })()
 
 
-    }, [])
+    }, [id])
 
 
     return (
         <>
-            <BasicMovieInfo foundData={foundData}  />
+            <BasicMovieInfo foundData={foundData}/>
             <div className="allDataElementBox">
                 {badRequestRedirect ? <Navigate to={'/allDataActor'} state={{id, listOfData}}/> : null}
                 {!foundData ? <Spinner returnRoute={'/userMain'}/> : (
                     <>
-                        {switches.trailer ? <TrailerComponent foundData={foundData} youTubeTrailer={youTubeTrailer}/> : null}
+                        {switches.wiki ?
+                            foundData.wikipedia?<WikiDataComponent offButtonHandle={setSwitches} foundData={foundData}/>:null : null}
+                        <button name={'wiki'} className={'goBack'} onClick={() => {
+                            setSwitches(prev => ({
+                                ...prev,
+                                wiki: !prev.wiki
+                            }))
+                        }}
+                        >{switches.wiki ? 'ukryj wikipedia' : 'pokaż wikipedia'}</button>
+
+                        {switches.trailer ?
+                            youTubeTrailer?<TrailerComponent foundData={foundData} youTubeTrailer={youTubeTrailer}/>:null : null}
                         <button name={'trailer'} className={'goBack'} onClick={() => {
                             setSwitches(prev => ({
                                 ...prev,
@@ -68,7 +83,7 @@ export const AllDataComponent = () => {
                             }))
                         }}
                         >{switches.trailer ? 'ukryj trailer' : 'pokaż trailer'}</button>
-                        {switches.photos ? (foundData.images ?<ImagesComponent posters={false} foundData={foundData}/>
+                        {switches.photos ? (foundData.images ? <ImagesComponent posters={false} foundData={foundData}/>
                             : <p>brak zdjęć w bazie IMDb</p>) : null}
                         <button className={'goBack'} onClick={() => {
                             setSwitches(prev => ({
@@ -90,15 +105,15 @@ export const AllDataComponent = () => {
                                 ...prev,
                                 fullCast: !prev.fullCast,
                             }))
-                        }}>{switches.fullCast?'ukryj obsadę':'pełna obsada'}
+                        }}>{switches.fullCast ? 'ukryj obsadę' : 'pełna obsada'}
                         </button>
-                        {switches.similars ? <SimilarsComponent foundData={foundData}/>: null}
+                        {switches.similars ? <SimilarsComponent listOfData={listOfData} foundData={foundData}/> : null}
                         <button className={'goBack'} onClick={() => {
                             setSwitches((prev) => ({
                                 ...prev,
                                 similars: !prev.similars,
                             }))
-                        }}>{switches.similars?'ukryj podobne':'podobne filmy'}
+                        }}>{switches.similars ? 'ukryj podobne' : 'podobne filmy'}
                         </button>
 
 

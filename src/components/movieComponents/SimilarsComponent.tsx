@@ -1,11 +1,13 @@
 import React from "react";
-import {SingleMovieSpecific}from 'types'
+import {SingleMovieSpecific,MovieListEntity}from 'types'
+import {Link} from "react-router-dom";
 
 interface Props {
     foundData:SingleMovieSpecific,
+    listOfData:MovieListEntity[]
 }
 export const SimilarsComponent = (props:Props)=>{
-const{foundData}=props
+const{foundData,listOfData}=props
 
 
     return (foundData.similars ?  <ul className={'similars picture actor'}>
@@ -19,6 +21,7 @@ const{foundData}=props
                 <div className="text actor similars">
                     {el.title ? <h2>{el.title}{}</h2> : null}
                     {el.imDbRating ? <h3>Ocena IMDb: <span>{el.imDbRating}</span></h3> : null}
+                    <Link  to={'/allData'} state={{id:el.id,listOfData:listOfData,type:'movie'}} className={'seeMore'}>zobacz więcej</Link>
                 </div>
             </li>)
         })}
