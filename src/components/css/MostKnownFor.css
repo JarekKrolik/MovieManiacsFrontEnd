@@ -1,0 +1,27 @@
+.starredIn.most-known-for ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+
+.starredIn.most-known-for .element {
+    width: auto;
+}
+
+
+@media (min-width: 914px) {
+    .starredIn.most-known-for ul {
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+
+    }
+
+    .starredIn.most-known-for .element {
+        width: 28%;
+    }
+
+}

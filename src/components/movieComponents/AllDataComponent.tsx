@@ -20,7 +20,6 @@ export const AllDataComponent = () => {
 
 
     const location = useLocation();
-    const {obj} = useContext(UserDataContext)
     const {id, listOfData, type} = location.state;
     const [badRequestRedirect, setBadRequestRedirect] = useState(false)
     const [switches, setSwitches] = useState({
@@ -82,7 +81,7 @@ export const AllDataComponent = () => {
                                 trailer: !prev.trailer
                             }))
                         }}
-                        >{switches.trailer ? 'ukryj trailer' : 'pokaż trailer'}</button>
+                        >{switches.trailer ? 'ukryj trailery' : 'pokaż trailery'}</button>
                         {switches.photos ? (foundData.images ? <ImagesComponent posters={false} foundData={foundData}/>
                             : <p>brak zdjęć w bazie IMDb</p>) : null}
                         <button className={'goBack'} onClick={() => {

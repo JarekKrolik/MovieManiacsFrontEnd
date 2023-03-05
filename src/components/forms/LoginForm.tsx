@@ -1,9 +1,7 @@
 import React, {useContext, useState} from "react";
 import {apiUrl} from "../../config/api";
-import {UserEntity} from 'types'
 import {Navigate} from "react-router-dom";
 import {GoBackBtn} from "../GoBackBtn";
-import {Spinner} from "../Spinner";
 import {Header} from "../Header";
 import {UserDataContext} from "../../contexts/UserDataContext";
 
@@ -13,7 +11,7 @@ interface Props {
 }
 
 export const LoginForm=(props:Props)=>{
-    const{obj,setUserData}=useContext(UserDataContext)
+    const{setUserData}=useContext(UserDataContext)
 
 
     const [loginData,setLoginData]=useState({
@@ -27,10 +25,10 @@ export const LoginForm=(props:Props)=>{
     })
     const handleVerificationCode =async (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
-        setLoginData(prev=>({
-            ...prev,
-            spinnerOn: true,
-        }))
+        // setLoginData(prev=>({
+        //     ...prev,
+        //     // spinnerOn: true,
+        // }))
         const res= await fetch(`${apiUrl}/verify/${loginData.userName}`,{
             method:"POST",
             headers: {
@@ -47,7 +45,7 @@ export const LoginForm=(props:Props)=>{
                 ...prev,
                 errorMessage: 'kod weryfikacyjny prawidłowy',
                 notVerified: false,
-                spinnerOn: false,
+
 
             }))
 
@@ -81,10 +79,6 @@ export const LoginForm=(props:Props)=>{
     const handleForm =  (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
 
-        setLoginData(prev=>({
-            ...prev,
-            spinnerOn: true,
-        }));
 
         (async ()=>{
             const res =  await fetch(`${apiUrl}/user/${loginData.userName}`,{
@@ -134,7 +128,6 @@ export const LoginForm=(props:Props)=>{
                     errorMessage: '',
                     notVerified: false,
                     loggedIn: true,
-                    spinnerOn: false,
                 }))
             }
 
@@ -144,7 +137,6 @@ export const LoginForm=(props:Props)=>{
     return(<>
             <Header/>
         <div className="formContainer">
-            {loginData.spinnerOn?<Spinner returnRoute={'/'}/>:null}
             <form onSubmit={handleForm} className='register loginForm'>
                 <label className={'loginLabels'}>
                     nazwa użytkownika <input onChange={handleInputData} name={'userName'} value={loginData.userName} required type="text"/>

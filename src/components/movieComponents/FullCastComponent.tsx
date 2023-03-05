@@ -21,7 +21,7 @@ export const FullCastComponent = (props:Props)=>{
                 <div className="text actor">
                     {el.name ? <h2>{el.name}</h2> : null}
                     {el.asCharacter ? <h3>Jako: <span>{el.asCharacter}</span></h3> : null}
-                    <Link className={'goBack actor'} state={{id: el.id, listOfData: listOfData}}
+                    <Link className={'goBack actor movie'} state={{id: el.id, listOfData: listOfData}}
                           to={'/allDataActor'}>zobacz więcej</Link>
                 </div>
             </li>)

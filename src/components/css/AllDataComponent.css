@@ -372,10 +372,13 @@ text.actor.similars {
     .goBack.actor {
 
         width: 60%;
-        font-size: 1.6rem;
+        padding: 0.7em;
+        font-size: 2.2rem;
 
     }
-
+.goBack.actor.movie{
+    width: auto;
+}
 
 }
 
@@ -404,13 +407,21 @@ text.actor.similars {
 
         flex-wrap: nowrap;
     }
+
+    .goBack.actor.movie{
+        width: auto;
+    }
     .goBack.actor {
 
         width: 30%;
-        font-size: 2.2rem;
+        font-size: 1.8rem;
 
     }
-
+    .goBack.actor.roles {
+        width: 30%;
+        font-size: 2.2rem;
+        padding: 0.7em 0;
+    }
 
 
 }

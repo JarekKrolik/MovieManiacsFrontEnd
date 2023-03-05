@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import "./css/LoginComponent.css"
 import {Header} from "./Header";
 import {UserDataContext} from "../contexts/UserDataContext";
+import {GearSpinner} from "./GearSpinner";
 export const LoginComponent=()=>{
 const{obj,setUserData} = useContext(UserDataContext);
 

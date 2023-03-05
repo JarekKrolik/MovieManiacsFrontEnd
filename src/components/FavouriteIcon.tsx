@@ -24,7 +24,6 @@ export const FavouriteIcon = (props: Props) => {
     const handleIconClick = async () => {
 
         if (!switchOn) {
-            setSwitch(true)
             if (props.type === 'movie') {
                 setUserData((prev: any) => ({
                     ...prev,
@@ -44,24 +43,38 @@ export const FavouriteIcon = (props: Props) => {
                             user: '',
                             actor_id: props.id,
                             image: props.image,
-                            name:props.title,
+                            name: props.title,
 
                         }]
                 }));
             }
+            setSwitch(true)
+            try {
+                await MovieFinder.addToFavouriteList(props.id, props.user, props.type, props.title, props.image)
+
+            } catch (e) {console.log(e)
+                return
+            }
+
         }
-        await MovieFinder.addToFavouriteList(props.id, props.user, props.type, props.title, props.image);
 
         if (switchOn) {
 
-                setSwitch(false)
-            if(props.type==='actor'){
+
+            if (props.type === 'actor') {
                 const newArr = obj.favActors.filter(e => e.actor_id !== props.id)
                 setUserData((prev: any) => ({
                     ...prev,
                     favActors: newArr,
-                }))}
+                }))
+            }
+            setSwitch(false)
+            try {
                 await MovieFinder.removeFromFavouriteList(props.id, props.user, props.type)
+
+            } catch (e) {console.log(e)
+                return
+            }
 
         }
 
