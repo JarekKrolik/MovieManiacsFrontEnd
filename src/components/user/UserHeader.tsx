@@ -20,8 +20,8 @@ export const UserHeader = (props: Props) => {
                 <div className="buttons">
                     <div className="button">ulubione</div>
                     <div className="button">do obejrzenia</div>
-                    <div className="button">zapowiedzi</div>
-                    <div className="button">teraz w kinach</div>
+                    <Link className={'button'} to={'/comingSoon'}>wkrótce w kinach</Link>
+                    <Link className={'button'} to={'/nowInCinemas'}>teraz w kinach</Link>
                 </div>
                 <div className="links">
                     <Link to={'/userPanel'}>

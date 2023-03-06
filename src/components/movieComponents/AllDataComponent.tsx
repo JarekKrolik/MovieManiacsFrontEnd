@@ -14,6 +14,8 @@ import {ImagesComponent} from "./ImagesComponent";
 import {FullCastComponent} from "./FullCastComponent";
 import {SimilarsComponent} from "./SimilarsComponent";
 import {WikiDataComponent} from "./WikiDataComponent";
+import {GoUpArrow} from "../GoUpArrow";
+import {BackArrow} from "./BackArrow";
 
 
 export const AllDataComponent = () => {
@@ -118,6 +120,8 @@ export const AllDataComponent = () => {
 
                     </>)}
                 <PreviousPage/>
+                <GoUpArrow/>
+                <BackArrow/>
                 <Link className={'goBack'} to={'/userMain'} state={{returnData: listOfData, type}}>strona główna</Link>
             </div>
 

@@ -10,6 +10,8 @@ import {PreviousPage} from "../PreviousPage";
 import {BasicActorInfo} from "./BasicActorInfo";
 import {ActorStarredInComponent} from "./ActorStarredInComponent";
 import {MostKnownFor} from "./MostKnownFor";
+import {GoUpArrow} from "../GoUpArrow";
+import {BackArrow} from "./BackArrow";
 
 interface StarredIn {
     id: string,
@@ -90,7 +92,9 @@ export const AllDataComponentActor = () => {
                     {switches.mostKnownFor ? <MostKnownFor foundData={foundData} listOfData={listOfData}/> : null}
                 </>
             )}
-            <PreviousPage/>
+
+            <GoUpArrow/>
+            <BackArrow/>
             <Link to={'/userMain'} className={'goBack'} state={{
                 returnData: listOfData, type: 'actor'
             }}>strona główna</Link>

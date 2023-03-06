@@ -7,6 +7,9 @@ import {Spinner} from "../Spinner";
 import {MovieListElement} from "../movieComponents/MovieListElement";
 import {ActorsListComponent} from "../movieComponents/ActorsListComponent";
 import {UserDataContext} from "../../contexts/UserDataContext";
+import {MoviesListComponent} from "../movieComponents/MoviesListComponent";
+import {GoUpArrow} from "../GoUpArrow";
+import {BackArrow} from "../movieComponents/BackArrow";
 
 interface Props {
     returnData: MovieListEntity[] | ActorsListEntity[] | undefined,
@@ -141,7 +144,6 @@ export const SearchComponent = (props: Props) => {
     return (
         <>
             <div className="formContainer">
-
                 <form onSubmit={handleFind} className={'register'}>
                     <label>wyszukaj :
                         <input required value={searchText} onChange={handleInput} type="text"/>
@@ -165,13 +167,10 @@ export const SearchComponent = (props: Props) => {
                                                  resultType={el.resultType} image={el.image} id={el.id}
                                                  description={el.description} errorMessage={""} favList={obj.favActors}/>
                         ))
-                    : showList ? <ul className={'moviesList'}>
-                        {!foundData ? <Spinner returnRoute={'/delay'}/> : foundData.map(el => (
-                            <MovieListElement listOfData={foundData} key={el.id} id={el.id} description={el.description}
-                                              image={el.image} title={el.title} resultType={el.resultType}
-                                              favList={obj.favMovies} errorMessage={""}/>
-                        ))}
-                    </ul> : null}</ul>
+                    : showList ? <MoviesListComponent foundData={foundData}/> : null}
+            <GoUpArrow/>
+            </ul>
+
 
 
         </>

@@ -1,0 +1,18 @@
+.fav{
+    width: 98%;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    z-index: 3;
+    box-shadow: 0 0 15px cornflowerblue;
+    color: cornflowerblue;
+    margin: 1em auto;
+}
+
+.fav h2{
+    color: cornflowerblue;
+    font-size: 3rem;
+    text-align: center;
+    padding: 2em;
+    text-transform: uppercase;
+}

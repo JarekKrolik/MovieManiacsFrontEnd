@@ -9,6 +9,7 @@ import {getUser} from "../../utils/getUser";
 import {Navigate} from "react-router-dom";
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {MovieFinder} from "../../repository/MovieFinder";
+import {GoUpArrow} from "../GoUpArrow";
 
 export const UserMainPage = () => {
 

@@ -48,13 +48,14 @@ export const FavouriteIcon = (props: Props) => {
                         }]
                 }));
             }
-            setSwitch(true)
-            try {
-                await MovieFinder.addToFavouriteList(props.id, props.user, props.type, props.title, props.image)
 
-            } catch (e) {console.log(e)
-                return
-            }
+
+               const res = await MovieFinder.addToFavouriteList(props.id, props.user, props.type, props.title, props.image)
+            if(res.response==='ok'){
+                setSwitch(true)
+            }else{return}
+
+
 
         }
 
@@ -68,13 +69,14 @@ export const FavouriteIcon = (props: Props) => {
                     favActors: newArr,
                 }))
             }
-            setSwitch(false)
-            try {
-                await MovieFinder.removeFromFavouriteList(props.id, props.user, props.type)
 
-            } catch (e) {console.log(e)
-                return
-            }
+
+                const res = await MovieFinder.removeFromFavouriteList(props.id, props.user, props.type);
+                if(res.response==='ok'){
+                    setSwitch(false)
+                }else{return}
+
+
 
         }
 

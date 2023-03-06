@@ -12,6 +12,8 @@ import {UserPanel} from "./components/user/UserPanel";
 import {DataDelayComponent} from "./components/movieComponents/DataDelayComponent";
 import {AllDataComponent} from "./components/movieComponents/AllDataComponent";
 import {AllDataComponentActor} from "./components/movieComponents/AllDataComponentActor";
+import {NowInCinemasComponent} from "./components/movieComponents/NowInCinemasComponent";
+import {ComingSoonMovies} from "./components/movieComponents/ComingSoonMovies";
 
 
 
@@ -57,6 +59,8 @@ const[userData,setUserData]=useState(obj);
           <Route path={'/delay'} element={<DataDelayComponent/>}/>
           <Route path={'/allData'} element={<AllDataComponent/>}/>
           <Route path={'/allDataActor'} element={<AllDataComponentActor/>}/>
+          <Route path={'/nowInCinemas'} element={<NowInCinemasComponent/>}/>
+          <Route path={'/comingSoon'} element={<ComingSoonMovies/>}/>
           <Route path={'/*'} element={<LoginComponent/>}/>
       </Routes>
 </UserDataContext.Provider>
