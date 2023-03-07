@@ -59,8 +59,6 @@ const[userData,setUserData]=useState(obj);
           <Route path={'/delay'} element={<DataDelayComponent/>}/>
           <Route path={'/allData'} element={<AllDataComponent/>}/>
           <Route path={'/allDataActor'} element={<AllDataComponentActor/>}/>
-          <Route path={'/nowInCinemas'} element={<NowInCinemasComponent/>}/>
-          <Route path={'/comingSoon'} element={<ComingSoonMovies/>}/>
           <Route path={'/*'} element={<LoginComponent/>}/>
       </Routes>
 </UserDataContext.Provider>

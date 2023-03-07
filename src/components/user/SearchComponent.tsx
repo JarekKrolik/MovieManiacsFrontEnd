@@ -168,7 +168,7 @@ export const SearchComponent = (props: Props) => {
                                                  description={el.description} errorMessage={""} favList={obj.favActors}/>
                         ))
                     : showList ? <MoviesListComponent foundData={foundData}/> : null}
-            <GoUpArrow/>
+                {foundData?<GoUpArrow/>:null}
             </ul>
 
 

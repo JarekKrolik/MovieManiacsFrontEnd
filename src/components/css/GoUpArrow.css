@@ -22,8 +22,8 @@ border-radius: 50%;
 }
 
 .arrow.back{
-    transform: rotate(-90deg);
-    top: 4%;
+    transform: rotate(-90deg) translateX(-50%);
+    top: 50%;
     left: 4%;
     bottom:auto;
 }

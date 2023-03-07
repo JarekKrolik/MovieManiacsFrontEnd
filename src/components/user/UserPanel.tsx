@@ -63,7 +63,7 @@ const date =  new Date(obj.date)
                         <input onChange={handleRadioChange} value={'1'} name={'avatar'} type="radio"/>
                     </label>
                     <label className={'label'}>
-                        {<div className={'picture input'}><img src={require('../../assets/img/avatars/3.png')} alt=""/></div>}
+                        {<div className={'picture input'}><img src={require('../../assets/img/avatars/2.png')} alt=""/></div>}
                         <input onChange={handleRadioChange} value={'2'} name={'avatar'} type="radio"/>
                     </label>
 <button>wybierz swój avatar</button>

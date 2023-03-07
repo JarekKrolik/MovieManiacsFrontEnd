@@ -1,47 +1,47 @@
 import React, {useContext, useState} from "react";
 import {apiUrl} from "../../config/api";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import {GoBackBtn} from "../GoBackBtn";
 import {Header} from "../Header";
 import {UserDataContext} from "../../contexts/UserDataContext";
 
 interface Props {
-    password:string;
-    login:string;
+    password: string;
+    login: string;
 }
 
-export const LoginForm=(props:Props)=>{
-    const{setUserData}=useContext(UserDataContext)
-
-
-    const [loginData,setLoginData]=useState({
-        userName:props.login,
-        password:props.password,
-        verificationCode:0,
-        loggedIn:false,
-        errorMessage:'',
-        notVerified:false,
-        spinnerOn:false,
+export const LoginForm = (props: Props) => {
+    const {setUserData} = useContext(UserDataContext)
+    const navigate = useNavigate()
+    const [showPasswordReset, setShowPasswordReset] = useState(false)
+    const [reset, setReset] = useState({
+        email: '',
+        user: '',
     })
-    const handleVerificationCode =async (e: React.FormEvent<HTMLFormElement>)=>{
+    const [loginData, setLoginData] = useState({
+        userName: props.login,
+        password: props.password,
+        verificationCode: 0,
+        loggedIn: false,
+        errorMessage: '',
+        notVerified: false,
+        spinnerOn: false,
+    })
+    const handleVerificationCode = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // setLoginData(prev=>({
-        //     ...prev,
-        //     // spinnerOn: true,
-        // }))
-        const res= await fetch(`${apiUrl}/verify/${loginData.userName}`,{
-            method:"POST",
+        const res = await fetch(`${apiUrl}/verify/${loginData.userName}`, {
+            method: "POST",
             headers: {
                 'Content-Type': 'application/json'
 
             },
-            body:JSON.stringify({code:loginData.verificationCode})
+            body: JSON.stringify({code: loginData.verificationCode})
 
         });
         const data = await res.json();
-        if(data.verificationOk){
+        if (data.verificationOk) {
 
-            setLoginData(prev=>({
+            setLoginData(prev => ({
                 ...prev,
                 errorMessage: 'kod weryfikacyjny prawidłowy',
                 notVerified: false,
@@ -49,8 +49,8 @@ export const LoginForm=(props:Props)=>{
 
             }))
 
-            }else{
-            setLoginData(prev=>({
+        } else {
+            setLoginData(prev => ({
                 ...prev,
                 errorMessage: 'błędny kod weryfikacyjny !',
                 notVerified: true,
@@ -60,41 +60,51 @@ export const LoginForm=(props:Props)=>{
 
 
     }
-    const handleInputData = (e:React.ChangeEvent<HTMLInputElement>)=>{
-        setLoginData(prev=>({
+    const handleInputData = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLoginData(prev => ({
                 ...prev,
-        [e.target.name]:e.target.value,
+                [e.target.name]: e.target.value,
             }
 
         ))
     }
 
-    const handleErrorMessage = ()=>{
-        setLoginData(prev=>({
+    const handleErrorMessage = () => {
+        setLoginData(prev => ({
             ...prev,
             errorMessage: '',
         }))
     }
 
-    const handleForm =  (e: React.FormEvent<HTMLFormElement>)=>{
+    const handleResetPassword = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoginData(prev => ({
+            ...prev,
+            errorMessage: 'Na podany adres e-mail zostało wysłane tymczasowe hasło.'
+        }));
+
+
+    }
+
+    const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
 
-        (async ()=>{
-            const res =  await fetch(`${apiUrl}/user/${loginData.userName}`,{
-                method:"POST",
+        (async () => {
+            const res = await fetch(`${apiUrl}/user/${loginData.userName}`, {
+                method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
 
                 },
-                body:JSON.stringify({pass:loginData.password})
+                body: JSON.stringify({pass: loginData.password})
             })
 
             const data = await res.json()
 
 
-            if(!data){
-                setLoginData(prev=>({
+            if (!data) {
+                setLoginData(prev => ({
                     ...prev,
                     errorMessage: 'błędna nazwa użytkownika lub hasło',
                     notVerified: false,
@@ -102,8 +112,8 @@ export const LoginForm=(props:Props)=>{
                 return
             }
 
-            if(data.userNotVerified){
-                setLoginData(prev=>({
+            if (data.userNotVerified) {
+                setLoginData(prev => ({
                     ...prev,
                     errorMessage: 'konto użytkownika nie zweryfikowane',
                     notVerified: true,
@@ -111,19 +121,19 @@ export const LoginForm=(props:Props)=>{
 
             }
 
-            if(data.message){
-                setLoginData(prev=>({
+            if (data.message) {
+                setLoginData(prev => ({
                     ...prev,
                     errorMessage: data.message,
 
                 }))
             }
 
-            if(data.id){
+            if (data.id) {
                 setUserData({
-                    id:data.id,
+                    id: data.id,
                 })
-                setLoginData(prev=>({
+                setLoginData(prev => ({
                     ...prev,
                     errorMessage: '',
                     notVerified: false,
@@ -134,32 +144,54 @@ export const LoginForm=(props:Props)=>{
         })()
     }
 
-    return(<>
+    return (<>
             <Header/>
-        <div className="formContainer">
-            <form onSubmit={handleForm} className='register loginForm'>
-                <label className={'loginLabels'}>
-                    nazwa użytkownika <input onChange={handleInputData} name={'userName'} value={loginData.userName} required type="text"/>
-                </label>
-                <label className={'loginLabels'}>
-                   hasło <input onChange={handleInputData} required name={'password'} value={loginData.password} type="password"/>
-                </label>
+            <div className="formContainer">
+                {showPasswordReset ? <form className={'register loginForm'} onSubmit={handleResetPassword}>
+                    <h3 className={'loginForm'}>Odzyskiwanie hasła</h3>
+                    <label className={'loginLabels'}>nazwa użytkownika<input value={reset.user} onChange={(e) => {
+                        setReset((prev) => ({
+                            ...prev,
+                            user: e.target.value,
+                        }))
+                    }} type="text"/></label>
+                    <label className={'loginLabels'}>podaj e-mail <input value={reset.email} onChange={(e) => {
+                        setReset(prev => ({
+                            ...prev,
+                            email: e.target.value,
+                        }))
+                    }} type="email"/></label>
+                    <button className={'goBack'}>wyślij</button>
+                </form> : null}
+                {!showPasswordReset ? <form onSubmit={handleForm} className='register loginForm'>
+                    <label className={'loginLabels'}>
+                        nazwa użytkownika <input onChange={handleInputData} name={'userName'} value={loginData.userName}
+                                                 required type="text"/>
+                    </label>
+                    <label className={'loginLabels'}>
+                        hasło <input onChange={handleInputData} required name={'password'} value={loginData.password}
+                                     type="password"/>
+                    </label>
 
 
-                <button>zaloguj</button>
-                <GoBackBtn text={'strona główna'} path={'/'}/>
-            </form>
-
-
-        </div>
-            {loginData.errorMessage?<p onClick={handleErrorMessage} className={'textInfo'}>{loginData.errorMessage}</p>:null}
-            {loginData.notVerified?(
+                    <button>zaloguj</button>
+                    <GoBackBtn text={'strona główna'} path={'/'}/>
+                </form> : null}
+                <p onClick={() => {
+                    setShowPasswordReset(prev => !prev)
+                }} className={'reset-password'}>{!showPasswordReset ? 'odzyskaj hasło' : 'wróć'}</p>
+            </div>
+            {loginData.errorMessage ?
+                <p onClick={handleErrorMessage} className={'textInfo'}>{loginData.errorMessage}</p> : null}
+            {loginData.notVerified ? (
                 <form className={'register'} onSubmit={handleVerificationCode}>
-                    <label className={'loginLabels'}>kod weryfikacyjny <input onChange={handleInputData} required value={loginData.verificationCode} name={'verificationCode'} type="number"/></label>
+                    <label className={'loginLabels'}>kod weryfikacyjny <input onChange={handleInputData} required
+                                                                              value={loginData.verificationCode}
+                                                                              name={'verificationCode'} type="number"/></label>
                     <button>zapisz</button>
                 </form>
-            ):null}
-            {!loginData.loggedIn?null:<Navigate to={'/userMain'}/>}
+            ) : null}
+            {!loginData.loggedIn ? null : <Navigate to={'/userMain'}/>}
 
         </>
     )

@@ -12,7 +12,9 @@
     margin: 2em;
     padding: 2em;
 }
-
+.element.in-cinema .picture{
+    width:60%
+}
 
 .element h3,.element p {
     text-align: center;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Dispatch, SetStateAction} from "react";
 import {UserEntity} from 'types'
 import '../css/UserHeader.css'
 import {Link} from "react-router-dom";
@@ -9,7 +9,8 @@ interface Props {
     avatar: number,
     date: string,
     email: string,
-}
+    setSwitches:Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; }>>,}
+
 
 export const UserHeader = (props: Props) => {
 
@@ -18,10 +19,29 @@ export const UserHeader = (props: Props) => {
         <>
             <header className="userHeader">
                 <div className="buttons">
+                    <div onClick={()=>{
+                        props.setSwitches(({
+                            soonInCinemas:false,
+                            nowInCinemas:false,
+                            searchComponent:true,
+                        }))
+                    }} className="button">wyszukiwarka</div>
                     <div className="button">ulubione</div>
                     <div className="button">do obejrzenia</div>
-                    <Link className={'button'} to={'/comingSoon'}>wkrótce w kinach</Link>
-                    <Link className={'button'} to={'/nowInCinemas'}>teraz w kinach</Link>
+                    <div onClick={()=>{
+                        props.setSwitches(({
+                            soonInCinemas:true,
+                            nowInCinemas:false,
+                            searchComponent:false,
+                        }))
+                    }} className={'button'} >wkrótce w kinach</div>
+                    <div onClick={()=>{
+                        props.setSwitches(({
+                            soonInCinemas:false,
+                            nowInCinemas:true,
+                            searchComponent:false,
+                        }))
+                    }} className={'button'}>teraz w kinach</div>
                 </div>
                 <div className="links">
                     <Link to={'/userPanel'}>

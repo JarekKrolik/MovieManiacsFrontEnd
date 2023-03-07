@@ -1,6 +1,7 @@
 .fav{
     width: 98%;
     border-radius: 25px;
+    min-height: 80vh;
     position: relative;
     overflow: hidden;
     z-index: 3;

@@ -1,15 +1,16 @@
 import React, {useContext, useEffect, useState} from "react";
 import {UserEntity, MovieListEntity, FavouriteMoviesList,FavouriteActorsList} from 'types'
-import {Link, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {UserHeader} from "./UserHeader";
 import {Spinner} from "../Spinner";
-import {GoBackBtn} from "../GoBackBtn";
 import {SearchComponent} from "./SearchComponent";
 import {getUser} from "../../utils/getUser";
 import {Navigate} from "react-router-dom";
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {MovieFinder} from "../../repository/MovieFinder";
-import {GoUpArrow} from "../GoUpArrow";
+import {ComingSoonMovies} from "../movieComponents/ComingSoonMovies";
+import {NowInCinemasComponent} from "../movieComponents/NowInCinemasComponent";
+
 
 export const UserMainPage = () => {
 
@@ -20,6 +21,11 @@ export const UserMainPage = () => {
     const location = useLocation();
     const[listOfFavMovies,setListOfFavMovies]=useState<FavouriteMoviesList[]>()
     const[listOfFavActors,setListOfFavActors]=useState<FavouriteActorsList[]>()
+    const[switches,setSwitches]=useState({
+        searchComponent:true,
+        nowInCinemas:false,
+        soonInCinemas:false,
+    })
 
     useEffect(() => {
         if (location.state) {
@@ -33,9 +39,6 @@ export const UserMainPage = () => {
 
 
     }, [])
-
-
-
 
     useEffect(() => {
         if (!obj.name) {
@@ -78,20 +81,16 @@ export const UserMainPage = () => {
 
         });
 
-
-
-
-
     }, []);
-
 
     return (
         <>
             {obj.id ? null : <Navigate to={'/'}/>}
-            {user ? <UserHeader name={obj.name} avatar={obj.avatar} email={obj.email} date={obj.date} id={obj.id}/> :
+            {user ? <UserHeader setSwitches={setSwitches} name={obj.name} avatar={obj.avatar} email={obj.email} date={obj.date} id={obj.id}/> :
                 <Spinner returnRoute={'/'}/>}
-            <SearchComponent type={type} returnData={returnData} favList={listOfFavMovies} favActorsList={listOfFavActors}/>
-            <GoBackBtn text={'odśwież'} path={'/'}/>
+            {switches.searchComponent?<SearchComponent type={type} returnData={returnData} favList={listOfFavMovies} favActorsList={listOfFavActors}/>:null}
+            {switches.nowInCinemas?<NowInCinemasComponent setSwitches={setSwitches}/>:null}
+            {switches.soonInCinemas?<ComingSoonMovies setSwitches={setSwitches}/>:null}
         </>
     )
 }
