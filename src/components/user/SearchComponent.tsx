@@ -1,15 +1,14 @@
-import React, {createContext, ReactHTMLElement, useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import '../css/RegisterForm.css'
 import '../css/moviesList.css'
 import {MovieFinder} from "../../repository/MovieFinder";
 import {MovieListEntity, ActorsListEntity, FavouriteMoviesList, Response, FavouriteActorsList} from 'types'
 import {Spinner} from "../Spinner";
-import {MovieListElement} from "../movieComponents/MovieListElement";
 import {ActorsListComponent} from "../movieComponents/ActorsListComponent";
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {MoviesListComponent} from "../movieComponents/MoviesListComponent";
 import {GoUpArrow} from "../GoUpArrow";
-import {BackArrow} from "../movieComponents/BackArrow";
+
 
 interface Props {
     returnData: MovieListEntity[] | ActorsListEntity[] | undefined,
@@ -43,7 +42,7 @@ export const SearchComponent = (props: Props) => {
             setSelect(props.type)
 
         }
-    }, [props.returnData])
+    }, [props.returnData, props.type])
 
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,11 +147,11 @@ export const SearchComponent = (props: Props) => {
                     <label>wyszukaj :
                         <input required value={searchText} onChange={handleInput} type="text"/>
                     </label>
-                        <select defaultValue={props.type} onChange={handleSelect} name="option">
-                            <option value="movie">film</option>
-                            <option value="series">serial</option>
-                            <option value="actor">aktorka/aktor</option>
-                        </select>
+                    <select defaultValue={props.type} onChange={handleSelect} name="option">
+                        <option value="movie">film</option>
+                        <option value="series">serial</option>
+                        <option value="actor">aktorka/aktor</option>
+                    </select>
                     <button type={'submit'}>szukaj...</button>
                 </form>
                 {searchText ? <p className="result">wyszukiwana fraza: <span>{searchText}</span></p> : null}
@@ -168,9 +167,8 @@ export const SearchComponent = (props: Props) => {
                                                  description={el.description} errorMessage={""} favList={obj.favActors}/>
                         ))
                     : showList ? <MoviesListComponent foundData={foundData}/> : null}
-                {foundData?<GoUpArrow/>:null}
+                {foundData ? <GoUpArrow/> : null}
             </ul>
-
 
 
         </>

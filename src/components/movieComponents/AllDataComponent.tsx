@@ -1,13 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, Navigate, useLocation} from "react-router-dom";
 import {MovieFinder} from "../../repository/MovieFinder";
 import {SingleMovieSpecific, YoutubeTrailer} from 'types'
 import {Spinner} from "../Spinner";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import {Carousel} from 'react-responsive-carousel';
 import '../css/AllDataComponent.css'
 import {PreviousPage} from "../PreviousPage";
-import {UserDataContext} from "../../contexts/UserDataContext";
 import {BasicMovieInfo} from "./BasicMovieInfo";
 import {TrailerComponent} from "./TrailerComponent";
 import {ImagesComponent} from "./ImagesComponent";
@@ -51,7 +49,6 @@ export const AllDataComponent = () => {
             }
             setYouTubeTrailer(youTubeTrailerRes)
             setFoundData(res)
-            console.log(res)
         })()
 
 

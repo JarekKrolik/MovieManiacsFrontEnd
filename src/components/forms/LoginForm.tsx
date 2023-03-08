@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import {apiUrl} from "../../config/api";
-import {Navigate, useNavigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import {GoBackBtn} from "../GoBackBtn";
 import {Header} from "../Header";
 import {UserDataContext} from "../../contexts/UserDataContext";
@@ -12,7 +12,6 @@ interface Props {
 
 export const LoginForm = (props: Props) => {
     const {setUserData} = useContext(UserDataContext)
-    const navigate = useNavigate()
     const [showPasswordReset, setShowPasswordReset] = useState(false)
     const [reset, setReset] = useState({
         email: '',
@@ -76,12 +75,35 @@ export const LoginForm = (props: Props) => {
         }))
     }
 
-    const handleResetPassword = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setLoginData(prev => ({
-            ...prev,
-            errorMessage: 'Na podany adres e-mail zostało wysłane tymczasowe hasło.'
-        }));
+    const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        const res = await fetch(`${apiUrl}/verify/reset`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+
+            },
+            body: JSON.stringify({
+                user:reset.user,
+                email:reset.email,
+            })
+
+        });
+        const data = await res.json()
+        if(data.response){
+            setLoginData(prev => ({
+                ...prev,
+                errorMessage: data.response
+            }));
+        }
+        if(data.message){
+            setLoginData(prev => ({
+                ...prev,
+                errorMessage: 'spróbuj ponownie za klika minut...'
+            }));
+        }
+
+
 
 
     }
