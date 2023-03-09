@@ -46,7 +46,8 @@ export const NowInCinemasComponent = (props: Props) => {
 
     return (
         <div className={'fav'}>
-            <h2>Teraz w kinach:</h2>
+            <h2>
+                Teraz w kinach:</h2>
             {filteredData?.length === 0 ? <h2>Brak danych, spróbuj ponownie za kilka minut...</h2> : null}
             <ul className={'moviesList'}>
                 {!filteredData ? <Spinner returnRoute={'/delay'}/> : filteredData.map(el => (

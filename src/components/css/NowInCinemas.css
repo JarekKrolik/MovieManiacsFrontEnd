@@ -11,9 +11,24 @@
 }
 
 .fav h2{
-    color: cornflowerblue;
+
+
     font-size: 3rem;
     text-align: center;
-    padding: 2em;
+    padding: 2em 2em;
     text-transform: uppercase;
+ color: #709cea;
+    width: 100%;
+    border-radius: 25px;
+    overflow: hidden;
+    background-image: url("/src/assets/img/cinema-strip-2713352_640.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+@media (min-width: 912px) {
+    .fav h2{
+        background-image: url("/src/assets/img/cinema-strip-2713352_1280.jpg");
+    }
+
 }
