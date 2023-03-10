@@ -25,6 +25,8 @@ export const FavouriteIcon = (props: Props) => {
 
         if (!switchOn) {
             if (props.type === 'movie') {
+
+
                 setUserData((prev: any) => ({
                     ...prev,
                     favMovies: [...prev.favMovies, {
@@ -67,6 +69,14 @@ export const FavouriteIcon = (props: Props) => {
                 setUserData((prev: any) => ({
                     ...prev,
                     favActors: newArr,
+                }))
+            }
+
+            if (props.type === 'movie') {
+                const newArr = obj.favMovies.filter(e => e.movie_id !== props.id)
+                setUserData((prev: any) => ({
+                    ...prev,
+                    favMovies: newArr,
                 }))
             }
 

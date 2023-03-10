@@ -1,0 +1,146 @@
+.favourites{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.favourites .movies{
+    position: relative;
+    width: 98%;
+    overflow: hidden;
+    border-radius: 25px;
+    box-shadow: 0 0 15px cornflowerblue;
+    margin: 2em auto;
+
+
+}
+
+.favourites .movies h2{
+    text-transform:uppercase;
+    color: cornflowerblue;
+    text-align: center;
+    font-size: 2.2rem;
+    padding: 1.5em;
+}
+
+.favourites .movies ul{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    margin: 1em auto;
+
+}
+
+.favourites .movies a{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7em;
+    border-bottom: 1px solid cornflowerblue;
+    transition: background-color 0.3s;
+    text-decoration: none;
+   height: 100%;
+
+}
+
+.movies ul h3 {
+    color:cornflowerblue ;
+    font-size: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 1em;
+}
+
+.favourites .movies a:hover{
+    background-color: cornflowerblue;
+
+}
+.favourites .movies a:hover h3{
+    color: black;
+}
+
+.favourites .movies a:first-of-type{
+    border-top: 1px solid cornflowerblue;
+}
+.favourites .movies a:last-of-type{
+    border-bottom: none;
+}
+
+
+.favourites .movies a h3{
+    padding-left: 1em;
+    color: cornflowerblue;
+    font-size: 2rem;
+    transition: color 0.3s;
+}
+
+.favourites .movies .fav-picture{
+    width: 30%;
+    padding-right: 1em;
+    overflow: hidden;
+    border-radius: 15px;
+
+}
+
+.favourites .movies .fav-picture img{
+    width: 100%;
+}
+
+@media (min-width: 912px) {
+    .favourites .movies a h3{
+
+        font-size: 2.6rem;
+    }
+
+
+    .favourites .movies .fav-picture{
+        width: 10%;
+        padding-right: 1em;
+        overflow: hidden;
+        border-radius: 15px;
+
+    }
+
+
+
+}
+
+@media (min-width: 1023px) {
+
+    .favourites .movies li{
+        border: none;
+        border-radius: 25px;
+        box-shadow: 0 0 15px cornflowerblue;
+        overflow: hidden;
+        margin: 1em auto;}
+
+
+    .favourites .movies .fav-picture{
+        width: 20%;
+
+
+
+    }
+
+    .favourites .movies ul{
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+
+    }
+    .favourites .movies li{
+      width: 27%;
+
+
+    }
+
+    .favourites .movies .fav-picture{
+        width: 30%;
+    }
+}

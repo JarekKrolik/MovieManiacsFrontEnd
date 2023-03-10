@@ -119,7 +119,7 @@ export const AllDataComponent = () => {
                 <PreviousPage/>
                 <GoUpArrow/>
                 <BackArrow/>
-                <Link className={'goBack'} to={'/userMain'} state={{returnData: listOfData, type}}>strona główna</Link>
+                <Link className={'goBack'} to={'/userMain'} state={{returnData: listOfData, type}}>powrót do wyszukiwarki</Link>
             </div>
 
         </>

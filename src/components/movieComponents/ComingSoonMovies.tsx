@@ -10,7 +10,7 @@ import {BackArrow} from "./BackArrow";
 import {GoUpArrow} from "../GoUpArrow";
 
 interface Props {
-    setSwitches?: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; }>>,
+    setSwitches?: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean;favourites:boolean }>>,
 }
 
 export const ComingSoonMovies = (props: Props) => {
@@ -18,7 +18,7 @@ export const ComingSoonMovies = (props: Props) => {
     const [foundData, setFoundData] = useState<NowInCinemasMovieEntity[]>()
     const [filteredData, setFilteredData] = useState<NowInCinemasMovieEntity[]>()
     const [numberOfDisplayedMovies, setNumberOfDisplayedMovies] = useState(10)
-    const [showMoreButton, setShowMoreButton] = useState(false)
+    const [showMoreButton, setShowMoreButton] = useState(true)
 
     useEffect(() => {
         (async () => {
@@ -63,6 +63,7 @@ export const ComingSoonMovies = (props: Props) => {
             <button onClick={() => {
                 if (props.setSwitches) {
                     props.setSwitches(prev => ({
+                        ...prev,
                         soonInCinemas: false,
                         searchComponent: true,
                         nowInCinemas: false,

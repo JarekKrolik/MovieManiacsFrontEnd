@@ -38,6 +38,16 @@ function App() {
             name:'',
             image:'',
         }],
+        searchList:[
+            {
+                id: '',
+                title: '',
+                description: '',
+                image: '',
+                resultType: '',
+                errorMessage: '',
+            },
+        ]
 
 
     }

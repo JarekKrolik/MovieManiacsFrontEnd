@@ -9,7 +9,7 @@ import {GoUpArrow} from "../GoUpArrow";
 
 
 interface Props {
-    setSwitches?: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; }>>,
+    setSwitches?: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean;favourites:boolean }>>,
 }
 
 export const NowInCinemasComponent = (props: Props) => {

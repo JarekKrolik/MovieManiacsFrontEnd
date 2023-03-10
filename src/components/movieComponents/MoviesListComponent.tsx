@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {Spinner} from "../Spinner";
 import {MovieListElement} from "./MovieListElement";
 import{MovieListEntity,NowInCinemasMovieEntity}from'types'
@@ -11,6 +11,9 @@ interface Props{
 export const MoviesListComponent=(props:Props)=>{
     const {obj} = useContext(UserDataContext);
     const{foundData}=props
+
+
+
     return(
         <ul className={'moviesList'}>
             {!foundData ? <Spinner returnRoute={'/delay'}/> : foundData.map(el => (

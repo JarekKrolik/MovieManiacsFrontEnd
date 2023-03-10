@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {UserEntity, MovieListEntity, FavouriteMoviesList,FavouriteActorsList} from 'types'
+import {UserEntity, MovieListEntity, FavouriteMoviesList, FavouriteActorsList} from 'types'
 import {useLocation} from "react-router-dom";
 import {UserHeader} from "./UserHeader";
 import {Spinner} from "../Spinner";
@@ -10,6 +10,7 @@ import {UserDataContext} from "../../contexts/UserDataContext";
 import {MovieFinder} from "../../repository/MovieFinder";
 import {ComingSoonMovies} from "../movieComponents/ComingSoonMovies";
 import {NowInCinemasComponent} from "../movieComponents/NowInCinemasComponent";
+import {FavouritesComponent} from "./FavouritesComponent";
 
 
 export const UserMainPage = () => {
@@ -19,12 +20,13 @@ export const UserMainPage = () => {
     const [returnData, setReturnData] = useState<MovieListEntity[]>()
     const [type, setType] = useState('')
     const location = useLocation();
-    const[listOfFavMovies,setListOfFavMovies]=useState<FavouriteMoviesList[]>()
-    const[listOfFavActors,setListOfFavActors]=useState<FavouriteActorsList[]>()
-    const[switches,setSwitches]=useState({
-        searchComponent:true,
-        nowInCinemas:false,
-        soonInCinemas:false,
+    const [listOfFavMovies, setListOfFavMovies] = useState<FavouriteMoviesList[]>()
+    const [listOfFavActors, setListOfFavActors] = useState<FavouriteActorsList[]>()
+    const [switches, setSwitches] = useState({
+        searchComponent: true,
+        nowInCinemas: false,
+        soonInCinemas: false,
+        favourites: false,
     })
 
     useEffect(() => {
@@ -57,8 +59,9 @@ export const UserMainPage = () => {
                         avatar: downloadedUser.avatar,
                         date: downloadedUser.date,
                         email: downloadedUser.email,
-                        favMovies:favList,
-                        favActors:favActorsList,
+                        favMovies: favList,
+                        favActors: favActorsList,
+                        searchList:[],
 
                     })
                     setListOfFavMovies(favList)
@@ -86,11 +89,14 @@ export const UserMainPage = () => {
     return (
         <>
             {obj.id ? null : <Navigate to={'/'}/>}
-            {user ? <UserHeader setSwitches={setSwitches} name={obj.name} avatar={obj.avatar} email={obj.email} date={obj.date} id={obj.id}/> :
+            {user ? <UserHeader setSwitches={setSwitches} name={obj.name} avatar={obj.avatar} email={obj.email}
+                                date={obj.date} id={obj.id}/> :
                 <Spinner returnRoute={'/'}/>}
-            {switches.searchComponent?<SearchComponent type={type} returnData={returnData} favList={listOfFavMovies} favActorsList={listOfFavActors}/>:null}
-            {switches.nowInCinemas?<NowInCinemasComponent setSwitches={setSwitches}/>:null}
-            {switches.soonInCinemas?<ComingSoonMovies setSwitches={setSwitches}/>:null}
+            {switches.searchComponent ? <SearchComponent type={type} returnData={returnData} favList={listOfFavMovies}
+                                                         favActorsList={listOfFavActors}/> : null}
+            {switches.nowInCinemas ? <NowInCinemasComponent setSwitches={setSwitches}/> : null}
+            {switches.soonInCinemas ? <ComingSoonMovies setSwitches={setSwitches}/> : null}
+            {switches.favourites ? <FavouritesComponent setSwitches={setSwitches}/> : null}
         </>
     )
 }

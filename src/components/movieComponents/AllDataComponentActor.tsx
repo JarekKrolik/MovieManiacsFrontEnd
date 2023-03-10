@@ -77,7 +77,7 @@ export const AllDataComponentActor = () => {
                             ...prev,
                             starredIn: !prev.starredIn,
                         }))
-                    }} className={'goBack actor roles'}>role
+                    }} className={'goBack actor roles'}>{switches.starredIn?"ukryj role":'role'}
                     </button>
                     {switches.starredIn ? <ActorStarredInComponent unFilteredData={unFilteredData} foundData={foundData}
                                                                    handleFilterData={handleFilterData}
@@ -87,7 +87,7 @@ export const AllDataComponentActor = () => {
                             ...prev,
                             mostKnownFor: !prev.mostKnownFor,
                         }))
-                    }} className={'goBack actor roles'}>najbardziej znane role
+                    }} className={'goBack actor roles'}>{switches.mostKnownFor?'ukryj':'najbardziej znane role'}
                     </button>
                     {switches.mostKnownFor ? <MostKnownFor foundData={foundData} listOfData={listOfData}/> : null}
                 </>
@@ -97,7 +97,7 @@ export const AllDataComponentActor = () => {
             <BackArrow/>
             <Link to={'/userMain'} className={'goBack'} state={{
                 returnData: listOfData, type: 'actor'
-            }}>strona główna</Link>
+            }}>powrót do wyszukiwarki</Link>
         </div>
     )
 }

@@ -9,7 +9,7 @@ interface Props {
     avatar: number,
     date: string,
     email: string,
-    setSwitches:Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; }>>,}
+    setSwitches:Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean;favourites:boolean }>>,}
 
 
 export const UserHeader = (props: Props) => {
@@ -21,18 +21,26 @@ export const UserHeader = (props: Props) => {
                 <div className="buttons">
                     <div onClick={()=>{
                         props.setSwitches(({
+                            favourites:false,
                             soonInCinemas:false,
                             nowInCinemas:false,
                             searchComponent:true,
                         }))
                     }} className="button">wyszukiwarka</div>
-                    <div className="button">ulubione</div>
+                    <div onClick={()=>{
+                        props.setSwitches(({
+                            soonInCinemas:false,
+                            nowInCinemas:false,
+                            searchComponent:false,
+                            favourites:true,
+                        }))}} className="button">ulubione</div>
                     <div className="button">do obejrzenia</div>
                     <div onClick={()=>{
                         props.setSwitches(({
                             soonInCinemas:true,
                             nowInCinemas:false,
                             searchComponent:false,
+                            favourites:false,
                         }))
                     }} className={'button'} >wkrótce w kinach</div>
                     <div onClick={()=>{
@@ -40,6 +48,7 @@ export const UserHeader = (props: Props) => {
                             soonInCinemas:false,
                             nowInCinemas:true,
                             searchComponent:false,
+                            favourites:false,
                         }))
                     }} className={'button'}>teraz w kinach</div>
                 </div>

@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const SearchComponent = (props: Props) => {
-    const {obj} = useContext(UserDataContext)
+    const {obj,setUserData} = useContext(UserDataContext)
     const [searchText, setSearchText] = useState('');
     const [foundData, setFoundData] = useState<MovieListEntity[] | ActorsListEntity[]>();
     const [showList, setShowList] = useState(false);
@@ -36,13 +36,18 @@ export const SearchComponent = (props: Props) => {
             setSelect('movie')
         }
 
-        if (props.returnData) {
-            setShowList(true);
-            setFoundData(props.returnData);
-            setSelect(props.type)
-
+        if(obj.searchList){
+            setShowList(true)
+            setFoundData(obj.searchList)
         }
-    }, [props.returnData, props.type])
+
+        // if (props.returnData) {
+        //     setShowList(true);
+        //     setFoundData(props.returnData);
+        //     setSelect(props.type)
+        //
+        // }
+    }, [obj.searchList, props.type])
 
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +89,10 @@ export const SearchComponent = (props: Props) => {
 
 
                 const finalData = result.results.filter(el => el.resultType === 'Movie') as MovieListEntity[]
+                setUserData((prev: any)=>({
+                    ...prev,
+                    searchList:finalData,
+                }))
                 setFoundData(finalData);
 
             }
@@ -107,6 +116,10 @@ export const SearchComponent = (props: Props) => {
                 setErrors(prev => ({
                     ...prev,
                     notFound: false,
+                }))
+                setUserData((prev: any)=>({
+                    ...prev,
+                    searchList:finalData,
                 }))
                 setFoundData(finalData)
             }
@@ -133,6 +146,10 @@ export const SearchComponent = (props: Props) => {
                 setErrors(prev => ({
                     ...prev,
                     notFound: false,
+                }))
+                setUserData((prev: any)=>({
+                    ...prev,
+                    searchList:finalData,
                 }))
                 setFoundData(finalData)
             }
