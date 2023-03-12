@@ -29,7 +29,11 @@ export const UserDataContext = createContext({
                 resultType: '',
                 errorMessage: '',
             },
-        ]
+        ],
+        selectedItem:{
+            id:'',
+            type:'',
+        }
 
     },
     setUserData: (obj: any) => {

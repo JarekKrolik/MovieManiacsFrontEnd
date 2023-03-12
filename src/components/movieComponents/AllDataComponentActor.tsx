@@ -1,17 +1,14 @@
-import React, {useEffect, useState} from "react";
-import {Link, Navigate, useLocation} from "react-router-dom";
+import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
 import {MovieFinder} from "../../repository/MovieFinder";
 import {SingleActorSpecific} from 'types'
 import {Spinner} from "../Spinner";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import {Carousel} from 'react-responsive-carousel';
 import '../css/AllDataComponent.css'
-import {PreviousPage} from "../PreviousPage";
 import {BasicActorInfo} from "./BasicActorInfo";
 import {ActorStarredInComponent} from "./ActorStarredInComponent";
 import {MostKnownFor} from "./MostKnownFor";
 import {GoUpArrow} from "../GoUpArrow";
-import {BackArrow} from "./BackArrow";
+import {UserDataContext} from "../../contexts/UserDataContext";
 
 interface StarredIn {
     id: string,
@@ -21,12 +18,17 @@ interface StarredIn {
     description: string,
 }
 
-export const AllDataComponentActor = () => {
+interface Props {
+    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>;
+    id: string,
+    type: string,
+}
+
+
+export const AllDataComponentActor = (props: Props) => {
     const [unFilteredData, setUnFilteredData] = useState<StarredIn[] | null>()
-    const [badRequestRedirect, setBadRequestRedirect] = useState(false)
+    const {setUserData} = useContext(UserDataContext)
     const [filter, setFilter] = useState('')
-    const location = useLocation();
-    const {id, listOfData, type} = location.state;
     const [switches, setSwitches] = useState({
         starredIn: false,
         mostKnownFor: false
@@ -54,22 +56,28 @@ export const AllDataComponentActor = () => {
 
         (async () => {
 
-            const res = await MovieFinder.findActorById(id) as unknown as SingleActorSpecific
+            const res = await MovieFinder.findActorById(props.id) as unknown as SingleActorSpecific
             if (res.errorMessage.includes('Invalid')) {
-                setBadRequestRedirect(true)
+                setUserData((prev: { selectedItem: any; })=>({
+                    ...prev,
+                    selectedItem:{
+                        ...prev.selectedItem,
+                        type:'movie'
+                    }
+                }))
             }
             setFoundData(res);
             setUnFilteredData(res.castMovies)
         })()
 
 
-    }, [])
+    }, [props.id,setUserData])
 
 
     return (
 
         <div className="allDataElementBox">
-            {badRequestRedirect ? <Navigate to={'/allData'} state={{id, listOfData}}/> : null}
+
             {!foundData ? <Spinner returnRoute={'/userMain'}/> : (<>
                     <BasicActorInfo foundData={foundData}/>
                     <button onClick={() => {
@@ -77,27 +85,36 @@ export const AllDataComponentActor = () => {
                             ...prev,
                             starredIn: !prev.starredIn,
                         }))
-                    }} className={'goBack actor roles'}>{switches.starredIn?"ukryj role":'role'}
+                    }} className={'goBack actor roles'}>{switches.starredIn ? "ukryj role" : 'role'}
                     </button>
-                    {switches.starredIn ? <ActorStarredInComponent unFilteredData={unFilteredData} foundData={foundData}
-                                                                   handleFilterData={handleFilterData}
-                                                                   listOfData={listOfData} type={type}/> : null}
+                    {switches.starredIn ?
+                        <ActorStarredInComponent setSwitches={props.setSwitches} unFilteredData={unFilteredData}
+                                                 foundData={foundData}
+                                                 handleFilterData={handleFilterData}
+                                                 listOfData={[]} type={'actor'}/> : null}
                     <button onClick={() => {
                         setSwitches(prev => ({
                             ...prev,
                             mostKnownFor: !prev.mostKnownFor,
                         }))
-                    }} className={'goBack actor roles'}>{switches.mostKnownFor?'ukryj':'najbardziej znane role'}
+                    }} className={'goBack actor roles'}>{switches.mostKnownFor ? 'ukryj' : 'najbardziej znane role'}
                     </button>
-                    {switches.mostKnownFor ? <MostKnownFor foundData={foundData} listOfData={listOfData}/> : null}
+                    {switches.mostKnownFor ?
+                        <MostKnownFor setSwitches={props.setSwitches} foundData={foundData}/> : null}
                 </>
             )}
 
             <GoUpArrow/>
-            <BackArrow/>
-            <Link to={'/userMain'} className={'goBack'} state={{
-                returnData: listOfData, type: 'actor'
-            }}>powrót do wyszukiwarki</Link>
+
+            <button onClick={() => {
+                props.setSwitches(prev => ({
+                        ...prev,
+                        allDataComponent: false,
+                        searchComponent: true,
+                    })
+                )
+            }} className="goBack">zamknij
+            </button>
         </div>
     )
 }

@@ -1,6 +1,5 @@
-import React, {useContext, useState} from "react";
-import {SingleActorSpecific, ActorsListEntity, FavouriteActorsList, FavouriteMoviesList} from 'types'
-import {Link} from "react-router-dom";
+import React, {Dispatch, SetStateAction, useContext} from "react";
+import {SingleActorSpecific} from 'types'
 import '../css/MostKnownFor.css'
 import {FavouriteIcon} from "../FavouriteIcon";
 import {UserDataContext} from "../../contexts/UserDataContext";
@@ -8,14 +7,35 @@ import {UserDataContext} from "../../contexts/UserDataContext";
 
 interface Props {
     foundData: SingleActorSpecific,
-    listOfData: ActorsListEntity,
+    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean;allDataComponent:boolean, }>>;
 }
 
 export const MostKnownFor = (props: Props) => {
-    const {obj} = useContext(UserDataContext)
+    const {obj,setUserData} = useContext(UserDataContext)
     const {foundData} = props
     const favList = obj.favMovies
     const list = favList?.map(e => e.movie_id)
+
+    const handleSeeMore = (e:any)=>{
+
+        props.setSwitches({
+            favourites:false,
+            soonInCinemas:false,
+            nowInCinemas:false,
+            searchComponent:false,
+            allDataComponent:true,
+
+        })
+        setUserData((prev: any)=>({
+            ...prev,
+            selectedItem:{
+                id:e.target.id,
+                type:'movie',
+            }
+        }))
+
+    }
+
     return (
         <div className="starredIn most-known-for">
             <ul>{foundData.knownFor.map(el => {
@@ -32,9 +52,7 @@ export const MostKnownFor = (props: Props) => {
                                  alt="symbol braku zdjęcia"/>}
                     </div>
 
-                    <Link to={'/allData'} state={{id: el.id, listOfData: props.listOfData, type: 'movie'}}
-                          className={'seeMore'}>zobacz więcej</Link>
-
+                    <button id={el.id} onClick={handleSeeMore} className="seeMore">zobacz więcej</button>
 
                 </li>)
             })}

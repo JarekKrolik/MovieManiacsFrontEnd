@@ -10,14 +10,14 @@ import {BackArrow} from "./BackArrow";
 import {GoUpArrow} from "../GoUpArrow";
 
 interface Props {
-    setSwitches?: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean;favourites:boolean }>>,
+    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean;favourites:boolean;allDataComponent:boolean, }>>,
 }
 
 export const ComingSoonMovies = (props: Props) => {
     const {obj} = useContext(UserDataContext);
     const [foundData, setFoundData] = useState<NowInCinemasMovieEntity[]>()
     const [filteredData, setFilteredData] = useState<NowInCinemasMovieEntity[]>()
-    const [numberOfDisplayedMovies, setNumberOfDisplayedMovies] = useState(10)
+    const [numberOfDisplayedMovies, setNumberOfDisplayedMovies] = useState(5)
     const [showMoreButton, setShowMoreButton] = useState(true)
 
     useEffect(() => {
@@ -36,7 +36,7 @@ export const ComingSoonMovies = (props: Props) => {
         if (filteredData && filteredData.length >= filteredData?.length + numberOfDisplayedMovies) {
             setShowMoreButton(false)
         }
-        setNumberOfDisplayedMovies(prev => prev + 10)
+        setNumberOfDisplayedMovies(prev => prev + 5)
         const slicedArray = foundData?.slice(0, numberOfDisplayedMovies)
         setFilteredData(slicedArray)
 
@@ -49,7 +49,7 @@ export const ComingSoonMovies = (props: Props) => {
             {filteredData?.length === 0 ? <h2>Brak danych, spróbuj ponownie za kilka minut...</h2> : null}
             <ul className={'moviesList'}>
                 {!filteredData ? <Spinner returnRoute={'/delay'}/> : filteredData.map(el => (
-                    <NowInCinemasElement key={el.id} favList={obj.favMovies} listOfData={[]} fullTitle={el.fullTitle}
+                    <NowInCinemasElement setSwitches={props.setSwitches} key={el.id} favList={obj.favMovies}  fullTitle={el.fullTitle}
                                          genres={el.genres} year={el.year} stars={el.stars}
                                          releaseState={el.releaseState} errorMessage={""} image={el.image}
                                          id={el.id} contentRating={el.contentRating} directors={el.directors}

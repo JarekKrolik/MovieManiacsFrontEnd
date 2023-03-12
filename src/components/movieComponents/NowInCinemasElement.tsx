@@ -1,32 +1,53 @@
-import React, {useContext, useState} from "react";
-import {Link} from "react-router-dom";
+import React, {Dispatch, SetStateAction, useContext} from "react";
 import {FavouriteIcon} from "../FavouriteIcon";
 import {UserDataContext} from "../../contexts/UserDataContext";
-import{NowInCinemasMovieEntity,FavouriteMoviesList} from 'types'
+import {NowInCinemasMovieEntity, FavouriteMoviesList} from 'types'
 
 interface Props extends NowInCinemasMovieEntity {
-    listOfData:NowInCinemasMovieEntity[];
-    favList:FavouriteMoviesList[]|undefined;
+    favList: FavouriteMoviesList[] | undefined;
+    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>,
 
 }
 
-export const NowInCinemasElement = (props:Props)=>{
+export const NowInCinemasElement = (props: Props) => {
+    const {setUserData} = useContext(UserDataContext)
+    const handleSeeMore = (e: any) => {
+        props.setSwitches({
+            favourites: false,
+            soonInCinemas: false,
+            nowInCinemas: false,
+            searchComponent: false,
+            allDataComponent: true,
+
+        })
+        setUserData((prev: any) => ({
+            ...prev,
+            selectedItem: {
+                id: e.target.id,
+                type: 'movie',
+            }
+        }))
+
+    }
+
     const {obj} = useContext(UserDataContext)
-    const{favList}= props;
-    const list = favList?.map(e=>e.movie_id)
+    const {favList} = props;
+    const list = favList?.map(e => e.movie_id)
 
     return (
-        <li className={'element in-cinema'}  id={props.id}>
-            <FavouriteIcon  switchedOn={list?list.includes(props.id):false}  id={props.id} user={obj.name} type={'movie'} image={props.image} title={props.fullTitle}/>
-            {props.fullTitle?<h3>Tytuł : <span>{props.fullTitle}</span></h3>:null}
-            {props.releaseState?<h3>Premiera : <span>{props.releaseState}</span></h3>:null}
-            {props.stars?<h3>Występują : <span>{props.stars}</span></h3>:null}
-            {props.directors?<h3>Reżyseria : <span>{props.directors}</span></h3>:null}
+        <li className={'element in-cinema'} id={props.id}>
+            <FavouriteIcon switchedOn={list ? list.includes(props.id) : false} id={props.id} user={obj.name}
+                           type={'movie'} image={props.image} title={props.fullTitle}/>
+            {props.fullTitle ? <h3>Tytuł : <span>{props.fullTitle}</span></h3> : null}
+            {props.releaseState ? <h3>Premiera : <span>{props.releaseState}</span></h3> : null}
+            {props.stars ? <h3>Występują : <span>{props.stars}</span></h3> : null}
+            {props.directors ? <h3>Reżyseria : <span>{props.directors}</span></h3> : null}
             <div className="picture">
-                {props.image?<img  src={props.image} alt="plakat z filmu"/>:<img src={require('../../assets/img/vecteezy_icon-image-not-found-vector_.jpg')} alt="symbol braku zdjęcia"/>}
+                {props.image ? <img src={props.image} alt="plakat z filmu"/> :
+                    <img src={require('../../assets/img/vecteezy_icon-image-not-found-vector_.jpg')}
+                         alt="symbol braku zdjęcia"/>}
             </div>
-
-            <Link  to={'/allData'} state={{id:props.id,listOfData:[],type:'movie'}} className={'seeMore'}>zobacz więcej</Link>
+            <button onClick={handleSeeMore} id={props.id} className="seeMore">zobacz więcej</button>
 
 
         </li>

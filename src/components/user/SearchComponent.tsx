@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
 import '../css/RegisterForm.css'
 import '../css/moviesList.css'
 import {MovieFinder} from "../../repository/MovieFinder";
@@ -11,6 +11,7 @@ import {GoUpArrow} from "../GoUpArrow";
 
 
 interface Props {
+    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>
     returnData: MovieListEntity[] | ActorsListEntity[] | undefined,
     type: string,
     favList: FavouriteMoviesList[] | undefined,
@@ -18,7 +19,7 @@ interface Props {
 }
 
 export const SearchComponent = (props: Props) => {
-    const {obj,setUserData} = useContext(UserDataContext)
+    const {obj, setUserData} = useContext(UserDataContext)
     const [searchText, setSearchText] = useState('');
     const [foundData, setFoundData] = useState<MovieListEntity[] | ActorsListEntity[]>();
     const [showList, setShowList] = useState(false);
@@ -29,25 +30,21 @@ export const SearchComponent = (props: Props) => {
         errorMessage: '',
     })
 
+    const {setSwitches} = props
 
     useEffect(() => {
+if(obj.selectedItem){if(obj.selectedItem.type!==''){setSelect(obj.selectedItem.type)}else{setSelect('movie')}}else{
+setSelect('movie')}
 
-        if (!props.type) {
-            setSelect('movie')
-        }
 
-        if(obj.searchList){
+
+        if (obj.searchList) {
             setShowList(true)
             setFoundData(obj.searchList)
         }
 
-        // if (props.returnData) {
-        //     setShowList(true);
-        //     setFoundData(props.returnData);
-        //     setSelect(props.type)
-        //
-        // }
-    }, [obj.searchList, props.type])
+
+    }, [obj.searchList,obj.selectedItem])
 
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +55,13 @@ export const SearchComponent = (props: Props) => {
     }
 
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-
+        setUserData((prev: { selectedItem: any; })=>({
+            ...prev,
+            selectedItem:{
+                ...prev.selectedItem,
+                type:e.target.value
+            }
+        }))
         setSelect(e.target.value);
         setShowList(false);
         setFoundData(undefined);
@@ -75,6 +78,7 @@ export const SearchComponent = (props: Props) => {
                 ...prev,
                 notSelected: false,
             }))
+
             setShowList(true)
 
             if (select === 'movie') {
@@ -89,9 +93,9 @@ export const SearchComponent = (props: Props) => {
 
 
                 const finalData = result.results.filter(el => el.resultType === 'Movie') as MovieListEntity[]
-                setUserData((prev: any)=>({
+                setUserData((prev: any) => ({
                     ...prev,
-                    searchList:finalData,
+                    searchList: finalData,
                 }))
                 setFoundData(finalData);
 
@@ -117,9 +121,9 @@ export const SearchComponent = (props: Props) => {
                     ...prev,
                     notFound: false,
                 }))
-                setUserData((prev: any)=>({
+                setUserData((prev: any) => ({
                     ...prev,
-                    searchList:finalData,
+                    searchList: finalData,
                 }))
                 setFoundData(finalData)
             }
@@ -147,9 +151,9 @@ export const SearchComponent = (props: Props) => {
                     ...prev,
                     notFound: false,
                 }))
-                setUserData((prev: any)=>({
+                setUserData((prev: any) => ({
                     ...prev,
-                    searchList:finalData,
+                    searchList: finalData,
                 }))
                 setFoundData(finalData)
             }
@@ -164,10 +168,11 @@ export const SearchComponent = (props: Props) => {
                     <label>wyszukaj :
                         <input required value={searchText} onChange={handleInput} type="text"/>
                     </label>
-                    <select defaultValue={props.type} onChange={handleSelect} name="option">
-                        <option value="movie">film</option>
-                        <option value="series">serial</option>
-                        <option value="actor">aktorka/aktor</option>
+                    <select defaultValue={select} onChange={handleSelect} name="option">
+                        <option value={select}>{select}</option>
+                        {select==='movie'?null:<option value="movie">movie</option>}
+                        {select==='series'?null:<option value="series">series</option>}
+                        {select==='actor'?null:<option value="actor">actor</option>}
                     </select>
                     <button type={'submit'}>szukaj...</button>
                 </form>
@@ -179,11 +184,12 @@ export const SearchComponent = (props: Props) => {
                 {errors.notFound ? <p>{errors.errorMessage}</p> : null}
                 {(select === 'actor' && showList) ? (!foundData) ?
                         <Spinner returnRoute={'/delay'}/> : foundData.map(el => (
-                            <ActorsListComponent listOfData={foundData} key={el.id} title={el.title}
+                            <ActorsListComponent setSwitches={props.setSwitches} listOfData={foundData} key={el.id}
+                                                 title={el.title}
                                                  resultType={el.resultType} image={el.image} id={el.id}
                                                  description={el.description} errorMessage={""} favList={obj.favActors}/>
                         ))
-                    : showList ? <MoviesListComponent foundData={foundData}/> : null}
+                    : showList ? <MoviesListComponent setSwitches={setSwitches} foundData={foundData}/> : null}
                 {foundData ? <GoUpArrow/> : null}
             </ul>
 

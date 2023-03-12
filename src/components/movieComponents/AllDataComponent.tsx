@@ -1,11 +1,9 @@
-import React, {useEffect, useState} from "react";
-import {Link, Navigate, useLocation} from "react-router-dom";
+import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
 import {MovieFinder} from "../../repository/MovieFinder";
 import {SingleMovieSpecific, YoutubeTrailer} from 'types'
 import {Spinner} from "../Spinner";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import '../css/AllDataComponent.css'
-import {PreviousPage} from "../PreviousPage";
 import {BasicMovieInfo} from "./BasicMovieInfo";
 import {TrailerComponent} from "./TrailerComponent";
 import {ImagesComponent} from "./ImagesComponent";
@@ -13,15 +11,17 @@ import {FullCastComponent} from "./FullCastComponent";
 import {SimilarsComponent} from "./SimilarsComponent";
 import {WikiDataComponent} from "./WikiDataComponent";
 import {GoUpArrow} from "../GoUpArrow";
-import {BackArrow} from "./BackArrow";
+import {UserDataContext} from "../../contexts/UserDataContext";
 
+interface Props {
+    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean;allDataComponent:boolean, }>>;
+    id:string,
+    type:string,
 
-export const AllDataComponent = () => {
+}
 
+export const AllDataComponent = (props:Props) => {
 
-    const location = useLocation();
-    const {id, listOfData, type} = location.state;
-    const [badRequestRedirect, setBadRequestRedirect] = useState(false)
     const [switches, setSwitches] = useState({
         fullCast: false,
         trailer: false,
@@ -32,16 +32,23 @@ export const AllDataComponent = () => {
     });
     const [foundData, setFoundData] = useState<SingleMovieSpecific>()
     const [youTubeTrailer, setYouTubeTrailer] = useState<YoutubeTrailer>()
+    const {setUserData}=useContext(UserDataContext)
 
 
     useEffect(() => {
 
 
         (async () => {
-            const res = await MovieFinder.getOneMovieById(id) as SingleMovieSpecific;
-            const youTubeTrailerRes = await MovieFinder.getYouTubeTrailer(id) as YoutubeTrailer;
+            const res = await MovieFinder.getOneMovieById(props.id) as SingleMovieSpecific;
+            const youTubeTrailerRes = await MovieFinder.getYouTubeTrailer(props.id) as YoutubeTrailer;
             if (res.errorMessage.includes('Invalid')) {
-                setBadRequestRedirect(true)
+                setUserData((prev: { selectedItem: any; })=>({
+                    ...prev,
+                    selectedItem:{
+                        ...prev.selectedItem,
+                        type:'actor'
+                    }
+                }))
             }
 
             if(youTubeTrailerRes.errorMessage){
@@ -52,14 +59,13 @@ export const AllDataComponent = () => {
         })()
 
 
-    }, [id])
+    }, [props.id,setUserData])
 
 
     return (
         <>
             <BasicMovieInfo foundData={foundData}/>
             <div className="allDataElementBox">
-                {badRequestRedirect ? <Navigate to={'/allDataActor'} state={{id, listOfData}}/> : null}
                 {!foundData ? <Spinner returnRoute={'/userMain'}/> : (
                     <>
                         {switches.wiki ?
@@ -97,7 +103,7 @@ export const AllDataComponent = () => {
                                 posters: !prev.posters,
                             }))
                         }}>{switches.posters ? 'ukryj postery' : 'pokaż postery'}</button>
-                        {switches.fullCast ? <FullCastComponent foundData={foundData} listOfData={listOfData}/> : null}
+                        {switches.fullCast ? <FullCastComponent setSwitches={props.setSwitches} foundData={foundData}/> : null}
                         <button className={'goBack'} onClick={() => {
                             setSwitches((prev) => ({
                                 ...prev,
@@ -105,7 +111,7 @@ export const AllDataComponent = () => {
                             }))
                         }}>{switches.fullCast ? 'ukryj obsadę' : 'pełna obsada'}
                         </button>
-                        {switches.similars ? <SimilarsComponent listOfData={listOfData} foundData={foundData}/> : null}
+                        {switches.similars ? <SimilarsComponent setSwitches={props.setSwitches} foundData={foundData}/> : null}
                         <button className={'goBack'} onClick={() => {
                             setSwitches((prev) => ({
                                 ...prev,
@@ -116,10 +122,17 @@ export const AllDataComponent = () => {
 
 
                     </>)}
-                <PreviousPage/>
+
+                <button onClick={()=>{
+                    props.setSwitches(prev=>({
+                        ...prev,
+                        allDataComponent:false,
+                        searchComponent:true,
+                        })
+                    )
+                }} className="goBack">zamknij</button>
                 <GoUpArrow/>
-                <BackArrow/>
-                <Link className={'goBack'} to={'/userMain'} state={{returnData: listOfData, type}}>powrót do wyszukiwarki</Link>
+
             </div>
 
         </>

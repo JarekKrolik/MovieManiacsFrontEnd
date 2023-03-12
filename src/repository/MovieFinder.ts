@@ -1,49 +1,59 @@
 import {imdbApiKey} from "../config/apiKeyConfig";
-import {ActorsListEntity, MovieListEntity, NowInCinemasMovieEntity, Response, SingleMovieSpecific,YoutubeTrailer} from 'types'
+import {
+    ActorsListEntity,
+    MovieListEntity,
+    NowInCinemasMovieEntity,
+    Response,
+    SingleMovieSpecific,
+    YoutubeTrailer
+} from 'types'
 import {apiUrl} from "../config/api";
 
 export class MovieFinder {
 
-    static async addToFavouriteList(id: string, user: string,type:string,title:string,image:string): Promise<{response:string}> {
-       const res =  await fetch(`${apiUrl}/favourite`, {
+    static async addToFavouriteList(id: string, user: string, type: string, title: string, image: string): Promise<{ response: string }> {
+        const res = await fetch(`${apiUrl}/favourite`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
 
                 },
                 body: JSON.stringify({
-                    id, user,type,title,image
+                    id, user, type, title, image
                 })
             }
         )
 
-    return res.json()
+        return res.json()
     }
-    static async getFavouritesMoviesList(id:string):Promise<MovieListEntity[]|null>{
+
+    static async getFavouritesMoviesList(id: string): Promise<MovieListEntity[] | null> {
         const res = await fetch(`${apiUrl}/favourite/${id}`)
         return await res.json()
     }
-    static async getFavouritesActorsList(id:string):Promise<ActorsListEntity[]|null>{
+
+    static async getFavouritesActorsList(id: string): Promise<ActorsListEntity[] | null> {
         const res = await fetch(`${apiUrl}/favourite/actor/${id}`)
         return await res.json()
 
     }
 
 
-    static async removeFromFavouriteList(id: string, user: string,type:string): Promise<{response:string}> {
-       const res =  await fetch(`${apiUrl}/favourite`, {
+    static async removeFromFavouriteList(id: string, user: string, type: string): Promise<{ response: string }> {
+        const res = await fetch(`${apiUrl}/favourite`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
 
                 },
                 body: JSON.stringify({
-                    id, user,type
+                    id, user, type
                 })
             }
-        ) ;
+        );
 
-       return res.json() }
+        return res.json()
+    }
 
 
     static async getAllByTitle(title: string, lang = 'en'): Promise<Response> {
@@ -78,8 +88,9 @@ export class MovieFinder {
         const data = await res.json()
         return data as SingleMovieSpecific;
     }
-    static async getYouTubeTrailer(id:string):Promise<YoutubeTrailer>{
-        const res = await  fetch(`https://imdb-api.com/en/API/YouTubeTrailer/${imdbApiKey}/${id}`);
+
+    static async getYouTubeTrailer(id: string): Promise<YoutubeTrailer> {
+        const res = await fetch(`https://imdb-api.com/en/API/YouTubeTrailer/${imdbApiKey}/${id}`);
         const data = await res.json()
         return data as YoutubeTrailer;
 
@@ -98,7 +109,6 @@ export class MovieFinder {
         const res = await fetch(`https://imdb-api.com/${lang}/API/Name/${imdbApiKey}/${id}`);
         const data = await res.json();
 
-        console.log(data)
         return data
     }
 

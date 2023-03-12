@@ -25,9 +25,10 @@ export const TrailerComponent = (props: Props) => {
             {!whichTrailer ? foundData.trailer? <div className="frameContainer">
                 <object
                     type="video/mp4"
-                    data={foundData.trailer.linkEmbed}
+                    data={`${foundData.trailer.linkEmbed}?autoplay=true`}
                     width="100%"
-                    height="100%"></object>
+                    height="100%"
+                ></object>
 
             </div> : <p>Brak trailera w bazie IMDb...</p> : null
 

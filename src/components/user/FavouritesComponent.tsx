@@ -1,85 +1,113 @@
 import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
-import {FavouriteMoviesList,FavouriteActorsList}from'types'
-import"../css/Favourites.css"
-import {Link} from "react-router-dom";
+import {FavouriteMoviesList, FavouriteActorsList} from 'types'
+import "../css/Favourites.css"
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {GoUpArrow} from "../GoUpArrow";
 
 interface Props {
-    setSwitches?: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean;favourites:boolean }>>;
+    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>;
 
 }
 
-export const FavouritesComponent=(props:Props)=>{
-const{setSwitches}=props
-    const{obj,setUserData}=useContext(UserDataContext)
-    const[favMovies,setFavMovies]= useState<FavouriteMoviesList[]>()
-    const[favActors,setFavActors]= useState<FavouriteActorsList[]>()
-    const[favVisible,setFavVisible]=useState({
-        favMovies:true,
-        favActors:false,
+export const FavouritesComponent = (props: Props) => {
+    const {setSwitches} = props
+    const {obj, setUserData} = useContext(UserDataContext)
+    const [favMovies, setFavMovies] = useState<FavouriteMoviesList[]>()
+    const [favActors, setFavActors] = useState<FavouriteActorsList[]>()
+    const [favVisible, setFavVisible] = useState({
+        favMovies: true,
+        favActors: false,
     })
 
-    useEffect(()=>{
+    const handleSeeMore = (e:any)=>{
+        setSwitches({
+            favourites:false,
+            soonInCinemas:false,
+            nowInCinemas:false,
+            searchComponent:false,
+            allDataComponent:true,
+
+        })
+        setUserData((prev: any)=>({
+            ...prev,
+            selectedItem:{
+                id:e.target.id,
+                type:e.target.datatype,
+            }
+        }))
+
+    }
+
+    useEffect(() => {
         setFavMovies(obj.favMovies)
 
-    },[obj])
-    useEffect(()=>{
+    }, [obj])
+    useEffect(() => {
         setFavActors(obj.favActors)
 
-    },[obj])
+    }, [obj])
 
-    return(
+    return (
         <div className="favourites">
-            <button onClick={()=>{
-                setFavVisible(prev=>({
+            <button onClick={() => {
+                setFavVisible(prev => ({
                     ...prev,
                     favMovies: !prev.favMovies,
                 }))
-            }} className="goBack">{favVisible.favMovies?'ukryj filmy':'filmy'}</button>
-            {favVisible.favMovies?
-            <div className="movies">
-                <h2>Your favourite movies list:</h2>
-                { favMovies?<ul>
-                    {favMovies.length>0?
-                    favMovies.map(el=>{return(
-                        <li key={el.movie_id}>
-                            <Link to={'/allData'} state={{id:el.movie_id,listOfData:[],type:'movie'}}>
-                            <h3>{el.name}</h3>
-                            <div className="fav-picture">
-                                <img src={el.image} alt=""/>
-                            </div>
-                            </Link>
-                        </li>
-                    )}):<h3>brak ulubionych na liście...</h3>}
-                </ul>:<h3>brak ulubionych na liście...</h3>}
-            </div>:null}
+            }} className="goBack">{favVisible.favMovies ? 'ukryj filmy' : 'filmy'}</button>
+            {favVisible.favMovies ?
+                <div className="movies">
+                    <h2>Your favourite movies list:</h2>
+                    {favMovies ? <ul>
+                        {favMovies.length > 0 ?
+                            favMovies.map(el => {
+                                return (
+                                    <li key={el.movie_id}>
+                                        <div className={'text'}>
+                                            <h3>{el.name}</h3>
+                                        <button className={'favBtn'} onClick={handleSeeMore} datatype={'movie'} id={el.movie_id}>zobacz</button>
+                                            </div>
+                                            <div className="fav-picture">
+                                                <img src={el.image} alt=""/>
+                                            </div>
 
-                <button onClick={()=>{
-                    setFavVisible(prev=>({
-                        ...prev,
-                        favActors: !prev.favActors,
-                    }))
-                }} className="goBack">{favVisible.favActors?'ukryj aktorzy':'aktorki/aktorzy'}</button>
-                {favVisible.favActors?
-                    <div className="actors movies">
-                        <h2>Your favourite actors list:</h2>
-                        {favActors? <ul>
-                            {favActors.length>0?
-                            favActors.map(el=>{return(
-                                <li key={el.actor_id}>
-                                    <Link to={'/allData'} state={{id:el.actor_id,listOfData:[],type:'actor'}}>
-                                    <h3>{el.name}</h3>
-                                    <div className="fav-picture">
-                                        <img src={el.image} alt=""/>
-                                    </div>
-                                    </Link>
-                                </li>
-                            )}):<h3>brak ulubionych na liście...</h3>}
-                        </ul>:<h3>brak ulubionych na liście...</h3>}
-                    </div>:null}
+                                    </li>
+                                )
+                            }) : <h3>brak ulubionych na liście...</h3>}
+                    </ul> : <h3>brak ulubionych na liście...</h3>}
+                </div> : null}
 
-<GoUpArrow/>
+            <button onClick={() => {
+                setFavVisible(prev => ({
+                    ...prev,
+                    favActors: !prev.favActors,
+                }))
+            }} className="goBack">{favVisible.favActors ? 'ukryj aktorzy' : 'aktorki/aktorzy'}</button>
+            {favVisible.favActors ?
+                <div className="actors movies">
+                    <h2>Your favourite actors list:</h2>
+                    {favActors ? <ul>
+                        {favActors.length > 0 ?
+                            favActors.map(el => {
+                                return (
+                                    <li key={el.actor_id}>
+
+                                            <div>
+                                                <h3>{el.name}</h3>
+                                                <button   onClick={handleSeeMore} datatype={'actor'} id={el.actor_id}>more</button>
+                                            </div>
+
+                                            <div className="fav-picture">
+                                                <img src={el.image} alt=""/>
+                                            </div>
+
+                                    </li>
+                                )
+                            }) : <h3>brak ulubionych na liście...</h3>}
+                    </ul> : <h3>brak ulubionych na liście...</h3>}
+                </div> : null}
+
+            <GoUpArrow/>
 
         </div>
     )

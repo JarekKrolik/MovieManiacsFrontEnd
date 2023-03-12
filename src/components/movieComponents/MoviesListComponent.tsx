@@ -1,10 +1,11 @@
-import React, {useContext, useEffect} from "react";
+import React, {Dispatch, SetStateAction, useContext, useEffect} from "react";
 import {Spinner} from "../Spinner";
 import {MovieListElement} from "./MovieListElement";
 import{MovieListEntity,NowInCinemasMovieEntity}from'types'
 import {UserDataContext} from "../../contexts/UserDataContext";
 interface Props{
     foundData:MovieListEntity[]|NowInCinemasMovieEntity[]|undefined,
+    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean;allDataComponent:boolean, }>>
 
 }
 
@@ -17,7 +18,7 @@ export const MoviesListComponent=(props:Props)=>{
     return(
         <ul className={'moviesList'}>
             {!foundData ? <Spinner returnRoute={'/delay'}/> : foundData.map(el => (
-                <MovieListElement listOfData={foundData} key={el.id} id={el.id} description={el.description}
+                <MovieListElement  setSwitches={props.setSwitches} listOfData={foundData} key={el.id} id={el.id} description={el.description}
                                   image={el.image} title={el.title} resultType={el.resultType}
                                   favList={obj.favMovies} errorMessage={""}/>
             ))}

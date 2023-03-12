@@ -11,6 +11,9 @@ import {MovieFinder} from "../../repository/MovieFinder";
 import {ComingSoonMovies} from "../movieComponents/ComingSoonMovies";
 import {NowInCinemasComponent} from "../movieComponents/NowInCinemasComponent";
 import {FavouritesComponent} from "./FavouritesComponent";
+import {MoviesListComponent} from "../movieComponents/MoviesListComponent";
+import {AllDataComponent} from "../movieComponents/AllDataComponent";
+import {AllDataComponentActor} from "../movieComponents/AllDataComponentActor";
 
 
 export const UserMainPage = () => {
@@ -27,20 +30,21 @@ export const UserMainPage = () => {
         nowInCinemas: false,
         soonInCinemas: false,
         favourites: false,
+        allDataComponent: false,
     })
 
-    useEffect(() => {
-        if (location.state) {
-
-            const {returnData, type} = location.state;
-            setType(type)
-            setReturnData(returnData)
-        } else {
-            setReturnData(undefined)
-        }
-
-
-    }, [])
+    // useEffect(() => {
+    //     if (location.state) {
+    //
+    //         const {returnData, type} = location.state;
+    //         setType(type)
+    //         setReturnData(returnData)
+    //     } else {
+    //         setReturnData(undefined)
+    //     }
+    //
+    //
+    // }, [])
 
     useEffect(() => {
         if (!obj.name) {
@@ -61,7 +65,11 @@ export const UserMainPage = () => {
                         email: downloadedUser.email,
                         favMovies: favList,
                         favActors: favActorsList,
-                        searchList:[],
+                        searchList: [],
+                        selectedItem: {
+                            id: '',
+                            type: '',
+                        }
 
                     })
                     setListOfFavMovies(favList)
@@ -92,11 +100,18 @@ export const UserMainPage = () => {
             {user ? <UserHeader setSwitches={setSwitches} name={obj.name} avatar={obj.avatar} email={obj.email}
                                 date={obj.date} id={obj.id}/> :
                 <Spinner returnRoute={'/'}/>}
-            {switches.searchComponent ? <SearchComponent type={type} returnData={returnData} favList={listOfFavMovies}
-                                                         favActorsList={listOfFavActors}/> : null}
+            {switches.searchComponent ?
+                <SearchComponent setSwitches={setSwitches} type={type} returnData={returnData} favList={listOfFavMovies}
+                                 favActorsList={listOfFavActors}/> : null}
             {switches.nowInCinemas ? <NowInCinemasComponent setSwitches={setSwitches}/> : null}
             {switches.soonInCinemas ? <ComingSoonMovies setSwitches={setSwitches}/> : null}
             {switches.favourites ? <FavouritesComponent setSwitches={setSwitches}/> : null}
+            {switches.allDataComponent ?
+                obj.selectedItem.type === 'movie' ?
+                    <AllDataComponent id={obj.selectedItem.id} type={obj.selectedItem.type}
+                                      setSwitches={setSwitches}/> :
+                    <AllDataComponentActor setSwitches={setSwitches} id={obj.selectedItem.id}
+                                           type={obj.selectedItem.type}/> : null}
         </>
     )
 }

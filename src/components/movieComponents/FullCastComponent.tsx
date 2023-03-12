@@ -1,14 +1,35 @@
-import React from "react";
-import {SingleMovieSpecific,MovieListEntity,ActorsListEntity} from 'types'
-import {Link} from "react-router-dom";
+import React, {Dispatch, SetStateAction, useContext} from "react";
+import {SingleMovieSpecific} from 'types'
+import {UserDataContext} from "../../contexts/UserDataContext";
+
 
 interface Props {
     foundData:SingleMovieSpecific,
-    listOfData:MovieListEntity[],
+    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean;allDataComponent:boolean, }>>;
 }
 
 export const FullCastComponent = (props:Props)=>{
-    const{foundData,listOfData}=props
+const{setUserData}=useContext(UserDataContext)
+    const handleSeeMore = (e:any)=>{
+
+        props.setSwitches({
+            favourites:false,
+            soonInCinemas:false,
+            nowInCinemas:false,
+            searchComponent:false,
+            allDataComponent:true,
+
+        })
+        setUserData((prev: any)=>({
+            ...prev,
+            selectedItem:{
+                id:e.target.id,
+                type:'actor',
+            }
+        }))
+
+    }
+    const{foundData}=props
 
     return (foundData.fullCast ? (foundData.fullCast.actors ? <ul className={'cast'}>
         {foundData.fullCast.actors.map(el => {
@@ -21,8 +42,7 @@ export const FullCastComponent = (props:Props)=>{
                 <div className="text actor">
                     {el.name ? <h2>{el.name}</h2> : null}
                     {el.asCharacter ? <h3>Jako: <span>{el.asCharacter}</span></h3> : null}
-                    <Link className={'goBack actor movie'} state={{id: el.id, listOfData: listOfData}}
-                          to={'/allDataActor'}>zobacz więcej</Link>
+                    <button onClick={handleSeeMore} id={el.id} className="goBack actor movie">zobacz więcej</button>
                 </div>
             </li>)
         })}

@@ -1,16 +1,37 @@
-import React from "react";
-import {SingleMovieSpecific,MovieListEntity}from 'types'
-import {Link} from "react-router-dom";
+import React, {Dispatch,  SetStateAction, useContext} from "react";
+import {SingleMovieSpecific} from 'types'
+import {UserDataContext} from "../../contexts/UserDataContext";
 
 interface Props {
-    foundData:SingleMovieSpecific,
-    listOfData:MovieListEntity[]
+    foundData: SingleMovieSpecific,
+    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>;
 }
-export const SimilarsComponent = (props:Props)=>{
-const{foundData,listOfData}=props
 
+export const SimilarsComponent = (props: Props) => {
+    const {foundData} = props
+    const {setUserData} = useContext(UserDataContext)
+    const handleSeeMore = (e: any) => {
+        window.scrollTo(0, 0)
+        const id = e.target.id
+        props.setSwitches({
+            favourites: false,
+            soonInCinemas: false,
+            nowInCinemas: false,
+            searchComponent: false,
+            allDataComponent: true,
 
-    return (foundData.similars ?  <ul className={'similars picture actor'}>
+        })
+        setUserData((prev: any) => ({
+            ...prev,
+            selectedItem: {
+                id: id,
+                type: 'movie',
+            }
+        }))
+
+    }
+
+    return (foundData.similars ? <ul className={'similars picture actor'}>
         {foundData.similars.map(el => {
             return (<li key={el.id}>
                 {el.image ?
@@ -21,7 +42,7 @@ const{foundData,listOfData}=props
                 <div className="text actor similars">
                     {el.title ? <h2>{el.title}{}</h2> : null}
                     {el.imDbRating ? <h3>Ocena IMDb: <span>{el.imDbRating}</span></h3> : null}
-                    <Link  to={'/allData'} state={{id:el.id,listOfData:listOfData,type:'movie'}} className={'seeMore'}>zobacz więcej</Link>
+                    <button onClick={handleSeeMore} id={el.id} className="seeMore">zobacz więcej</button>
                 </div>
             </li>)
         })}

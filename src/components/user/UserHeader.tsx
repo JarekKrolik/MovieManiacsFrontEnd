@@ -9,7 +9,7 @@ interface Props {
     avatar: number,
     date: string,
     email: string,
-    setSwitches:Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean;favourites:boolean }>>,}
+    setSwitches:Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean;favourites:boolean;allDataComponent:boolean, }>>,}
 
 
 export const UserHeader = (props: Props) => {
@@ -25,6 +25,7 @@ export const UserHeader = (props: Props) => {
                             soonInCinemas:false,
                             nowInCinemas:false,
                             searchComponent:true,
+                            allDataComponent:false,
                         }))
                     }} className="button">wyszukiwarka</div>
                     <div onClick={()=>{
@@ -33,6 +34,7 @@ export const UserHeader = (props: Props) => {
                             nowInCinemas:false,
                             searchComponent:false,
                             favourites:true,
+                            allDataComponent:false,
                         }))}} className="button">ulubione</div>
                     <div className="button">do obejrzenia</div>
                     <div onClick={()=>{
@@ -41,6 +43,7 @@ export const UserHeader = (props: Props) => {
                             nowInCinemas:false,
                             searchComponent:false,
                             favourites:false,
+                            allDataComponent:false,
                         }))
                     }} className={'button'} >wkrótce w kinach</div>
                     <div onClick={()=>{
@@ -49,6 +52,7 @@ export const UserHeader = (props: Props) => {
                             nowInCinemas:true,
                             searchComponent:false,
                             favourites:false,
+                            allDataComponent:false,
                         }))
                     }} className={'button'}>teraz w kinach</div>
                 </div>

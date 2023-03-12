@@ -47,7 +47,11 @@ function App() {
                 resultType: '',
                 errorMessage: '',
             },
-        ]
+        ],
+        selectedItem:{
+            id:'',
+            type:'',
+        }
 
 
     }
@@ -67,8 +71,8 @@ const[userData,setUserData]=useState(obj);
           <Route path={'/userMain'} element={<UserMainPage/>}/>
           <Route path={'/userPanel'} element={<UserPanel/>} />
           <Route path={'/delay'} element={<DataDelayComponent/>}/>
-          <Route path={'/allData'} element={<AllDataComponent/>}/>
-          <Route path={'/allDataActor'} element={<AllDataComponentActor/>}/>
+          {/*<Route path={'/allData'} element={<AllDataComponent/>}/>*/}
+          {/*<Route path={'/allDataActor'} element={<AllDataComponentActor/>}/>*/}
           <Route path={'/*'} element={<LoginComponent/>}/>
       </Routes>
 </UserDataContext.Provider>
