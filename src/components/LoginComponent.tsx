@@ -1,20 +1,18 @@
-import React, {useContext, useState} from "react";
+import React from "react";
 import {Link} from "react-router-dom";
 import "./css/LoginComponent.css"
 import {Header} from "./Header";
-import {UserDataContext} from "../contexts/UserDataContext";
-import {GearSpinner} from "./GearSpinner";
-export const LoginComponent=()=>{
-const{obj,setUserData} = useContext(UserDataContext);
+
+export const LoginComponent = () => {
 
 
-
-    return(<>
+    return (
+        <>
             <Header/>
-        <div className={'loginBox'}>
-            <Link to={'/log'}>zaloguj</Link>
-            <Link to={'/register'}>zarejestruj</Link>
-        </div>
+            <div className={'loginBox'}>
+                <Link to={'/log'}>log in</Link>
+                <Link to={'/register'}>register</Link>
+            </div>
         </>
     )
 }

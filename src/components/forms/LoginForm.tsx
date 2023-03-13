@@ -84,26 +84,24 @@ export const LoginForm = (props: Props) => {
 
             },
             body: JSON.stringify({
-                user:reset.user,
-                email:reset.email,
+                user: reset.user,
+                email: reset.email,
             })
 
         });
         const data = await res.json()
-        if(data.response){
+        if (data.response) {
             setLoginData(prev => ({
                 ...prev,
                 errorMessage: data.response
             }));
         }
-        if(data.message){
+        if (data.message) {
             setLoginData(prev => ({
                 ...prev,
                 errorMessage: 'spróbuj ponownie za klika minut...'
             }));
         }
-
-
 
 
     }
@@ -170,47 +168,47 @@ export const LoginForm = (props: Props) => {
             <Header/>
             <div className="formContainer">
                 {showPasswordReset ? <form className={'register loginForm'} onSubmit={handleResetPassword}>
-                    <h3 className={'loginForm'}>Odzyskiwanie hasła</h3>
-                    <label className={'loginLabels'}>nazwa użytkownika<input value={reset.user} onChange={(e) => {
+                    <h3 className={'loginForm'}>Recover password</h3>
+                    <label className={'loginLabels'}>user name<input value={reset.user} onChange={(e) => {
                         setReset((prev) => ({
                             ...prev,
                             user: e.target.value,
                         }))
                     }} type="text"/></label>
-                    <label className={'loginLabels'}>podaj e-mail <input value={reset.email} onChange={(e) => {
+                    <label className={'loginLabels'}>your e-mail <input value={reset.email} onChange={(e) => {
                         setReset(prev => ({
                             ...prev,
                             email: e.target.value,
                         }))
                     }} type="email"/></label>
-                    <button className={'goBack'}>wyślij</button>
+                    <button className={'goBack'}>send</button>
                 </form> : null}
                 {!showPasswordReset ? <form onSubmit={handleForm} className='register loginForm'>
                     <label className={'loginLabels'}>
-                        nazwa użytkownika <input onChange={handleInputData} name={'userName'} value={loginData.userName}
-                                                 required type="text"/>
+                        user name <input onChange={handleInputData} name={'userName'} value={loginData.userName}
+                                         required type="text"/>
                     </label>
                     <label className={'loginLabels'}>
-                        hasło <input onChange={handleInputData} required name={'password'} value={loginData.password}
-                                     type="password"/>
+                        password <input onChange={handleInputData} required name={'password'} value={loginData.password}
+                                        type="password"/>
                     </label>
 
 
-                    <button>zaloguj</button>
-                    <GoBackBtn text={'strona główna'} path={'/'}/>
+                    <button>log in</button>
+                    <GoBackBtn text={'main paige'} path={'/'}/>
                 </form> : null}
                 <p onClick={() => {
                     setShowPasswordReset(prev => !prev)
-                }} className={'reset-password'}>{!showPasswordReset ? 'odzyskaj hasło' : 'wróć'}</p>
+                }} className={'reset-password'}>{!showPasswordReset ? 'recover your password' : 'go back'}</p>
             </div>
             {loginData.errorMessage ?
                 <p onClick={handleErrorMessage} className={'textInfo'}>{loginData.errorMessage}</p> : null}
             {loginData.notVerified ? (
                 <form className={'register'} onSubmit={handleVerificationCode}>
-                    <label className={'loginLabels'}>kod weryfikacyjny <input onChange={handleInputData} required
+                    <label className={'loginLabels'}>verification code <input onChange={handleInputData} required
                                                                               value={loginData.verificationCode}
                                                                               name={'verificationCode'} type="number"/></label>
-                    <button>zapisz</button>
+                    <button>send</button>
                 </form>
             ) : null}
             {!loginData.loggedIn ? null : <Navigate to={'/userMain'}/>}
