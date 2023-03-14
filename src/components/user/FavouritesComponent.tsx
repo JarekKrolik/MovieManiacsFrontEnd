@@ -11,7 +11,7 @@ interface Props {
 
 export const FavouritesComponent = (props: Props) => {
     const {setSwitches} = props
-    const {obj, setUserData} = useContext(UserDataContext)
+    const {userData, setUserData} = useContext(UserDataContext)
     const [favMovies, setFavMovies] = useState<FavouriteMoviesList[]>()
     const [favActors, setFavActors] = useState<FavouriteActorsList[]>()
     const [favVisible, setFavVisible] = useState({
@@ -39,13 +39,13 @@ export const FavouritesComponent = (props: Props) => {
     }
 
     useEffect(() => {
-        setFavMovies(obj.favMovies)
+        setFavMovies(userData.favMovies)
 
-    }, [obj])
+    }, [userData])
     useEffect(() => {
-        setFavActors(obj.favActors)
+        setFavActors(userData.favActors)
 
-    }, [obj])
+    }, [userData])
 
     return (
         <div className="favourites">

@@ -1,6 +1,5 @@
 import React, {Dispatch, SetStateAction, useContext} from "react";
 import{SingleActorSpecific,ActorsListEntity}from'types'
-import {Link} from "react-router-dom";
 import {UserDataContext} from "../../contexts/UserDataContext";
 
 interface StarredIn {
@@ -22,8 +21,8 @@ interface Props{
 
 
 export const ActorStarredInComponent = (props:Props)=>{
-    const{foundData,listOfData,type,handleFilterData,unFilteredData}=props
-    const{obj,setUserData}=useContext(UserDataContext)
+    const{foundData,handleFilterData,unFilteredData}=props
+    const{setUserData}=useContext(UserDataContext)
     const handleSeeMore = (e:any)=>{
 
         props.setSwitches({
@@ -52,8 +51,6 @@ export const ActorStarredInComponent = (props:Props)=>{
                         {el.role ? <h3>Rola : <span>{el.role}</span></h3> : null}
                         {el.year ? <h3>Rok : <span>{el.year}</span></h3> : null}
                         {el.description ? <h3>Opis : <span>{el.description}</span></h3> : null}
-                        {/*<Link className={'goBack actor'} to={'/allData'}*/}
-                        {/*      state={{id: el.id, listOfData: listOfData, type}}>pokaż więcej</Link>*/}
                         <button onClick={handleSeeMore} id={el.id} className={'goBack actor'}>zobacz więcej</button>
                     </div>
                 )

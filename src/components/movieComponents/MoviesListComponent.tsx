@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useContext, useEffect} from "react";
+import React, {Dispatch, SetStateAction, useContext} from "react";
 import {Spinner} from "../Spinner";
 import {MovieListElement} from "./MovieListElement";
 import{MovieListEntity,NowInCinemasMovieEntity}from'types'
@@ -10,7 +10,7 @@ interface Props{
 }
 
 export const MoviesListComponent=(props:Props)=>{
-    const {obj} = useContext(UserDataContext);
+    const {userData} = useContext(UserDataContext);
     const{foundData}=props
 
 
@@ -20,7 +20,7 @@ export const MoviesListComponent=(props:Props)=>{
             {!foundData ? <Spinner returnRoute={'/delay'}/> : foundData.map(el => (
                 <MovieListElement  setSwitches={props.setSwitches} listOfData={foundData} key={el.id} id={el.id} description={el.description}
                                   image={el.image} title={el.title} resultType={el.resultType}
-                                  favList={obj.favMovies} errorMessage={""}/>
+                                  favList={userData.favMovies} errorMessage={""}/>
             ))}
         </ul>
     )

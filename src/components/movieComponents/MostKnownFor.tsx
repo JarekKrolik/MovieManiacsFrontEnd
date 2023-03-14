@@ -3,6 +3,7 @@ import {SingleActorSpecific} from 'types'
 import '../css/MostKnownFor.css'
 import {FavouriteIcon} from "../FavouriteIcon";
 import {UserDataContext} from "../../contexts/UserDataContext";
+import {UserData}from 'types'
 
 
 interface Props {
@@ -11,9 +12,9 @@ interface Props {
 }
 
 export const MostKnownFor = (props: Props) => {
-    const {obj,setUserData} = useContext(UserDataContext)
+    const {userData,setUserData} = useContext(UserDataContext)
     const {foundData} = props
-    const favList = obj.favMovies
+    const favList = userData.favMovies
     const list = favList?.map(e => e.movie_id)
 
     const handleSeeMore = (e:any)=>{
@@ -26,7 +27,7 @@ export const MostKnownFor = (props: Props) => {
             allDataComponent:true,
 
         })
-        setUserData((prev: any)=>({
+        setUserData((prev: UserData)=>({
             ...prev,
             selectedItem:{
                 id:e.target.id,
@@ -40,7 +41,7 @@ export const MostKnownFor = (props: Props) => {
         <div className="starredIn most-known-for">
             <ul>{foundData.knownFor.map(el => {
                 return (<li key={el.id} className={'element'} id={el.id}>
-                    <FavouriteIcon switchedOn={list ? list.includes(el.id) : false} id={el.id} user={obj.name}
+                    <FavouriteIcon switchedOn={list ? list.includes(el.id) : false} id={el.id} user={userData.name}
                                    type={'movie'} image={el.image} title={el.fullTitle}/>
                     <h3>Tytuł : <span>{el.fullTitle}</span></h3>
 

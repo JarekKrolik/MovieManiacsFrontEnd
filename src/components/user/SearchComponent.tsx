@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const SearchComponent = (props: Props) => {
-    const {obj} = useContext(UserDataContext)
+    const {userData} = useContext(UserDataContext)
     const [searchText, setSearchText] = useState('');
     const [foundData, setFoundData] = useState<MovieListEntity[] | ActorsListEntity[]>();
     const [showList, setShowList] = useState(false);
@@ -33,9 +33,9 @@ export const SearchComponent = (props: Props) => {
     const {setSwitches} = props
 
     useEffect(() => {
-        if (obj.selectedItem) {
-            if (obj.selectedItem.type !== '') {
-                setSelect(obj.selectedItem.type)
+        if (userData.selectedItem) {
+            if (userData.selectedItem.type !== '') {
+                setSelect(userData.selectedItem.type)
             } else {
                 setSelect('movie')
             }
@@ -44,12 +44,12 @@ export const SearchComponent = (props: Props) => {
         }
 
 
-        if (obj.searchList) {
+        if (userData.searchList) {
             setShowList(true)
-            setFoundData(obj.searchList)
+            setFoundData(userData.searchList)
         }
 
-    }, [obj.searchList, obj.selectedItem])
+    }, [userData.searchList, userData.selectedItem])
 
     return (
         <>
@@ -63,7 +63,7 @@ export const SearchComponent = (props: Props) => {
                             <ActorsListComponent setSwitches={props.setSwitches} listOfData={foundData} key={el.id}
                                                  title={el.title}
                                                  resultType={el.resultType} image={el.image} id={el.id}
-                                                 description={el.description} errorMessage={""} favList={obj.favActors}/>
+                                                 description={el.description} errorMessage={""} favList={userData.favActors}/>
                         ))
                     : showList ? <MoviesListComponent setSwitches={setSwitches} foundData={foundData}/> : null}
                 {foundData ? <GoUpArrow/> : null}

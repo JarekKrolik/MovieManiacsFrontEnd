@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const NowInCinemasComponent = (props: Props) => {
-    const {obj} = useContext(UserDataContext);
+    const {userData} = useContext(UserDataContext);
     const [foundData, setFoundData] = useState<NowInCinemasMovieEntity[]>()
     const [numberOfDisplayedMovies, setNumberOfDisplayedMovies] = useState(5)
     const [filteredData, setFilteredData] = useState<NowInCinemasMovieEntity[]>()
@@ -51,7 +51,7 @@ export const NowInCinemasComponent = (props: Props) => {
             {filteredData?.length === 0 ? <h2>Brak danych, spróbuj ponownie za kilka minut...</h2> : null}
             <ul className={'moviesList'}>
                 {!filteredData ? <Spinner returnRoute={'/delay'}/> : filteredData.map(el => (
-                    <NowInCinemasElement setSwitches={props.setSwitches} key={el.id} favList={obj.favMovies} fullTitle={el.fullTitle}
+                    <NowInCinemasElement setSwitches={props.setSwitches} key={el.id} favList={userData.favMovies} fullTitle={el.fullTitle}
                                          genres={el.genres} year={el.year} stars={el.stars}
                                          releaseState={el.releaseState} errorMessage={""} image={el.image}
                                          id={el.id} contentRating={el.contentRating} directors={el.directors}

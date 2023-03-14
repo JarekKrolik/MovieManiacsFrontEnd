@@ -1,7 +1,6 @@
 import React, {Dispatch, SetStateAction, useContext} from "react";
 import '../css/MovieListElement.css'
 import {ActorsListEntity,FavouriteActorsList} from 'types'
-import {Link} from "react-router-dom";
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {FavouriteIcon} from "../FavouriteIcon";
 
@@ -12,7 +11,7 @@ interface Props extends ActorsListEntity {
 }
 
 export const ActorsListComponent = (props: Props) => {
-    const {obj,setUserData} = useContext(UserDataContext)
+    const {userData,setUserData} = useContext(UserDataContext)
     const {id, description, image, title,favList} = props
     const list = favList?.map(e=>e.actor_id)
 
@@ -37,7 +36,7 @@ export const ActorsListComponent = (props: Props) => {
 
 
     return (<li className={'element'} id={id}>
-        <FavouriteIcon image={image} switchedOn={list?list.includes(id):false}  id={id} user={obj.name} type={'actor'} title={title}/>
+        <FavouriteIcon image={image} switchedOn={list?list.includes(id):false}  id={id} user={userData.name} type={'actor'} title={title}/>
         <h3>Imię i Nazwisko : <span>{title}</span></h3>
         <p>Krótki opis : <span>{description}</span></p>
         <div className="picture">
@@ -46,7 +45,5 @@ export const ActorsListComponent = (props: Props) => {
                      alt="symbol braku zdjęcia"/>)}
         </div>
         <button onClick={handleSeeMore} className="seeMore">zobacz więcej</button>
-        {/*<Link to={'/allDataActor'} state={{id: id, listOfData: props.listOfData, type: 'actor'}} className={'seeMore'}>zobacz*/}
-        {/*    więcej</Link>*/}
     </li>)
 }

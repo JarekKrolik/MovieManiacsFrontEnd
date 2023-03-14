@@ -8,7 +8,7 @@ import {AvatarComponent} from "./AvatarComponent";
 
 
 export const UserPanel = () => {
-    const {obj, setUserData} = useContext(UserDataContext)
+    const {userData, setUserData} = useContext(UserDataContext)
     const [avatar, setAvatar] = useState(0)
     const [redirect, setRedirect] = useState(false)
     const[showNewPassword,setShowNewPassword]=useState(false)
@@ -43,7 +43,7 @@ export const UserPanel = () => {
     const handlePasswordChange = async (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         if(newPassword.password===newPassword.confirmPassword){
-            const res = await fetch(`${apiUrl}/user/change_password/${obj.id}`, {
+            const res = await fetch(`${apiUrl}/user/change_password/${userData.id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json'
@@ -73,11 +73,11 @@ export const UserPanel = () => {
 
         try {
             setUserData({
-                ...obj,
+                ...userData,
                 avatar: avatar,
             });
             setRedirect(true)
-            const res = await (fetch(`${apiUrl}/user/${obj.id}`, {
+            const res = await (fetch(`${apiUrl}/user/${userData.id}`, {
 
                 method: "PUT",
                 headers: {
@@ -93,12 +93,12 @@ export const UserPanel = () => {
 
     }
 
-    const date = new Date(obj.date)
+    const date = new Date(userData.date)
 
 
     return (
         <>
-            {obj.id ? null : <Navigate to={'/'}/>}
+            {userData.id ? null : <Navigate to={'/'}/>}
             (
             <div className="userPanel">
                 {showError.display?<p onClick={()=>{
@@ -109,7 +109,7 @@ export const UserPanel = () => {
                     setShowNewPassword(false)
                 }} className="textInfo">{showError.errorMessage}</p>:null}
                 <div className="text">
-                    <h3>Użytkownik : {obj.name}</h3>
+                    <h3>Użytkownik : {userData.name}</h3>
                     <p>Data założenia konta na MovieManiac : <br/>{date.toLocaleDateString()}</p>
                 </div>
                 <div className="form">

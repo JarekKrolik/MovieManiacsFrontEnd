@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import '../components/css/FavouriteIcon.css'
 import {MovieFinder} from "../repository/MovieFinder";
 import {UserDataContext} from "../contexts/UserDataContext";
+import{UserData}from'types'
 
 interface Props {
     id: string,
@@ -15,11 +16,11 @@ interface Props {
 
 export const FavouriteIcon = (props: Props) => {
     const [switchOn, setSwitch] = useState(false)
-    const {obj, setUserData} = useContext(UserDataContext)
+    const {userData, setUserData} = useContext(UserDataContext)
 
     useEffect(() => {
         setSwitch(props.switchedOn)
-    }, [])
+    }, [props.switchedOn])
 
     const handleIconClick = async () => {
 
@@ -27,7 +28,7 @@ export const FavouriteIcon = (props: Props) => {
             if (props.type === 'movie') {
 
 
-                setUserData((prev: any) => ({
+                setUserData((prev:UserData) => ({
                     ...prev,
                     favMovies: [...prev.favMovies, {
                         user: '',
@@ -65,7 +66,7 @@ export const FavouriteIcon = (props: Props) => {
 
 
             if (props.type === 'actor') {
-                const newArr = obj.favActors.filter(e => e.actor_id !== props.id)
+                const newArr = userData.favActors.filter(e => e.actor_id !== props.id)
                 setUserData((prev: any) => ({
                     ...prev,
                     favActors: newArr,
@@ -73,7 +74,7 @@ export const FavouriteIcon = (props: Props) => {
             }
 
             if (props.type === 'movie') {
-                const newArr = obj.favMovies.filter(e => e.movie_id !== props.id)
+                const newArr = userData.favMovies.filter(e => e.movie_id !== props.id)
                 setUserData((prev: any) => ({
                     ...prev,
                     favMovies: newArr,

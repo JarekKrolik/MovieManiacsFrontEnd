@@ -30,13 +30,13 @@ export const NowInCinemasElement = (props: Props) => {
 
     }
 
-    const {obj} = useContext(UserDataContext)
+    const {userData} = useContext(UserDataContext)
     const {favList} = props;
     const list = favList?.map(e => e.movie_id)
 
     return (
         <li className={'element in-cinema'} id={props.id}>
-            <FavouriteIcon switchedOn={list ? list.includes(props.id) : false} id={props.id} user={obj.name}
+            <FavouriteIcon switchedOn={list ? list.includes(props.id) : false} id={props.id} user={userData.name}
                            type={'movie'} image={props.image} title={props.fullTitle}/>
             {props.fullTitle ? <h3>Tytuł : <span>{props.fullTitle}</span></h3> : null}
             {props.releaseState ? <h3>Premiera : <span>{props.releaseState}</span></h3> : null}

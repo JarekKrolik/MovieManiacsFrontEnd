@@ -1,8 +1,6 @@
-import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
+import React, {Dispatch, SetStateAction, useContext} from "react";
 import {MovieListEntity} from 'types'
 import '../css/MovieListElement.css'
-
-import {Link, Navigate} from "react-router-dom";
 import {FavouriteIcon} from "../FavouriteIcon";
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {FavouriteMoviesList} from 'types'
@@ -14,7 +12,7 @@ interface Props extends MovieListEntity {
 }
 
 export const MovieListElement = (props: Props) => {
-    const {obj,setUserData} = useContext(UserDataContext)
+    const {userData,setUserData} = useContext(UserDataContext)
     const {id, description, image, resultType, title, favList} = props;
 
     const list = favList?.map(e => e.movie_id)
@@ -41,7 +39,7 @@ export const MovieListElement = (props: Props) => {
 
     return (
         <li className={'element'} id={id}>
-            <FavouriteIcon switchedOn={list ? list.includes(id) : false} id={id} user={obj.name} type={'movie'}
+            <FavouriteIcon switchedOn={list ? list.includes(id) : false} id={id} user={userData.name} type={'movie'}
                            image={image} title={title}/>
             <h3>Tytuł : <span>{title}</span></h3>
 
@@ -53,8 +51,6 @@ export const MovieListElement = (props: Props) => {
                          alt="symbol braku zdjęcia"/>}
             </div>
             <button onClick={handleSeeMore} className="seeMore">zobacz więcej</button>
-            {/*<Link  to={'/allData'} state={{id:id,listOfData:props.listOfData,type:'movie'}} className={'seeMore'}>zobacz więcej</Link>*/}
-
 
         </li>
 

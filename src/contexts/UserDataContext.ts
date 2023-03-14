@@ -1,7 +1,8 @@
 import {createContext} from "react";
+import{UserData}from'types'
 
 export const UserDataContext = createContext({
-    obj: {
+    userData: {
         id: '',
         name: '',
         date: '',
@@ -36,7 +37,7 @@ export const UserDataContext = createContext({
         }
 
     },
-    setUserData: (obj: any) => {
+    setUserData: (userData: UserData) => {
     }
 })
 

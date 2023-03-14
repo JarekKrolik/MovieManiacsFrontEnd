@@ -8,8 +8,8 @@ interface Props {
 }
 
 export const BasicMovieInfo = (props: Props) => {
-    const {obj} = useContext(UserDataContext)
-    const favList = obj.favMovies
+    const {userData} = useContext(UserDataContext)
+    const favList = userData.favMovies
     const list = favList?.map(e => e.movie_id)
     const {foundData} = props
     return (
@@ -18,7 +18,7 @@ export const BasicMovieInfo = (props: Props) => {
                 backgroundImage: `url(${foundData.image})`
             }}>
                 <div className="shade"></div>
-                <FavouriteIcon id={foundData.id} user={obj.name} type={'movie'} title={foundData.fullTitle} switchedOn={list?list.includes(foundData.id):false} image={foundData.image}/>
+                <FavouriteIcon id={foundData.id} user={userData.name} type={'movie'} title={foundData.fullTitle} switchedOn={list?list.includes(foundData.id):false} image={foundData.image}/>
                 {foundData.fullTitle ? <h2>Tytuł : <span>{foundData.fullTitle}</span></h2> :
                     <h2>Brak danych w bazie IMDb...</h2>}
                 {foundData.year ? <h3>Rok : <span>{foundData.year}</span></h3> : null}
