@@ -9,7 +9,7 @@ interface Props {
 
 export const SimilarsComponent = (props: Props) => {
     const {foundData} = props
-    const {setUserData} = useContext(UserDataContext)
+    const {setUserData,userData} = useContext(UserDataContext)
     const handleSeeMore = (e: any) => {
         window.scrollTo(0, 0)
         const id = e.target.id
@@ -21,8 +21,8 @@ export const SimilarsComponent = (props: Props) => {
             allDataComponent: true,
 
         })
-        setUserData((prev: any) => ({
-            ...prev,
+        setUserData( ({
+            ...userData,
             selectedItem: {
                 id: id,
                 type: 'movie',

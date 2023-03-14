@@ -15,38 +15,39 @@ import{UserData}from'types'
 function App() {
 
     const userDataObject:UserData = {
-        name: '',
-        id: '',
-        avatar: 0,
-        date: '',
-        email: '',
-        movieId: '',
-        favMovies: [{
-            user: '',
-            movie_id: '',
+
             name: '',
-            image: '',
-        }],
-        favActors: [{
-            user: '',
-            actor_id: '',
-            name: '',
-            image: '',
-        }],
-        searchList: [
-            {
-                id: '',
-                title: '',
-                description: '',
-                image: '',
-                resultType: '',
-                errorMessage: '',
-            },
-        ],
-        selectedItem: {
             id: '',
-            type: '',
-        }
+            avatar: 0,
+            date: '',
+            email: '',
+            movieId: '',
+            favMovies: [{
+                user: '',
+                movie_id: '',
+                name: '',
+                image: '',
+            }],
+            favActors: [{
+                user: '',
+                actor_id: '',
+                name: '',
+                image: '',
+            }],
+            searchList: [
+                {
+                    id: '',
+                    title: '',
+                    description: '',
+                    image: '',
+                    resultType: '',
+                    errorMessage: '',
+                },
+            ],
+            selectedItem: {
+                id: '',
+                type: '',
+            }
 
 
     }

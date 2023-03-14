@@ -22,7 +22,7 @@ interface Props{
 
 export const ActorStarredInComponent = (props:Props)=>{
     const{foundData,handleFilterData,unFilteredData}=props
-    const{setUserData}=useContext(UserDataContext)
+    const{setUserData,userData}=useContext(UserDataContext)
     const handleSeeMore = (e:any)=>{
 
         props.setSwitches({
@@ -33,8 +33,8 @@ export const ActorStarredInComponent = (props:Props)=>{
             allDataComponent:true,
 
         })
-        setUserData((prev: any)=>({
-            ...prev,
+        setUserData(({
+            ...userData,
             selectedItem:{
                 id:e.target.id,
                 type:'movie',

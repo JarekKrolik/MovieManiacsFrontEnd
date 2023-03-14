@@ -26,8 +26,8 @@ export const MovieListElement = (props: Props) => {
             allDataComponent:true,
 
         })
-        setUserData((prev: any)=>({
-            ...prev,
+        setUserData(({
+            ...userData,
             selectedItem:{
                 id:id,
                 type:'movie',

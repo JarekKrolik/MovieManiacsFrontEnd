@@ -27,7 +27,7 @@ interface Props {
 
 export const AllDataComponentActor = (props: Props) => {
     const [unFilteredData, setUnFilteredData] = useState<StarredIn[] | null>()
-    const {setUserData} = useContext(UserDataContext)
+    const {setUserData,userData} = useContext(UserDataContext)
     const [filter, setFilter] = useState('')
     const [switches, setSwitches] = useState({
         starredIn: false,
@@ -58,10 +58,10 @@ export const AllDataComponentActor = (props: Props) => {
 
             const res = await MovieFinder.findActorById(props.id) as unknown as SingleActorSpecific
             if (res.errorMessage.includes('Invalid')) {
-                setUserData((prev: { selectedItem: any; })=>({
-                    ...prev,
+                setUserData(({
+                    ...userData,
                     selectedItem:{
-                        ...prev.selectedItem,
+                        ...userData.selectedItem,
                         type:'movie'
                     }
                 }))

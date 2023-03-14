@@ -24,8 +24,8 @@ export const ActorsListComponent = (props: Props) => {
             allDataComponent:true,
 
         })
-        setUserData((prev: any)=>({
-            ...prev,
+        setUserData(({
+            ...userData,
             selectedItem:{
                 id:id,
                 type:'actor',

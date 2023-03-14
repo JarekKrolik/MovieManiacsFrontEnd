@@ -32,7 +32,7 @@ export const AllDataComponent = (props:Props) => {
     });
     const [foundData, setFoundData] = useState<SingleMovieSpecific>()
     const [youTubeTrailer, setYouTubeTrailer] = useState<YoutubeTrailer>()
-    const {setUserData}=useContext(UserDataContext)
+    const {setUserData,userData}=useContext(UserDataContext)
 
 
     useEffect(() => {
@@ -42,10 +42,10 @@ export const AllDataComponent = (props:Props) => {
             const res = await MovieFinder.getOneMovieById(props.id) as SingleMovieSpecific;
             const youTubeTrailerRes = await MovieFinder.getYouTubeTrailer(props.id) as YoutubeTrailer;
             if (res.errorMessage.includes('Invalid')) {
-                setUserData((prev: { selectedItem: any; })=>({
-                    ...prev,
+                setUserData(({
+                    ...userData,
                     selectedItem:{
-                        ...prev.selectedItem,
+                        ...userData.selectedItem,
                         type:'actor'
                     }
                 }))

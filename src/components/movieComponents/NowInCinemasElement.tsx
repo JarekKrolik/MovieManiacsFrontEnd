@@ -20,8 +20,8 @@ export const NowInCinemasElement = (props: Props) => {
             allDataComponent: true,
 
         })
-        setUserData((prev: any) => ({
-            ...prev,
+        setUserData( ({
+            ...userData,
             selectedItem: {
                 id: e.target.id,
                 type: 'movie',

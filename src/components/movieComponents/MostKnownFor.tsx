@@ -27,8 +27,8 @@ export const MostKnownFor = (props: Props) => {
             allDataComponent:true,
 
         })
-        setUserData((prev: UserData)=>({
-            ...prev,
+        setUserData(({
+            ...userData,
             selectedItem:{
                 id:e.target.id,
                 type:'movie',

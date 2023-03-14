@@ -16,7 +16,7 @@ interface Props {
 
 export const FavouriteIcon = (props: Props) => {
     const [switchOn, setSwitch] = useState(false)
-    const {userData, setUserData} = useContext(UserDataContext)
+    const {userData,setUserData} = useContext(UserDataContext)
 
     useEffect(() => {
         setSwitch(props.switchedOn)
@@ -28,9 +28,9 @@ export const FavouriteIcon = (props: Props) => {
             if (props.type === 'movie') {
 
 
-                setUserData((prev:UserData) => ({
-                    ...prev,
-                    favMovies: [...prev.favMovies, {
+                setUserData( ({
+                    ...userData,
+                    favMovies: [...userData.favMovies, {
                         user: '',
                         movie_id: props.id,
                         image: props.image,
@@ -39,9 +39,9 @@ export const FavouriteIcon = (props: Props) => {
                 }));
             }
             if (props.type === 'actor') {
-                setUserData((prev: any) => ({
-                    ...prev,
-                    favActors: [...prev.favActors,
+                setUserData( ({
+                    ...userData,
+                    favActors: [...userData.favActors,
                         {
                             user: '',
                             actor_id: props.id,
@@ -67,16 +67,16 @@ export const FavouriteIcon = (props: Props) => {
 
             if (props.type === 'actor') {
                 const newArr = userData.favActors.filter(e => e.actor_id !== props.id)
-                setUserData((prev: any) => ({
-                    ...prev,
+                setUserData(({
+                    ...userData,
                     favActors: newArr,
                 }))
             }
 
             if (props.type === 'movie') {
                 const newArr = userData.favMovies.filter(e => e.movie_id !== props.id)
-                setUserData((prev: any) => ({
-                    ...prev,
+                setUserData( ({
+                    ...userData,
                     favMovies: newArr,
                 }))
             }

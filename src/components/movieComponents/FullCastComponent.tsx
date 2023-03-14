@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const FullCastComponent = (props:Props)=>{
-const{setUserData}=useContext(UserDataContext)
+const{setUserData,userData}=useContext(UserDataContext)
     const handleSeeMore = (e:any)=>{
 
         props.setSwitches({
@@ -20,8 +20,8 @@ const{setUserData}=useContext(UserDataContext)
             allDataComponent:true,
 
         })
-        setUserData((prev: any)=>({
-            ...prev,
+        setUserData(({
+            ...userData,
             selectedItem:{
                 id:e.target.id,
                 type:'actor',

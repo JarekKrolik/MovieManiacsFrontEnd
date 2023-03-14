@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const LoginForm = (props: Props) => {
-    const {setUserData} = useContext(UserDataContext)
+    const {setUserData,userData} = useContext(UserDataContext)
     const [showPasswordReset, setShowPasswordReset] = useState(false)
     const [reset, setReset] = useState({
         email: '',
@@ -42,7 +42,7 @@ export const LoginForm = (props: Props) => {
 
             setLoginData(prev => ({
                 ...prev,
-                errorMessage: 'kod weryfikacyjny prawidłowy',
+                errorMessage: 'verification code correct.',
                 notVerified: false,
 
 
@@ -51,7 +51,7 @@ export const LoginForm = (props: Props) => {
         } else {
             setLoginData(prev => ({
                 ...prev,
-                errorMessage: 'błędny kod weryfikacyjny !',
+                errorMessage: 'wrong verification number !',
                 notVerified: true,
             }))
 
@@ -99,7 +99,7 @@ export const LoginForm = (props: Props) => {
         if (data.message) {
             setLoginData(prev => ({
                 ...prev,
-                errorMessage: 'spróbuj ponownie za klika minut...'
+                errorMessage: 'try again later...'
             }));
         }
 
@@ -151,6 +151,7 @@ export const LoginForm = (props: Props) => {
 
             if (data.id) {
                 setUserData({
+                    ...userData,
                     id: data.id,
                 })
                 setLoginData(prev => ({

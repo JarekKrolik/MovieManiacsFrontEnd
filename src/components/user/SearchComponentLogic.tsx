@@ -3,6 +3,7 @@ import {MovieFinder} from "../../repository/MovieFinder";
 import {MovieListEntity, ActorsListEntity, Response} from 'types'
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {SearchComponentForm} from "./SearchComponentForm";
+import{UserData}from'types'
 
 
 interface Props {
@@ -22,7 +23,7 @@ interface Props {
 
 export const SearchComponentLogic = (props: Props) => {
     const {setSearchText, setShowList, setFoundData, setSelect, setErrors, select, searchText, foundData} = props
-    const {setUserData} = useContext(UserDataContext)
+    const {userData,setUserData} = useContext(UserDataContext)
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -32,10 +33,10 @@ export const SearchComponentLogic = (props: Props) => {
     }
 
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setUserData((prev: { selectedItem: any; }) => ({
-            ...prev,
+        setUserData(  ({
+            ...userData,
             selectedItem: {
-                ...prev.selectedItem,
+                ...userData.selectedItem,
                 type: e.target.value
             }
         }))
@@ -70,8 +71,8 @@ export const SearchComponentLogic = (props: Props) => {
 
 
                 const finalData = result.results.filter(el => el.resultType === 'Movie') as MovieListEntity[]
-                setUserData((prev: any) => ({
-                    ...prev,
+                setUserData(({
+                    ...userData,
                     searchList: finalData,
                 }))
                 setFoundData(finalData);
@@ -98,8 +99,8 @@ export const SearchComponentLogic = (props: Props) => {
                     ...prev,
                     notFound: false,
                 }))
-                setUserData((prev: any) => ({
-                    ...prev,
+                setUserData( ({
+                    ...userData,
                     searchList: finalData,
                 }))
                 setFoundData(finalData)
@@ -128,8 +129,8 @@ export const SearchComponentLogic = (props: Props) => {
                     ...prev,
                     notFound: false,
                 }))
-                setUserData((prev: any) => ({
-                    ...prev,
+                setUserData( ({
+                    ...userData,
                     searchList: finalData,
                 }))
                 setFoundData(finalData)
