@@ -3,17 +3,25 @@ import {SingleMovieSpecific} from 'types'
 import '../css/WikiDataComponent.css'
 interface Props {
     foundData: SingleMovieSpecific,
-    offButtonHandle:Dispatch<SetStateAction<{ fullCast: boolean; trailer: boolean; photos: boolean; posters: boolean; similars: boolean; wiki: boolean; }>>,}
+    setSwitches:Dispatch<SetStateAction<{
+        fullCast: boolean;
+        trailer: boolean;
+        photos: boolean;
+        posters: boolean;
+        similars: boolean;
+        wiki: boolean;
+        others:boolean;
+    }>>,}
 
 
 export const WikiDataComponent = (props:Props)=>{
     const[backGroundImage,setBackgroundImage] = useState<string>()
-    const{foundData,offButtonHandle}=props
+    const{foundData,setSwitches}=props
     useEffect(()=>{
         const random = Math.floor(Math.random()*foundData.images.items.length)
         const backPic = foundData.images.items[random].image;
         if(backPic){setBackgroundImage(backPic)}else {setBackgroundImage(foundData.image)}
-    },[])
+    },[foundData.image,foundData.images.items])
 
     return(
         foundData.wikipedia.plotFull?
@@ -21,15 +29,15 @@ export const WikiDataComponent = (props:Props)=>{
     backgroundImage:`url(${backGroundImage})`
 }}>
     <button onClick={()=>{
-        offButtonHandle(prev=>({
+        setSwitches(prev=>({
             ...prev,
             wiki:false,
         }))
-    }} className="return">ukryj wiki</button>
+    }} className="return">hide wiki</button>
     <div className="shade"></div>
 
-    <h2>Więcej informacji o filmie</h2>
-    <p>{foundData.wikipedia.plotFull.plainText?foundData.wikipedia.plotFull.plainText:'niestety brak danych...'}</p>
+    <h2>More information about the movie</h2>
+    <p>{foundData.wikipedia.plotFull.plainText?foundData.wikipedia.plotFull.plainText:'sorry, no data...'}</p>
 
 
 

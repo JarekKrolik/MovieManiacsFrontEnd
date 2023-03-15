@@ -138,6 +138,10 @@
 
 }
 
+.goBack:last-of-type{
+    margin-bottom: 3em;
+}
+
 h2.poster {
     text-transform: uppercase;
     text-align: center;
@@ -368,6 +372,8 @@ text.actor.similars {
         flex-grow: 1;
 
     }
+
+
 
     .goBack.actor {
 

@@ -27,7 +27,7 @@ export const UserHeader = (props: Props) => {
                             searchComponent:true,
                             allDataComponent:false,
                         }))
-                    }} className="button">wyszukiwarka</div>
+                    }} className="button">search engine</div>
                     <div onClick={()=>{
                         props.setSwitches(({
                             soonInCinemas:false,
@@ -35,8 +35,8 @@ export const UserHeader = (props: Props) => {
                             searchComponent:false,
                             favourites:true,
                             allDataComponent:false,
-                        }))}} className="button">ulubione</div>
-                    <div className="button">do obejrzenia</div>
+                        }))}} className="button">favourites</div>
+                    <div className="button">to watch</div>
                     <div onClick={()=>{
                         props.setSwitches(({
                             soonInCinemas:true,
@@ -45,7 +45,7 @@ export const UserHeader = (props: Props) => {
                             favourites:false,
                             allDataComponent:false,
                         }))
-                    }} className={'button'} >wkrótce w kinach</div>
+                    }} className={'button'} >soon in cinemas</div>
                     <div onClick={()=>{
                         props.setSwitches(({
                             soonInCinemas:false,
@@ -54,20 +54,20 @@ export const UserHeader = (props: Props) => {
                             favourites:false,
                             allDataComponent:false,
                         }))
-                    }} className={'button'}>teraz w kinach</div>
+                    }} className={'button'}>now in cinemas</div>
                 </div>
                 <div className="links">
                     <Link to={'/userPanel'}>
                         <div className="avatar">
                             <img src={require(`../../assets/img/avatars/${props.avatar}.png`)}
-                                 alt="widok awatara użytkownika"/>
+                                 alt="user avatar"/>
                             <p>{props.name}</p>
                         </div>
                     </Link>
                     <Link to={'/'}>
                         <div className="avatar logout">
-                            <img src={require(`../../assets/img/log-out-2355227_640.png`)} alt="obrazek wylogowania"/>
-                            <p>wyloguj</p>
+                            <img src={require(`../../assets/img/log-out-2355227_640.png`)} alt="logout icon"/>
+                            <p>log out</p>
                         </div>
                     </Link>
                 </div>

@@ -19,15 +19,15 @@ export const BasicActorInfo = (props:Props)=>{
             <FavouriteIcon id={foundData.id} user={userData.name} type={'actor'} title={foundData.name} switchedOn={list?list.includes(foundData.id):false} image={foundData.image}/>
             <div className="text actor">
                 {foundData.name ? <h2>{foundData.name}</h2> : null}
-                {foundData.birthDate ? <h3>Data urodzenia : <span>{foundData.birthDate}</span></h3> : null}
-                {foundData.deathDate ? <h3>Data śmierci : <span>{foundData.deathDate}</span></h3> : null}
-                {foundData.height ? <h3>Wzrost : <span>{foundData.height}</span></h3> : null}
-                {foundData.awards ? <h3>Nagrody : <span>{foundData.awards}</span></h3> : null}
-                {foundData.summary ? <h3>Opis : <span>{foundData.summary}</span></h3> : null}
+                {foundData.birthDate ? <h3>Birth date : <span>{foundData.birthDate}</span></h3> : null}
+                {foundData.deathDate ? <h3>Death date : <span>{foundData.deathDate}</span></h3> : null}
+                {foundData.height ? <h3>Height : <span>{foundData.height}</span></h3> : null}
+                {foundData.awards ? <h3>Awards : <span>{foundData.awards}</span></h3> : null}
+                {foundData.summary ? <h3>Summary : <span>{foundData.summary}</span></h3> : null}
 
             </div>
             <div className="picture actor">
-                <img src={foundData.image} alt="zdjęcie aktora lub aktorki"/>
+                <img src={foundData.image} alt="actor or actress"/>
             </div>
         </div>
     )

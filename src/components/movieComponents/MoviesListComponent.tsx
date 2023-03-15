@@ -6,7 +6,6 @@ import {UserDataContext} from "../../contexts/UserDataContext";
 interface Props{
     foundData:MovieListEntity[]|NowInCinemasMovieEntity[]|undefined,
     setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean;allDataComponent:boolean, }>>
-
 }
 
 export const MoviesListComponent=(props:Props)=>{

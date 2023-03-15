@@ -4,6 +4,15 @@ import {UserDataContext} from "../../contexts/UserDataContext";
 
 
 interface Props {
+    offButton: Dispatch<SetStateAction<{
+        fullCast: boolean;
+        trailer: boolean;
+        photos: boolean;
+        posters: boolean;
+        similars: boolean;
+        wiki: boolean;
+        others: boolean;
+    }>>;
     foundData:SingleMovieSpecific,
     setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean;allDataComponent:boolean, }>>;
 }
@@ -35,16 +44,22 @@ const{setUserData,userData}=useContext(UserDataContext)
         {foundData.fullCast.actors.map(el => {
             return (<li key={el.id}>
                 {el.image ?
-                    <div className={'picture actor'}><img src={el.image} alt='zdjęcie aktora'/>
+                    <div className={'picture actor'}><img src={el.image} alt='actor or actress'/>
                     </div> : <div className={'picture'}><img
                         src={require('../../assets/img/vecteezy_icon-image-not-found-vector_.jpg')}
-                        alt='zdjęcie aktora'/></div>}
+                        alt='actor or actress'/></div>}
                 <div className="text actor">
                     {el.name ? <h2>{el.name}</h2> : null}
-                    {el.asCharacter ? <h3>Jako: <span>{el.asCharacter}</span></h3> : null}
-                    <button onClick={handleSeeMore} id={el.id} className="goBack actor movie">zobacz więcej</button>
+                    {el.asCharacter ? <h3>As: <span>{el.asCharacter}</span></h3> : null}
+                    <button onClick={handleSeeMore} id={el.id} className="goBack actor movie">see more</button>
+                    <button onClick={()=>{
+                        props.offButton(prev=>({
+                            ...prev,
+                            fullCast:!prev.fullCast,
+                        }))
+                    }} className="return">hide full cast</button>
                 </div>
             </li>)
         })}
-    </ul> : <p>Brak danych w bazie IMDb</p>) : null)
+    </ul> : <p>No data in IMDb database</p>) : null)
 }

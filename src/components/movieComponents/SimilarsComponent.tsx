@@ -1,15 +1,30 @@
-import React, {Dispatch,  SetStateAction, useContext} from "react";
+import React, {Dispatch, SetStateAction, useContext} from "react";
 import {SingleMovieSpecific} from 'types'
 import {UserDataContext} from "../../contexts/UserDataContext";
 
 interface Props {
+    offButton: Dispatch<SetStateAction<{
+        fullCast: boolean;
+        trailer: boolean;
+        photos: boolean;
+        posters: boolean;
+        similars: boolean;
+        wiki: boolean;
+        others: boolean;
+    }>>;
     foundData: SingleMovieSpecific,
-    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>;
+    setSwitches: Dispatch<SetStateAction<{
+        searchComponent: boolean;
+        nowInCinemas: boolean;
+        soonInCinemas: boolean;
+        favourites: boolean;
+        allDataComponent: boolean,
+    }>>;
 }
 
 export const SimilarsComponent = (props: Props) => {
     const {foundData} = props
-    const {setUserData,userData} = useContext(UserDataContext)
+    const {setUserData, userData} = useContext(UserDataContext)
     const handleSeeMore = (e: any) => {
         window.scrollTo(0, 0)
         const id = e.target.id
@@ -21,7 +36,7 @@ export const SimilarsComponent = (props: Props) => {
             allDataComponent: true,
 
         })
-        setUserData( ({
+        setUserData(({
             ...userData,
             selectedItem: {
                 id: id,
@@ -41,11 +56,17 @@ export const SimilarsComponent = (props: Props) => {
                         alt='zdjęcie aktora'/></div>}
                 <div className="text actor similars">
                     {el.title ? <h2>{el.title}{}</h2> : null}
-                    {el.imDbRating ? <h3>Ocena IMDb: <span>{el.imDbRating}</span></h3> : null}
-                    <button onClick={handleSeeMore} id={el.id} className="seeMore">zobacz więcej</button>
+                    {el.imDbRating ? <h3>IMDb rating: <span>{el.imDbRating}</span></h3> : null}
+                    <button onClick={handleSeeMore} id={el.id} className="seeMore">see more</button>
+                    <button onClick={()=>{
+                        props.offButton(prev=>({
+                            ...prev,
+                            similars:!prev.similars,
+                        }))
+                    }} className="return">hide similar movies</button>
                 </div>
             </li>)
         })}
-    </ul> : <p>Brak danych w bazie IMDb</p>)
+    </ul> : <p>No data in IMDb database</p>)
 }
 

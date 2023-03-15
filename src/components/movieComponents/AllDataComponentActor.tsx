@@ -27,7 +27,7 @@ interface Props {
 
 export const AllDataComponentActor = (props: Props) => {
     const [unFilteredData, setUnFilteredData] = useState<StarredIn[] | null>()
-    const {setUserData,userData} = useContext(UserDataContext)
+    const {setUserData, userData} = useContext(UserDataContext)
     const [filter, setFilter] = useState('')
     const [switches, setSwitches] = useState({
         starredIn: false,
@@ -48,8 +48,6 @@ export const AllDataComponentActor = (props: Props) => {
             });
             setUnFilteredData(dataFiltered)
         }
-
-
     }
 
     useEffect(() => {
@@ -60,24 +58,22 @@ export const AllDataComponentActor = (props: Props) => {
             if (res.errorMessage.includes('Invalid')) {
                 setUserData(({
                     ...userData,
-                    selectedItem:{
+                    selectedItem: {
                         ...userData.selectedItem,
-                        type:'movie'
+                        type: 'movie'
                     }
                 }))
             }
-            setFoundData(res);
+            setFoundData(res)
             setUnFilteredData(res.castMovies)
         })()
 
 
-    }, [props.id,setUserData])
+    }, [props.id, setUserData,userData])
 
 
     return (
-
         <div className="allDataElementBox">
-
             {!foundData ? <Spinner returnRoute={'/userMain'}/> : (<>
                     <BasicActorInfo foundData={foundData}/>
                     <button onClick={() => {
@@ -85,19 +81,19 @@ export const AllDataComponentActor = (props: Props) => {
                             ...prev,
                             starredIn: !prev.starredIn,
                         }))
-                    }} className={'goBack actor roles'}>{switches.starredIn ? "ukryj role" : 'role'}
+                    }} className={'goBack actor roles'}>{switches.starredIn ? "hide roles" : 'roles'}
                     </button>
                     {switches.starredIn ?
                         <ActorStarredInComponent setSwitches={props.setSwitches} unFilteredData={unFilteredData}
                                                  foundData={foundData}
                                                  handleFilterData={handleFilterData}
-                                                 listOfData={[]} type={'actor'}/> : null}
+                                                 type={'actor'}/> : null}
                     <button onClick={() => {
                         setSwitches(prev => ({
                             ...prev,
                             mostKnownFor: !prev.mostKnownFor,
                         }))
-                    }} className={'goBack actor roles'}>{switches.mostKnownFor ? 'ukryj' : 'najbardziej znane role'}
+                    }} className={'goBack actor roles'}>{switches.mostKnownFor ? 'hide' : 'most known for'}
                     </button>
                     {switches.mostKnownFor ?
                         <MostKnownFor setSwitches={props.setSwitches} foundData={foundData}/> : null}
@@ -113,7 +109,7 @@ export const AllDataComponentActor = (props: Props) => {
                         searchComponent: true,
                     })
                 )
-            }} className="goBack">zamknij
+            }} className="goBack">close
             </button>
         </div>
     )

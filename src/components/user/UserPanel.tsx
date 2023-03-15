@@ -63,7 +63,7 @@ export const UserPanel = () => {
         }else{
             setShowError(({
                 display: true,
-                errorMessage: 'hasła nie są takie same !'
+                errorMessage: 'passwords are not the same !'
             }))
         }
     }
@@ -109,8 +109,8 @@ export const UserPanel = () => {
                     setShowNewPassword(false)
                 }} className="textInfo">{showError.errorMessage}</p>:null}
                 <div className="text">
-                    <h3>Użytkownik : {userData.name}</h3>
-                    <p>Data założenia konta na MovieManiac : <br/>{date.toLocaleDateString()}</p>
+                    <h3>User : {userData.name}</h3>
+                    <p>MovieManiac account created at : <br/>{date.toLocaleDateString()}</p>
                 </div>
                 <div className="form">
                     <form className={'form'} onSubmit={handleAvatarSelect}>
@@ -118,22 +118,20 @@ export const UserPanel = () => {
                             return (<AvatarComponent key={index} countOfAvatars={index} handleRadioChange={handleRadioChange}/>)
                         })}
 
-                        <button>wybierz swój avatar</button>
+                        <button>choose your avatar </button>
                     </form>
                 </div>
                 {redirect ? <Navigate to={'/userMain'}/> : null}
                 {showNewPassword?<form onSubmit={handlePasswordChange} className={'register loginForm'}>
-                    <label  className={'loginLabels'}>podaj nowe hasło <input onChange={handlePasswordChangeValue} name={'password'} required={true}  type={'password'}/></label>
-                    <label className={'loginLabels'}>powtórz hasło <input onChange={handlePasswordChangeValue} name={'confirmPassword'} required={true} type={'password'}/></label>
-                    <button>wyślij</button>
+                    <label  className={'loginLabels'}>new password <input onChange={handlePasswordChangeValue} name={'password'} required={true}  type={'password'}/></label>
+                    <label className={'loginLabels'}>repeat new password <input onChange={handlePasswordChangeValue} name={'confirmPassword'} required={true} type={'password'}/></label>
+                    <button>send</button>
                 </form>:null}
                 <button onClick={()=>{
                     setShowNewPassword(prev=>!prev)
-                }} className="goBack">{showNewPassword?'zamknij':'zmień hasło'}</button>
+                }} className="goBack">{showNewPassword?'close':'change password'}</button>
 
-                <GoBackBtn text={'powrót'} path={'/userMain'}/>
-
-
+                <GoBackBtn text={'go back'} path={'/userMain'}/>
             </div>
         </>
 

@@ -65,7 +65,7 @@ export const SearchComponent = (props: Props) => {
                                                  resultType={el.resultType} image={el.image} id={el.id}
                                                  description={el.description} errorMessage={""} favList={userData.favActors}/>
                         ))
-                    : showList ? <MoviesListComponent setSwitches={setSwitches} foundData={foundData}/> : null}
+                    : showList ? <MoviesListComponent  setSwitches={setSwitches} foundData={foundData}/> : null}
                 {foundData ? <GoUpArrow/> : null}
             </ul>
         </>

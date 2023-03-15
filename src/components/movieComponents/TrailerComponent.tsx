@@ -21,16 +21,17 @@ export const TrailerComponent = (props: Props) => {
 
 
                 ></iframe>
-            </div> : <p>Brak trailera YouTube...</p> : null}
+            </div> : <p>No trailer available on YouTube...</p> : null}
             {!whichTrailer ? foundData.trailer? <div className="frameContainer">
                 <object
+                    aria-label="Alternative Text"
                     type="video/mp4"
                     data={`${foundData.trailer.linkEmbed}?autoplay=true`}
                     width="100%"
                     height="100%"
-                ></object>
+                >No trailer available...</object>
 
-            </div> : <p>Brak trailera w bazie IMDb...</p> : null
+            </div> : <p>No trailer available on IMDb...</p> : null
 
             }
             <button onClick={() => {

@@ -15,35 +15,35 @@ export const ImagesComponent = (props:Props)=>{
             {foundData.images.items.map(e => {
                 return (
                     <div key={e.title}>
-                        <img loading={'lazy'} src={e.image}/>
+                        <img loading={'lazy'} src={e.image} alt={'movie pictures'}/>
                         <p className="legend">{e.title}</p>
                     </div>
                 )
             })}
-        </Carousel>:<> <h2 className={'poster'}>Przednie postery:</h2>
+        </Carousel>:<> <h2 className={'poster'}>Posters:</h2>
             {foundData.posters.posters.length !== 0 ?
                 <Carousel showArrows={true} emulateTouch={true} useKeyboardArrows={true}
                           dynamicHeight={true} infiniteLoop={true} className={'main-slide'}>
                     {foundData.posters.posters.map(e => {
                         return (
                             <div key={e.id}>
-                                <img loading={'lazy'} src={e.link}/>
+                                <img loading={'lazy'} src={e.link} alt={'posters'}/>
                             </div>
                         )
                     })}
-                </Carousel> : <p>Brak w bazie IMDb</p>}
-            <h2 className={'poster'}>okładki:</h2>
+                </Carousel> : <p>No pictures in IMDb</p>}
+            <h2 className={'poster'}>backdrops :</h2>
             {foundData.posters.backdrops.length !== 0 ?
                 <Carousel showArrows={true} emulateTouch={true} useKeyboardArrows={true}
                           dynamicHeight={true} infiniteLoop={true} className={'main-slide'}>
                     {foundData.posters.backdrops.map(e => {
                         return (
                             <div key={e.id}>
-                                <img loading={'lazy'} src={e.link}/>
+                                <img loading={'lazy'} src={e.link} alt={'posters backdrops'}/>
                             </div>
                         )
                     })}
-                </Carousel> : <p>Brak w bazie IMDb</p>}
+                </Carousel> : <p>No pictures in IMDb</p>}
         </>
     )
 }

@@ -1,5 +1,5 @@
 import React, {Dispatch, SetStateAction, useContext} from "react";
-import{SingleActorSpecific,ActorsListEntity}from'types'
+import{SingleActorSpecific}from'types'
 import {UserDataContext} from "../../contexts/UserDataContext";
 
 interface StarredIn {
@@ -12,7 +12,6 @@ interface StarredIn {
 
 interface Props{
     foundData:SingleActorSpecific,
-    listOfData:ActorsListEntity[],
     type:string,
     unFilteredData:StarredIn[]|null|undefined,
     handleFilterData:(e: React.ChangeEvent<HTMLInputElement>)=>void,
@@ -44,17 +43,17 @@ export const ActorStarredInComponent = (props:Props)=>{
     }
     return(
         <div className={'starredIn'}>
-            {foundData.castMovies?<form className={'register actor'}><label>filtruj wyniki po tytule <input onChange={handleFilterData} type="text"/></label></form>:null}
+            {foundData.castMovies?<form className={'register actor'}><label>search by title <input onChange={handleFilterData} type="text"/></label></form>:null}
             {unFilteredData ? (unFilteredData.map(el => {
                 return (<div key={el.id + Math.random()} className={'roles'}>
-                        {el.title ? <h3>Tytuł : <span>{el.title}</span></h3> : null}
-                        {el.role ? <h3>Rola : <span>{el.role}</span></h3> : null}
-                        {el.year ? <h3>Rok : <span>{el.year}</span></h3> : null}
-                        {el.description ? <h3>Opis : <span>{el.description}</span></h3> : null}
-                        <button onClick={handleSeeMore} id={el.id} className={'goBack actor'}>zobacz więcej</button>
+                        {el.title ? <h3>Title : <span>{el.title}</span></h3> : null}
+                        {el.role ? <h3>Role : <span>{el.role}</span></h3> : null}
+                        {el.year ? <h3>Year : <span>{el.year}</span></h3> : null}
+                        {el.description ? <h3>Description : <span>{el.description}</span></h3> : null}
+                        <button onClick={handleSeeMore} id={el.id} className={'goBack actor'}>see more</button>
                     </div>
                 )
-            })) : <p>Brak danych...</p>}
+            })) : <p>No data...</p>}
         </div>
     )
 }

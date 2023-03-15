@@ -1,0 +1,41 @@
+.others {
+    position: relative;
+    margin: 1em auto;
+    width: 98%;
+    border-radius: 25px;
+    box-shadow: 0 0 15px cornflowerblue;
+    overflow: hidden;
+    padding: 2em;
+
+}
+.others ul{
+    list-style: none;
+}
+.others h2{
+    font-size: 2.2rem;
+    margin: 1em auto;
+    text-align: center;
+    border-bottom: 1px solid cornflowerblue;
+}
+
+.others h3{
+    font-size: 1.7rem;
+    text-transform: uppercase;
+    line-height: 130%;
+    margin: 0.7em auto;
+}
+.others h4 {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    line-height: 120%;
+    margin: 0.5em auto;
+}
+
+.others.btn{
+    display: inline;
+    width:auto;
+    padding: 0.6em;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}

@@ -30,6 +30,8 @@ export const UserMainPage = () => {
         allDataComponent: false,
     })
 
+
+
     useEffect(() => {
         if (!userData.name) {
 
