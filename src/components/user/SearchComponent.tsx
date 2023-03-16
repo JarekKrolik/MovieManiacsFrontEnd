@@ -33,15 +33,16 @@ export const SearchComponent = (props: Props) => {
     const {setSwitches} = props
 
     useEffect(() => {
-        if (userData.selectedItem) {
-            if (userData.selectedItem.type !== '') {
-                setSelect(userData.selectedItem.type)
+        if (userData.searchList)
+            if (userData.selectedItem) {
+                if (userData.selectedItem.type !== '') {
+                    setSelect(userData.selectedItem.type)
+                } else {
+                    setSelect('movie')
+                }
             } else {
                 setSelect('movie')
             }
-        } else {
-            setSelect('movie')
-        }
 
 
         if (userData.searchList) {
@@ -63,9 +64,10 @@ export const SearchComponent = (props: Props) => {
                             <ActorsListComponent setSwitches={props.setSwitches} listOfData={foundData} key={el.id}
                                                  title={el.title}
                                                  resultType={el.resultType} image={el.image} id={el.id}
-                                                 description={el.description} errorMessage={""} favList={userData.favActors}/>
+                                                 description={el.description} errorMessage={""}
+                                                 favList={userData.favActors}/>
                         ))
-                    : showList ? <MoviesListComponent  setSwitches={setSwitches} foundData={foundData}/> : null}
+                    : showList ? <MoviesListComponent setSwitches={setSwitches} foundData={foundData}/> : null}
                 {foundData ? <GoUpArrow/> : null}
             </ul>
         </>

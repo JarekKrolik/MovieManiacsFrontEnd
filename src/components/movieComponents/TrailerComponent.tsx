@@ -1,7 +1,16 @@
-import React, {useState} from "react";
+import React, {Dispatch, SetStateAction, useState} from "react";
 import {YoutubeTrailer, SingleMovieSpecific} from 'types'
 
 interface Props {
+    offButton: Dispatch<SetStateAction<{
+        fullCast: boolean;
+        trailer: boolean;
+        photos: boolean;
+        posters: boolean;
+        similars: boolean;
+        wiki: boolean;
+        others: boolean;
+    }>>;
     youTubeTrailer: YoutubeTrailer,
     foundData: SingleMovieSpecific,
 }
@@ -37,6 +46,12 @@ export const TrailerComponent = (props: Props) => {
             <button onClick={() => {
                 setWhichTrailer(prev => !prev)
             }} className={'goBack'}>{whichTrailer ? 'trailer IMDb' : 'trailer YouTube'}</button>
+            <button onClick={()=>{
+                props.offButton(prev=>({
+                    ...prev,
+                    trailer:!prev.trailer,
+                }))
+            }} className="return">hide trailers</button>
         </>
     )
 }

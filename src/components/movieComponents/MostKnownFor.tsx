@@ -5,6 +5,10 @@ import {FavouriteIcon} from "../FavouriteIcon";
 import {UserDataContext} from "../../contexts/UserDataContext";
 
 interface Props {
+    offButton: Dispatch<SetStateAction<{
+        starredIn: boolean,
+        mostKnownFor: boolean,
+    }>>,
     foundData: SingleActorSpecific,
     setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>;
 }
@@ -56,6 +60,13 @@ export const MostKnownFor = (props: Props) => {
                 </li>)
             })}
             </ul>
+            <button onClick={() => {
+                props.offButton(prev => ({
+                    ...prev,
+                    mostKnownFor: !prev.mostKnownFor,
+                }))
+            }} className="return">hide known for
+            </button>
         </div>
     )
 }

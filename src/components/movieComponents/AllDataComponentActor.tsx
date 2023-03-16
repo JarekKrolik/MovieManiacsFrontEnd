@@ -19,7 +19,13 @@ interface StarredIn {
 }
 
 interface Props {
-    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>;
+    setSwitches: Dispatch<SetStateAction<{
+        searchComponent: boolean;
+        nowInCinemas: boolean;
+        soonInCinemas: boolean;
+        favourites: boolean;
+        allDataComponent: boolean,
+    }>>;
     id: string,
     type: string,
 }
@@ -31,7 +37,7 @@ export const AllDataComponentActor = (props: Props) => {
     const [filter, setFilter] = useState('')
     const [switches, setSwitches] = useState({
         starredIn: false,
-        mostKnownFor: false
+        mostKnownFor: false,
 
     });
     const [foundData, setFoundData] = useState<SingleActorSpecific>()
@@ -69,7 +75,7 @@ export const AllDataComponentActor = (props: Props) => {
         })()
 
 
-    }, [props.id, setUserData,userData])
+    }, [props.id, setUserData, userData])
 
 
     return (
@@ -84,7 +90,9 @@ export const AllDataComponentActor = (props: Props) => {
                     }} className={'goBack actor roles'}>{switches.starredIn ? "hide roles" : 'roles'}
                     </button>
                     {switches.starredIn ?
-                        <ActorStarredInComponent setSwitches={props.setSwitches} unFilteredData={unFilteredData}
+                        <ActorStarredInComponent setSwitches={props.setSwitches}
+                                                 offButton={setSwitches}
+                                                 unFilteredData={unFilteredData}
                                                  foundData={foundData}
                                                  handleFilterData={handleFilterData}
                                                  type={'actor'}/> : null}
@@ -96,7 +104,11 @@ export const AllDataComponentActor = (props: Props) => {
                     }} className={'goBack actor roles'}>{switches.mostKnownFor ? 'hide' : 'most known for'}
                     </button>
                     {switches.mostKnownFor ?
-                        <MostKnownFor setSwitches={props.setSwitches} foundData={foundData}/> : null}
+                        <MostKnownFor
+                            offButton={setSwitches}
+                            setSwitches={props.setSwitches}
+                            foundData={foundData}
+                        /> : null}
                 </>
             )}
 

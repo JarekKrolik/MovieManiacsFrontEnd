@@ -77,7 +77,7 @@ export const AllDataComponent = (props: Props) => {
 
                         {switches.trailer ?
                             youTubeTrailer ?
-                                <TrailerComponent foundData={foundData} youTubeTrailer={youTubeTrailer}/> : null : null}
+                                <TrailerComponent offButton={setSwitches} foundData={foundData} youTubeTrailer={youTubeTrailer}/> : null : null}
                         <button name={'trailer'} className={'goBack'} onClick={() => {
                             setSwitches(prev => ({
                                 ...prev,
@@ -85,7 +85,7 @@ export const AllDataComponent = (props: Props) => {
                             }))
                         }}
                         >{switches.trailer ? 'hide trailers' : 'show trailers'}</button>
-                        {switches.photos ? (foundData.images ? <ImagesComponent posters={false} foundData={foundData}/>
+                        {switches.photos ? (foundData.images ? <ImagesComponent offButton={setSwitches} posters={false} foundData={foundData}/>
                             : <p>no photos in IMDb database</p>) : null}
                         <button className={'goBack'} onClick={() => {
                             setSwitches(prev => ({
@@ -93,7 +93,7 @@ export const AllDataComponent = (props: Props) => {
                                 photos: !prev.photos,
                             }))
                         }}>{switches.photos ? 'hide pictures' : 'show pictures'}</button>
-                        {switches.posters ? (foundData.posters ? <ImagesComponent posters={true} foundData={foundData}/>
+                        {switches.posters ? (foundData.posters ? <ImagesComponent offButton={setSwitches} posters={true} foundData={foundData}/>
                             : <p>brak zdjęć w bazie IMDb</p>) : null}
                         <button className={'goBack'} onClick={() => {
                             setSwitches(prev => ({

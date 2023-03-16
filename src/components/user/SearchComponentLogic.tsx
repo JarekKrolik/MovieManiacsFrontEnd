@@ -3,7 +3,6 @@ import {MovieFinder} from "../../repository/MovieFinder";
 import {MovieListEntity, ActorsListEntity, Response} from 'types'
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {SearchComponentForm} from "./SearchComponentForm";
-import{UserData}from'types'
 
 
 interface Props {
@@ -30,6 +29,7 @@ export const SearchComponentLogic = (props: Props) => {
         setSearchText(e.target.value);
         setShowList(false);
         setFoundData(undefined);
+
     }
 
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {

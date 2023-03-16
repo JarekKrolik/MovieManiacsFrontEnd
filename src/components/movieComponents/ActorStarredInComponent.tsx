@@ -11,7 +11,12 @@ interface StarredIn {
 }
 
 interface Props{
-    foundData:SingleActorSpecific,
+    offButton:Dispatch<SetStateAction<{
+        starredIn: boolean,
+        mostKnownFor: boolean,
+    }>>,
+
+foundData:SingleActorSpecific,
     type:string,
     unFilteredData:StarredIn[]|null|undefined,
     handleFilterData:(e: React.ChangeEvent<HTMLInputElement>)=>void,
@@ -51,6 +56,12 @@ export const ActorStarredInComponent = (props:Props)=>{
                         {el.year ? <h3>Year : <span>{el.year}</span></h3> : null}
                         {el.description ? <h3>Description : <span>{el.description}</span></h3> : null}
                         <button onClick={handleSeeMore} id={el.id} className={'goBack actor'}>see more</button>
+                        <button onClick={()=>{
+                            props.offButton(prev=>({
+                                ...prev,
+                                starredIn:!prev.starredIn,
+                            }))
+                        }} className="return">hide roles</button>
                     </div>
                 )
             })) : <p>No data...</p>}

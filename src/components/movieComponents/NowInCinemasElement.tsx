@@ -38,18 +38,16 @@ export const NowInCinemasElement = (props: Props) => {
         <li className={'element in-cinema'} id={props.id}>
             <FavouriteIcon switchedOn={list ? list.includes(props.id) : false} id={props.id} user={userData.name}
                            type={'movie'} image={props.image} title={props.fullTitle}/>
-            {props.fullTitle ? <h3>Tytuł : <span>{props.fullTitle}</span></h3> : null}
-            {props.releaseState ? <h3>Premiera : <span>{props.releaseState}</span></h3> : null}
-            {props.stars ? <h3>Występują : <span>{props.stars}</span></h3> : null}
-            {props.directors ? <h3>Reżyseria : <span>{props.directors}</span></h3> : null}
+            {props.fullTitle ? <h3>Title : <span>{props.fullTitle}</span></h3> : null}
+            {props.releaseState ? <h3>Release date : <span>{props.releaseState}</span></h3> : null}
+            {props.stars ? <h3>Stars : <span>{props.stars}</span></h3> : null}
+            {props.directors ? <h3>Directors : <span>{props.directors}</span></h3> : null}
             <div className="picture">
-                {props.image ? <img src={props.image} alt="plakat z filmu"/> :
+                {props.image ? <img src={props.image} alt="poster from movie"/> :
                     <img src={require('../../assets/img/vecteezy_icon-image-not-found-vector_.jpg')}
-                         alt="symbol braku zdjęcia"/>}
+                         alt="poster from movie"/>}
             </div>
-            <button onClick={handleSeeMore} id={props.id} className="seeMore">zobacz więcej</button>
-
-
+            <button onClick={handleSeeMore} id={props.id} className="seeMore">see more</button>
         </li>
 
 

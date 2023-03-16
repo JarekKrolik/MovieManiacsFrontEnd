@@ -242,6 +242,7 @@ h2.poster {
 
 .starredIn {
     width: 98%;
+    max-width: 1200px;
     box-shadow: 0 0 15px cornflowerblue;
     overflow: hidden;
     border-radius: 25px;

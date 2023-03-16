@@ -1,26 +1,52 @@
-import React from "react";
+import React, {Dispatch, SetStateAction} from "react";
 import {Carousel} from "react-responsive-carousel";
-import{SingleMovieSpecific}from'types'
-interface Props{
-    foundData:SingleMovieSpecific,
-    posters:boolean,
+import {SingleMovieSpecific} from 'types'
+
+interface Props {
+    offButton: Dispatch<SetStateAction<{
+        fullCast: boolean;
+        trailer: boolean;
+        photos: boolean;
+        posters: boolean;
+        similars: boolean;
+        wiki: boolean;
+        others: boolean;
+    }>>;
+    foundData: SingleMovieSpecific,
+    posters: boolean,
 }
 
-export const ImagesComponent = (props:Props)=>{
-    const{foundData,posters}=props
+export const ImagesComponent = (props: Props) => {
+    const {foundData, posters} = props
 
-    return(
-        !posters?<Carousel showArrows={true} emulateTouch={true} useKeyboardArrows={true}
-                  dynamicHeight={true} infiniteLoop={true} className={'main-slide'}>
+    return (
+        !posters ? <> <Carousel showArrows={true} emulateTouch={true} useKeyboardArrows={true}
+                                dynamicHeight={true} infiniteLoop={true} className={'main-slide'}>
             {foundData.images.items.map(e => {
                 return (
                     <div key={e.title}>
                         <img loading={'lazy'} src={e.image} alt={'movie pictures'}/>
                         <p className="legend">{e.title}</p>
+
                     </div>
                 )
             })}
-        </Carousel>:<> <h2 className={'poster'}>Posters:</h2>
+        </Carousel>
+            <button onClick={() => {
+                props.offButton(prev => ({
+                    ...prev,
+                    photos: !prev.photos,
+                }))
+            }} className="return">hide pictures
+            </button>
+        </> : <> <h2 className={'poster'}>Posters:</h2>
+            <button onClick={() => {
+                props.offButton(prev => ({
+                    ...prev,
+                    posters: !prev.posters,
+                }))
+            }} className="return">hide posters
+            </button>
             {foundData.posters.posters.length !== 0 ?
                 <Carousel showArrows={true} emulateTouch={true} useKeyboardArrows={true}
                           dynamicHeight={true} infiniteLoop={true} className={'main-slide'}>
@@ -43,6 +69,7 @@ export const ImagesComponent = (props:Props)=>{
                             </div>
                         )
                     })}
+
                 </Carousel> : <p>No pictures in IMDb</p>}
         </>
     )

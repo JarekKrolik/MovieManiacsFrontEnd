@@ -5,17 +5,15 @@ import {UserDataContext} from "../../contexts/UserDataContext";
 import {Util} from "leaflet";
 
 
-
-
 interface Props {
-    offButton:Dispatch<SetStateAction<{
+    offButton: Dispatch<SetStateAction<{
         fullCast: boolean;
         trailer: boolean;
         photos: boolean;
         posters: boolean;
         similars: boolean;
         wiki: boolean;
-        others:boolean;
+        others: boolean;
     }>>;
     foundData: SingleMovieSpecific,
     setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>;
@@ -25,7 +23,7 @@ export const OthersCastComponent = (props: Props) => {
     const {setUserData, userData} = useContext(UserDataContext)
     const {foundData} = props
     const [listOfOthers, setListOfOthers] = useState(foundData.fullCast.others)
-      const handleInputFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
         setListOfOthers(foundData.fullCast.others.filter(el => el.job.toUpperCase().includes(e.target.value.toUpperCase())))
     }
 
@@ -53,9 +51,9 @@ export const OthersCastComponent = (props: Props) => {
             <form className={'register actor'}>
                 <label>search by job : <input onChange={handleInputFilter} type="text"/></label>
             </form>
-            <ul>{listOfOthers.map(el => {
+            {listOfOthers ? <ul>{listOfOthers.map(el => {
                 return (
-                    <li>
+                    <li key={Math.floor(Math.random()*1000)+el.job}>
                         <h2>{el.job}</h2>
                         <div>{el.items.map(el => {
                             return (<div>
@@ -66,13 +64,14 @@ export const OthersCastComponent = (props: Props) => {
                         })}</div>
                     </li>
                 )
-            })}</ul>
-            <button onClick={()=>{
-                props.offButton(prev=>({
+            })}</ul> : <h2>Sorry no data...</h2>}
+            <button onClick={() => {
+                props.offButton(prev => ({
                     ...prev,
-                    others:!prev.others,
+                    others: !prev.others,
                 }))
-            }} className="return">hide others cast</button>
+            }} className="return">hide others cast
+            </button>
         </div>
     )
 }

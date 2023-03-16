@@ -49,13 +49,13 @@
 
 }
 
-.favourites .movies li .text{
+.favourites .movies li .text {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     padding: 0.7em;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 
 .movies ul h3 {
@@ -75,12 +75,13 @@
     border-bottom: none;
 }
 
-.favBtn{
-    transition: background-color 0.3s,color 0.3s;
+.favBtn {
+    transition: background-color 0.3s, color 0.3s;
     cursor: pointer;
 }
-.favBtn:hover{
-    background-color:  #363636;
+
+.favBtn:hover {
+    background-color: #363636;
     color: cornflowerblue;
 }
 
@@ -106,8 +107,8 @@
 
 @media (min-width: 912px) {
     .favourites .movies li h3 {
-
-        font-size: 2.6rem;
+        margin-bottom: 1em;
+        font-size: 2.1rem;
     }
 
 
@@ -124,12 +125,14 @@
 
 @media (min-width: 1023px) {
 
+
     .favourites .movies li {
         border: none;
         border-radius: 25px;
         box-shadow: 0 0 15px cornflowerblue;
         overflow: hidden;
         margin: 1em auto;
+        align-items: flex-end;
     }
 
 
@@ -150,6 +153,7 @@
 
     .favourites .movies li {
         width: 27%;
+        height: auto;
 
 
     }
