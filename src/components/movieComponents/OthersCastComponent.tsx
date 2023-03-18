@@ -2,7 +2,7 @@ import React, {Dispatch, SetStateAction, useContext, useState} from "react";
 import {SingleMovieSpecific} from 'types';
 import '../css/OthersCastComponents.css'
 import {UserDataContext} from "../../contexts/UserDataContext";
-import {Util} from "leaflet";
+import {Switches} from "../LoginComponent";
 
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
         others: boolean;
     }>>;
     foundData: SingleMovieSpecific,
-    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>;
 }
 
 export const OthersCastComponent = (props: Props) => {
@@ -34,6 +34,7 @@ export const OthersCastComponent = (props: Props) => {
             nowInCinemas: false,
             searchComponent: false,
             allDataComponent: true,
+            whatToWatch:false,
         })
         setUserData(({
             ...userData,

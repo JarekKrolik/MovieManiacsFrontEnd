@@ -1,6 +1,7 @@
 import React, {Dispatch, SetStateAction, useContext} from "react";
 import{SingleActorSpecific}from'types'
 import {UserDataContext} from "../../contexts/UserDataContext";
+import {Switches} from "../LoginComponent";
 
 interface StarredIn {
     id:string,
@@ -20,7 +21,7 @@ foundData:SingleActorSpecific,
     type:string,
     unFilteredData:StarredIn[]|null|undefined,
     handleFilterData:(e: React.ChangeEvent<HTMLInputElement>)=>void,
-    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean;allDataComponent:boolean, }>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>;
 }
 
 
@@ -35,6 +36,7 @@ export const ActorStarredInComponent = (props:Props)=>{
             nowInCinemas:false,
             searchComponent:false,
             allDataComponent:true,
+            whatToWatch:false,
 
         })
         setUserData(({

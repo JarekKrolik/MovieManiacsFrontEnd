@@ -3,9 +3,10 @@ import {Spinner} from "../Spinner";
 import {MovieListElement} from "./MovieListElement";
 import{MovieListEntity,NowInCinemasMovieEntity}from'types'
 import {UserDataContext} from "../../contexts/UserDataContext";
+import {Switches} from "../LoginComponent";
 interface Props{
     foundData:MovieListEntity[]|NowInCinemasMovieEntity[]|undefined,
-    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean;allDataComponent:boolean, }>>
+    setSwitches: Dispatch<SetStateAction<Switches>>
 }
 
 export const MoviesListComponent=(props:Props)=>{

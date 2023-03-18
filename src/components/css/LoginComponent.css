@@ -13,6 +13,19 @@
 
 }
 
+.quotes{
+    display: flex;
+    flex-direction: column;
+    color: cornflowerblue;
+    padding: 1em;
+    text-align: center;
+
+}
+.quotes h2{
+    margin: 1em auto;
+    font-size: 1.8rem;
+}
+
 .loginBox a {
     background-color: #1c1b1b;
     display: block;

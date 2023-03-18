@@ -1,0 +1,17 @@
+.whatToWatch {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+
+}
+.whatToWatch h2{
+    text-align: center;
+    font-size: 2.3rem;
+    text-transform: uppercase;
+    padding: 1em;
+    margin: 0.6em auto;
+    color: cornflowerblue;
+}
+

@@ -1,0 +1,20 @@
+.proposed{
+    width: 98%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 25px;
+    box-shadow: 0 0 15px cornflowerblue;
+
+}
+
+.proposed h2 {
+    margin: 0.6em auto;
+    padding: 0.6em;
+}
+
+.proposed .picture{
+    width: 80%;
+}

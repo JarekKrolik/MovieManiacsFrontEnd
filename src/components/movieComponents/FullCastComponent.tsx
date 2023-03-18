@@ -1,6 +1,7 @@
 import React, {Dispatch, SetStateAction, useContext} from "react";
 import {SingleMovieSpecific} from 'types'
 import {UserDataContext} from "../../contexts/UserDataContext";
+import {Switches} from "../LoginComponent";
 
 
 interface Props {
@@ -14,7 +15,7 @@ interface Props {
         others: boolean;
     }>>;
     foundData:SingleMovieSpecific,
-    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean;allDataComponent:boolean, }>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>;
 }
 
 export const FullCastComponent = (props:Props)=>{
@@ -27,6 +28,7 @@ const{setUserData,userData}=useContext(UserDataContext)
             nowInCinemas:false,
             searchComponent:false,
             allDataComponent:true,
+            whatToWatch:false,
 
         })
         setUserData(({

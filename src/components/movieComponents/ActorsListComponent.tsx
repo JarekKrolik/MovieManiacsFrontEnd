@@ -3,11 +3,12 @@ import '../css/MovieListElement.css'
 import {ActorsListEntity,FavouriteActorsList} from 'types'
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {FavouriteIcon} from "../FavouriteIcon";
+import {Switches} from "../LoginComponent";
 
 interface Props extends ActorsListEntity {
     listOfData: ActorsListEntity[];
     favList:FavouriteActorsList[]|undefined;
-    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean;allDataComponent:boolean, }>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>;
 }
 
 export const ActorsListComponent = (props: Props) => {
@@ -22,6 +23,7 @@ export const ActorsListComponent = (props: Props) => {
             nowInCinemas:false,
             searchComponent:false,
             allDataComponent:true,
+            whatToWatch:false,
 
         })
         setUserData(({

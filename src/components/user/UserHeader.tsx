@@ -1,7 +1,8 @@
-import React, {Dispatch, SetStateAction} from "react";
-import {UserEntity} from 'types'
+import React, {Dispatch, SetStateAction, useContext} from "react";
 import '../css/UserHeader.css'
 import {Link} from "react-router-dom";
+import {Switches} from "../LoginComponent";
+import {UserDataContext} from "../../contexts/UserDataContext";
 
 interface Props {
     id: string,
@@ -9,11 +10,18 @@ interface Props {
     avatar: number,
     date: string,
     email: string,
-    setSwitches:Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean;favourites:boolean;allDataComponent:boolean, }>>,}
-
+    setSwitches:Dispatch<SetStateAction<Switches>>,}
 
 export const UserHeader = (props: Props) => {
+    const {setUserData, userData}=useContext(UserDataContext)
+const logOut = ()=>{
+    setUserData({
+...userData,
+        name:'',
+        id:'',
 
+    })
+}
 
     return (
         <>
@@ -26,6 +34,7 @@ export const UserHeader = (props: Props) => {
                             nowInCinemas:false,
                             searchComponent:true,
                             allDataComponent:false,
+                            whatToWatch:false,
                         }))
                     }} className="button">search engine</div>
                     <div onClick={()=>{
@@ -35,8 +44,18 @@ export const UserHeader = (props: Props) => {
                             searchComponent:false,
                             favourites:true,
                             allDataComponent:false,
+                            whatToWatch:false,
                         }))}} className="button">favourites</div>
-                    <div className="button">to watch</div>
+                    <div onClick={()=>{
+                        props.setSwitches(({
+                            soonInCinemas:false,
+                            nowInCinemas:false,
+                            searchComponent:false,
+                            favourites:false,
+                            allDataComponent:false,
+                           whatToWatch:true,
+                        }))
+                    }} className="button">what to watch ?</div>
                     <div onClick={()=>{
                         props.setSwitches(({
                             soonInCinemas:true,
@@ -44,6 +63,7 @@ export const UserHeader = (props: Props) => {
                             searchComponent:false,
                             favourites:false,
                             allDataComponent:false,
+                            whatToWatch:false,
                         }))
                     }} className={'button'} >soon in cinemas</div>
                     <div onClick={()=>{
@@ -53,6 +73,7 @@ export const UserHeader = (props: Props) => {
                             searchComponent:false,
                             favourites:false,
                             allDataComponent:false,
+                            whatToWatch:false,
                         }))
                     }} className={'button'}>now in cinemas</div>
                 </div>
@@ -64,12 +85,12 @@ export const UserHeader = (props: Props) => {
                             <p>{props.name}</p>
                         </div>
                     </Link>
-                    <Link to={'/'}>
-                        <div className="avatar logout">
+
+                        <div onClick={logOut} className="avatar logout">
                             <img src={require(`../../assets/img/log-out-2355227_640.png`)} alt="logout icon"/>
                             <p>log out</p>
                         </div>
-                    </Link>
+
                 </div>
             </header>
         </>

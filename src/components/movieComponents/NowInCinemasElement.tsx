@@ -2,10 +2,11 @@ import React, {Dispatch, SetStateAction, useContext} from "react";
 import {FavouriteIcon} from "../FavouriteIcon";
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {NowInCinemasMovieEntity, FavouriteMoviesList} from 'types'
+import {Switches} from "../LoginComponent";
 
 interface Props extends NowInCinemasMovieEntity {
     favList: FavouriteMoviesList[] | undefined;
-    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>,
+    setSwitches: Dispatch<SetStateAction<Switches>>,
 
 }
 
@@ -18,6 +19,7 @@ export const NowInCinemasElement = (props: Props) => {
             nowInCinemas: false,
             searchComponent: false,
             allDataComponent: true,
+            whatToWatch:false,
 
         })
         setUserData( ({

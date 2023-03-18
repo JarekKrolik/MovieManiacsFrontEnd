@@ -6,10 +6,11 @@ import "../css/NowInCinemas.css"
 import {Spinner} from "../Spinner";
 import {NowInCinemasElement} from "./NowInCinemasElement";
 import {GoUpArrow} from "../GoUpArrow";
+import {Switches} from "../LoginComponent";
 
 
 interface Props {
-    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean;favourites:boolean;allDataComponent:boolean, }>>,
+    setSwitches: Dispatch<SetStateAction<Switches>>,
 }
 
 export const NowInCinemasComponent = (props: Props) => {

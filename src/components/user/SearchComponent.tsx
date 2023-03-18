@@ -8,11 +8,12 @@ import {UserDataContext} from "../../contexts/UserDataContext";
 import {MoviesListComponent} from "../movieComponents/MoviesListComponent";
 import {GoUpArrow} from "../GoUpArrow";
 import {SearchComponentLogic} from "./SearchComponentLogic";
+import {Switches} from "../LoginComponent";
 
 
 interface Props {
-    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>
-    returnData: MovieListEntity[] | ActorsListEntity[] | undefined,
+    setSwitches: Dispatch<SetStateAction<Switches>>,
+    // returnData: MovieListEntity[] | ActorsListEntity[] | undefined,
     type: string,
     favList: FavouriteMoviesList[] | undefined,
     favActorsList: FavouriteActorsList[] | undefined,

@@ -12,13 +12,14 @@ import {NowInCinemasComponent} from "../movieComponents/NowInCinemasComponent";
 import {FavouritesComponent} from "./FavouritesComponent";
 import {AllDataComponent} from "../movieComponents/AllDataComponent";
 import {AllDataComponentActor} from "../movieComponents/AllDataComponentActor";
+import {WhatToWatchComponent} from "../movieComponents/WhatToWatchComponent";
 
 
 export const UserMainPage = () => {
 
     const {userData, setUserData} = useContext(UserDataContext)
     const [user, setUser] = useState<UserEntity>();
-    const [returnData] = useState<MovieListEntity[]>()
+    // const [returnData] = useState<MovieListEntity[]>()
     const [type] = useState('')
     const [listOfFavMovies, setListOfFavMovies] = useState<FavouriteMoviesList[]>()
     const [listOfFavActors, setListOfFavActors] = useState<FavouriteActorsList[]>()
@@ -28,6 +29,7 @@ export const UserMainPage = () => {
         soonInCinemas: false,
         favourites: false,
         allDataComponent: false,
+        whatToWatch:false
     })
 
 
@@ -87,11 +89,12 @@ export const UserMainPage = () => {
                                 date={userData.date} id={userData.id}/> :
                 <Spinner returnRoute={'/'}/>}
             {switches.searchComponent ?
-                <SearchComponent setSwitches={setSwitches} type={type} returnData={returnData} favList={listOfFavMovies}
+                <SearchComponent setSwitches={setSwitches} type={type}  favList={listOfFavMovies}
                                  favActorsList={listOfFavActors}/> : null}
             {switches.nowInCinemas ? <NowInCinemasComponent setSwitches={setSwitches}/> : null}
             {switches.soonInCinemas ? <ComingSoonMovies setSwitches={setSwitches}/> : null}
             {switches.favourites ? <FavouritesComponent setSwitches={setSwitches}/> : null}
+            {switches.whatToWatch?<WhatToWatchComponent setSwitches={setSwitches}/>:null}
             {switches.allDataComponent ?
                 userData.selectedItem.type === 'movie' ?
                     <AllDataComponent id={userData.selectedItem.id} type={userData.selectedItem.type}

@@ -9,6 +9,7 @@ import {ActorStarredInComponent} from "./ActorStarredInComponent";
 import {MostKnownFor} from "./MostKnownFor";
 import {GoUpArrow} from "../GoUpArrow";
 import {UserDataContext} from "../../contexts/UserDataContext";
+import {Switches} from "../LoginComponent";
 
 interface StarredIn {
     id: string,
@@ -19,13 +20,7 @@ interface StarredIn {
 }
 
 interface Props {
-    setSwitches: Dispatch<SetStateAction<{
-        searchComponent: boolean;
-        nowInCinemas: boolean;
-        soonInCinemas: boolean;
-        favourites: boolean;
-        allDataComponent: boolean,
-    }>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>;
     id: string,
     type: string,
 }

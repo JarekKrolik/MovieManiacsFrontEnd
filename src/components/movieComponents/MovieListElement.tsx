@@ -4,9 +4,10 @@ import '../css/MovieListElement.css'
 import {FavouriteIcon} from "../FavouriteIcon";
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {FavouriteMoviesList} from 'types'
+import {Switches} from "../LoginComponent";
 
 interface Props extends MovieListEntity {
-    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>;
     listOfData: MovieListEntity[];
     favList: FavouriteMoviesList[] | undefined;
 }
@@ -23,6 +24,7 @@ export const MovieListElement = (props: Props) => {
             nowInCinemas: false,
             searchComponent: false,
             allDataComponent: true,
+            whatToWatch:false,
 
         })
         setUserData(({

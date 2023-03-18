@@ -3,9 +3,10 @@ import {FavouriteMoviesList, FavouriteActorsList} from 'types'
 import "../css/Favourites.css"
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {GoUpArrow} from "../GoUpArrow";
+import {Switches} from "../LoginComponent";
 
 interface Props {
-    setSwitches: Dispatch<SetStateAction<{ searchComponent: boolean; nowInCinemas: boolean; soonInCinemas: boolean; favourites: boolean; allDataComponent: boolean, }>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>;
 
 }
 
@@ -32,6 +33,7 @@ export const FavouritesComponent = (props: Props) => {
             nowInCinemas: false,
             searchComponent: false,
             allDataComponent: true,
+            whatToWatch:false,
 
         })
         setUserData( ({

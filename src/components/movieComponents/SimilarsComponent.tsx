@@ -1,6 +1,7 @@
 import React, {Dispatch, SetStateAction, useContext} from "react";
 import {SingleMovieSpecific} from 'types'
 import {UserDataContext} from "../../contexts/UserDataContext";
+import {Switches} from "../LoginComponent";
 
 interface Props {
     offButton: Dispatch<SetStateAction<{
@@ -13,13 +14,7 @@ interface Props {
         others: boolean;
     }>>;
     foundData: SingleMovieSpecific,
-    setSwitches: Dispatch<SetStateAction<{
-        searchComponent: boolean;
-        nowInCinemas: boolean;
-        soonInCinemas: boolean;
-        favourites: boolean;
-        allDataComponent: boolean,
-    }>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>;
 }
 
 export const SimilarsComponent = (props: Props) => {
@@ -34,6 +29,7 @@ export const SimilarsComponent = (props: Props) => {
             nowInCinemas: false,
             searchComponent: false,
             allDataComponent: true,
+            whatToWatch:false,
 
         })
         setUserData(({
