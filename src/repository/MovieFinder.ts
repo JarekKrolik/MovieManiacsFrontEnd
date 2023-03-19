@@ -11,6 +11,22 @@ import {apiUrl} from "../config/api";
 
 export class MovieFinder {
 
+
+    static async whereToWatch(title:string,imdbId:string){
+        const res = await fetch(`https://streaming-availability.p.rapidapi.com/v2/search/title?title=${title}&country=pl&type=movie&output_language=en`,{
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': 'eee3e0efbemsh23dcfc7e2f8b735p1dbd2fjsn91a0da94641f',
+                'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com',
+            }
+        })
+        const data = await res.json()
+        const found = data.result.filter((el: { imdbId: string; })=>el.imdbId === imdbId)
+        console.log(found[0].streamingInfo)
+
+
+    }
+
     static async addToFavouriteList(id: string, user: string, type: string, title: string, image: string): Promise<{ response: string }> {
         const res = await fetch(`${apiUrl}/favourite`, {
                 method: 'POST',

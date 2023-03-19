@@ -22,7 +22,6 @@ interface Props {
 }
 
 export const AllDataComponent = (props: Props) => {
-
     const [switches, setSwitches] = useState({
         fullCast: false,
         trailer: false,
@@ -32,16 +31,22 @@ export const AllDataComponent = (props: Props) => {
         wiki: false,
         others: false,
     });
-    const [foundData, setFoundData] = useState<SingleMovieSpecific>()
-    const [youTubeTrailer, setYouTubeTrailer] = useState<YoutubeTrailer>()
-    const {setUserData, userData} = useContext(UserDataContext)
+    const [foundData, setFoundData] = useState<SingleMovieSpecific>();
+    const [youTubeTrailer, setYouTubeTrailer] = useState<YoutubeTrailer>();
+    const {setUserData, userData} = useContext(UserDataContext);
+
+    (async ()=>{
+
+    })()
 
 
     useEffect(() => {
         (async () => {
+
+            window.scrollTo(0,0)
             const res = await MovieFinder.getOneMovieById(props.id) as SingleMovieSpecific;
             const youTubeTrailerRes = await MovieFinder.getYouTubeTrailer(props.id) as YoutubeTrailer;
-            if (res.errorMessage.includes('Invalid')) {
+                       if (res.errorMessage.includes('Invalid')) {
                 setUserData(({
                     ...userData,
                     selectedItem: {
@@ -56,18 +61,21 @@ export const AllDataComponent = (props: Props) => {
             }
             setYouTubeTrailer(youTubeTrailerRes)
             setFoundData(res)
+            await MovieFinder.whereToWatch(res.fullTitle,props.id)
+
         })()
+
     }, [props.id, setUserData, userData])
 
     return (
         <>
-            <BasicMovieInfo foundData={foundData}/>
+            <BasicMovieInfo  foundData={foundData}/>
             <div className="allDataElementBox">
                 {!foundData ? <Spinner returnRoute={'/userMain'}/> : (
                     <>
                         {switches.wiki ?
                             foundData.wikipedia ?
-                                <WikiDataComponent setSwitches={setSwitches} foundData={foundData}/> : null : null}
+                                <WikiDataComponent  setSwitches={setSwitches} foundData={foundData}/> : null : null}
                         <button name={'wiki'} className={'goBack'} onClick={() => {
                             setSwitches(prev => ({
                                 ...prev,
@@ -138,7 +146,7 @@ export const AllDataComponent = (props: Props) => {
                     props.setSwitches(prev => ({
                             ...prev,
                             allDataComponent: false,
-                            searchComponent: true,
+                            // searchComponent: true,
                         })
                     )
                 }} className="goBack">close

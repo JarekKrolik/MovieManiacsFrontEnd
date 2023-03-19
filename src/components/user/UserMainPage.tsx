@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {UserEntity, MovieListEntity, FavouriteMoviesList, FavouriteActorsList} from 'types'
+import {UserEntity,FavouriteMoviesList, FavouriteActorsList} from 'types'
 import {UserHeader} from "./UserHeader";
 import {Spinner} from "../Spinner";
 import {SearchComponent} from "./SearchComponent";
@@ -19,12 +19,11 @@ export const UserMainPage = () => {
 
     const {userData, setUserData} = useContext(UserDataContext)
     const [user, setUser] = useState<UserEntity>();
-    // const [returnData] = useState<MovieListEntity[]>()
     const [type] = useState('')
     const [listOfFavMovies, setListOfFavMovies] = useState<FavouriteMoviesList[]>()
     const [listOfFavActors, setListOfFavActors] = useState<FavouriteActorsList[]>()
     const [switches, setSwitches] = useState({
-        searchComponent: true,
+        searchComponent: false,
         nowInCinemas: false,
         soonInCinemas: false,
         favourites: false,
@@ -79,8 +78,14 @@ export const UserMainPage = () => {
             passwordhash: '',
 
         });
+if(!switches.allDataComponent&&!switches.whatToWatch&&!switches.favourites&&!switches.soonInCinemas&&!switches.soonInCinemas){
+    setSwitches(prev=>({
+        ...prev,
+        searchComponent: true,
+    }))
+}
 
-    }, [setUserData,userData]);
+    }, [setUserData,userData,switches.allDataComponent]);
 
     return (
         <>
@@ -88,6 +93,12 @@ export const UserMainPage = () => {
             {user ? <UserHeader setSwitches={setSwitches} name={userData.name} avatar={userData.avatar} email={userData.email}
                                 date={userData.date} id={userData.id}/> :
                 <Spinner returnRoute={'/'}/>}
+            {switches.allDataComponent ?
+                userData.selectedItem.type === 'movie' ?
+                    <AllDataComponent id={userData.selectedItem.id} type={userData.selectedItem.type}
+                                      setSwitches={setSwitches}/> :
+                    <AllDataComponentActor setSwitches={setSwitches} id={userData.selectedItem.id}
+                                           type={userData.selectedItem.type}/> : null}
             {switches.searchComponent ?
                 <SearchComponent setSwitches={setSwitches} type={type}  favList={listOfFavMovies}
                                  favActorsList={listOfFavActors}/> : null}
@@ -95,12 +106,7 @@ export const UserMainPage = () => {
             {switches.soonInCinemas ? <ComingSoonMovies setSwitches={setSwitches}/> : null}
             {switches.favourites ? <FavouritesComponent setSwitches={setSwitches}/> : null}
             {switches.whatToWatch?<WhatToWatchComponent setSwitches={setSwitches}/>:null}
-            {switches.allDataComponent ?
-                userData.selectedItem.type === 'movie' ?
-                    <AllDataComponent id={userData.selectedItem.id} type={userData.selectedItem.type}
-                                      setSwitches={setSwitches}/> :
-                    <AllDataComponentActor setSwitches={setSwitches} id={userData.selectedItem.id}
-                                           type={userData.selectedItem.type}/> : null}
+
         </>
     )
 }
