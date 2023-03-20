@@ -52,7 +52,7 @@ form.register label{
     color: cornflowerblue;
 }
 
-form.register input{
+form.register input,textarea{
     padding: 0.6em;
     border-radius: 10px;
     overflow: hidden;
@@ -60,7 +60,8 @@ form.register input{
     font-size: 1.6rem;
     color: cornflowerblue;
 }
-form.register input:focus{
+
+form.register input:focus,textarea:focus{
     outline: none;
     box-shadow: 0 0 15px cornflowerblue;
     }
@@ -129,6 +130,8 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px #1c1b1b inset !important;
 }
+
+
 
 input:-webkit-autofill{
     -webkit-text-fill-color: cornflowerblue !important;

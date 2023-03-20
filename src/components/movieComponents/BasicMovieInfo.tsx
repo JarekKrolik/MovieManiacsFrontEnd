@@ -3,15 +3,19 @@ import {SingleMovieSpecific} from 'types'
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {FavouriteIcon} from "../FavouriteIcon";
 
+
+
+
 interface Props {
-    foundData: SingleMovieSpecific | undefined
+    foundData: SingleMovieSpecific | undefined;
 }
 
 export const BasicMovieInfo = (props: Props) => {
     const {userData} = useContext(UserDataContext)
     const favList = userData.favMovies
     const list = favList?.map(e => e.movie_id)
-    const {foundData} = props
+    const {foundData} = props;
+
     return (
         foundData ?
             <div className={'basicInfo'} style={{
@@ -52,7 +56,6 @@ export const BasicMovieInfo = (props: Props) => {
                         {foundData.ratings.theMovieDb ?
                             <h3>theMovieDb: {foundData.ratings.theMovieDb}</h3> : null}</div>
                 </h3> : null}
-
             </div> : null
     )
 }

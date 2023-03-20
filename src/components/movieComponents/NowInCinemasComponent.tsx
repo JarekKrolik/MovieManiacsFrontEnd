@@ -48,8 +48,8 @@ export const NowInCinemasComponent = (props: Props) => {
     return (
         <div className={'fav'}>
             <h2>
-                Teraz w kinach:</h2>
-            {filteredData?.length === 0 ? <h2>Brak danych, spróbuj ponownie za kilka minut...</h2> : null}
+                Now In cinemas:</h2>
+            {filteredData?.length === 0 ? <h2>No data, try again later...</h2> : null}
             <ul className={'moviesList'}>
                 {!filteredData ? <Spinner returnRoute={'/delay'}/> : filteredData.map(el => (
                     <NowInCinemasElement setSwitches={props.setSwitches} key={el.id} favList={userData.favMovies} fullTitle={el.fullTitle}
@@ -62,7 +62,7 @@ export const NowInCinemasComponent = (props: Props) => {
             </ul>
             )
             <GoUpArrow/>
-            {showMoreButton ? <button onClick={handleMoreMoviesDisplay} className={'goBack'}>więcej...</button> : null}
+            {showMoreButton ? <button onClick={handleMoreMoviesDisplay} className={'goBack'}>see more...</button> : null}
             <button onClick={() => {
                 if (props.setSwitches) {
                     props.setSwitches(prev => ({
@@ -71,7 +71,7 @@ export const NowInCinemasComponent = (props: Props) => {
                         nowInCinemas: false,
                     }))
                 }
-            }} className={'goBack'}>zamknij
+            }} className={'goBack'}>close
             </button>
         </div>
     )

@@ -126,7 +126,7 @@ export const LoginForm = (props: Props) => {
             if (!data) {
                 setLoginData(prev => ({
                     ...prev,
-                    errorMessage: 'błędna nazwa użytkownika lub hasło',
+                    errorMessage: 'wrong user name or password',
                     notVerified: false,
                 }));
                 return
@@ -135,7 +135,7 @@ export const LoginForm = (props: Props) => {
             if (data.userNotVerified) {
                 setLoginData(prev => ({
                     ...prev,
-                    errorMessage: 'konto użytkownika nie zweryfikowane',
+                    errorMessage: 'user account not verified',
                     notVerified: true,
                 }))
 

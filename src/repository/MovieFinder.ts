@@ -1,31 +1,112 @@
 import {imdbApiKey} from "../config/apiKeyConfig";
 import {
     ActorsListEntity,
+    CommentsResponse,
     MovieListEntity,
     NowInCinemasMovieEntity,
     Response,
     SingleMovieSpecific,
-    YoutubeTrailer
+    YoutubeTrailer,
 } from 'types'
 import {apiUrl} from "../config/api";
 
 export class MovieFinder {
 
 
-    static async whereToWatch(title:string,imdbId:string){
-        const res = await fetch(`https://streaming-availability.p.rapidapi.com/v2/search/title?title=${title}&country=pl&type=movie&output_language=en`,{
-            method: 'GET',
-            headers: {
-                'X-RapidAPI-Key': 'eee3e0efbemsh23dcfc7e2f8b735p1dbd2fjsn91a0da94641f',
-                'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com',
+    // static async whereToWatch(title:string,imdbId:string,lang:string,country:string){
+    //     try{
+    //     const res = await fetch(`https://streaming-availability.p.rapidapi.com/v2/search/title?title=${title}&country=${country}&type=movie&output_language=${lang}`,{
+    //         method: 'GET',
+    //         headers: {
+    //             'X-RapidAPI-Key': 'eee3e0efbemsh23dcfc7e2f8b735p1dbd2fjsn91a0da94641f',
+    //             'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com',
+    //         }
+    //     })
+    //     const data = await res.json()
+    //     const found = data.result.filter((el: { imdbId: string; })=>el.imdbId === imdbId)
+    //         console.log(Object.entries(found[0].streamingInfo ))
+    //     return found[0].streamingInfo}catch (e){
+    //         console.log(e);
+    //         return null;
+    //     }
+    //
+    //
+    // }
+
+    static async getComments(id: string, type: string) {
+        const getComment = await fetch(`${apiUrl}/comments/${id}/${type}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+
+                },
+
             }
-        })
-        const data = await res.json()
-        const found = data.result.filter((el: { imdbId: string; })=>el.imdbId === imdbId)
-        console.log(found[0].streamingInfo)
+        );
+        return await getComment.json() as CommentsResponse;
+
+    }
+
+    static async deleteComment(id: string) {
+
+        const resp = await fetch(`${apiUrl}/comments`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+
+                },
+                body: JSON.stringify({
+                    id: id,
+
+                })
+            }
+        );
+
+        return await resp.json();
 
 
     }
+
+    static async editComment(id:string,comment:string){
+        const response = await fetch(`${apiUrl}/comments`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+
+                },
+                body: JSON.stringify({
+                    newComment:comment,
+                    id:id,
+
+                })
+            }
+        );
+        return await response.json();
+    }
+
+    static async addComment(id: string, avatar: number, type: string, name: string, comment: string):Promise<any> {
+
+        const response = await fetch(`${apiUrl}/comments`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+
+                },
+                body: JSON.stringify({
+                    commented_id: id,
+                    avatar,
+                    type,
+                    name,
+                    comment,
+
+                })
+            }
+        );
+
+        return await response.json();
+
+
+    };
 
     static async addToFavouriteList(id: string, user: string, type: string, title: string, image: string): Promise<{ response: string }> {
         const res = await fetch(`${apiUrl}/favourite`, {

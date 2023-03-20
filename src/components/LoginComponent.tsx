@@ -11,7 +11,7 @@ export  interface Switches {
     soonInCinemas: boolean;
     favourites:boolean;
     allDataComponent:boolean,
-    whatToWatch:boolean
+    whatToWatch:boolean,
 }
 
 interface Quote {

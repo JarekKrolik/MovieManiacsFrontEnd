@@ -1,17 +1,10 @@
 import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {SingleMovieSpecific} from 'types'
 import '../css/WikiDataComponent.css'
+import {AllDataSwitches} from "./AllDataComponent";
 interface Props {
     foundData: SingleMovieSpecific,
-    setSwitches:Dispatch<SetStateAction<{
-        fullCast: boolean;
-        trailer: boolean;
-        photos: boolean;
-        posters: boolean;
-        similars: boolean;
-        wiki: boolean;
-        others:boolean;
-    }>>,}
+    setSwitches:Dispatch<SetStateAction<AllDataSwitches>>,}
 
 
 export const WikiDataComponent = (props:Props)=>{

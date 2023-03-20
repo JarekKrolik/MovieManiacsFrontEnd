@@ -1,16 +1,9 @@
 import React, {Dispatch, SetStateAction, useState} from "react";
 import {YoutubeTrailer, SingleMovieSpecific} from 'types'
+import {AllDataSwitches} from "./AllDataComponent";
 
 interface Props {
-    offButton: Dispatch<SetStateAction<{
-        fullCast: boolean;
-        trailer: boolean;
-        photos: boolean;
-        posters: boolean;
-        similars: boolean;
-        wiki: boolean;
-        others: boolean;
-    }>>;
+    offButton: Dispatch<SetStateAction<AllDataSwitches>>;
     youTubeTrailer: YoutubeTrailer,
     foundData: SingleMovieSpecific,
 }

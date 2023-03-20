@@ -2,18 +2,11 @@ import React, {Dispatch, SetStateAction, useContext} from "react";
 import {SingleMovieSpecific} from 'types'
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {Switches} from "../LoginComponent";
+import {AllDataSwitches} from "./AllDataComponent";
 
 
 interface Props {
-    offButton: Dispatch<SetStateAction<{
-        fullCast: boolean;
-        trailer: boolean;
-        photos: boolean;
-        posters: boolean;
-        similars: boolean;
-        wiki: boolean;
-        others: boolean;
-    }>>;
+    offButton: Dispatch<SetStateAction<AllDataSwitches>>;
     foundData:SingleMovieSpecific,
     setSwitches: Dispatch<SetStateAction<Switches>>;
 }

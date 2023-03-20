@@ -1,6 +1,6 @@
 import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
 import {MovieFinder} from "../../repository/MovieFinder";
-import {SingleMovieSpecific, YoutubeTrailer} from 'types'
+import {SingleMovieSpecific, YoutubeTrailer, CommentsResponse} from 'types'
 import {Spinner} from "../Spinner";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import '../css/AllDataComponent.css'
@@ -14,11 +14,23 @@ import {GoUpArrow} from "../GoUpArrow";
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {OthersCastComponent} from "./OthersCastComponent";
 import {Switches} from "../LoginComponent";
+import {CommentsComponent} from "./CommentsComponent";
 
 interface Props {
     setSwitches: Dispatch<SetStateAction<Switches>>;
     id: string,
     type: string,
+}
+
+export interface AllDataSwitches {
+    fullCast: boolean;
+    trailer: boolean;
+    photos: boolean;
+    posters: boolean;
+    similars: boolean;
+    wiki: boolean;
+    others: boolean;
+    comments: boolean;
 }
 
 export const AllDataComponent = (props: Props) => {
@@ -30,12 +42,13 @@ export const AllDataComponent = (props: Props) => {
         similars: false,
         wiki: false,
         others: false,
+        comments: false,
     });
     const [foundData, setFoundData] = useState<SingleMovieSpecific>();
     const [youTubeTrailer, setYouTubeTrailer] = useState<YoutubeTrailer>();
     const {setUserData, userData} = useContext(UserDataContext);
-
-    (async ()=>{
+    const [id, setId] = useState('');
+    (async () => {
 
     })()
 
@@ -43,10 +56,10 @@ export const AllDataComponent = (props: Props) => {
     useEffect(() => {
         (async () => {
 
-            window.scrollTo(0,0)
+            window.scrollTo(0, 0)
             const res = await MovieFinder.getOneMovieById(props.id) as SingleMovieSpecific;
             const youTubeTrailerRes = await MovieFinder.getYouTubeTrailer(props.id) as YoutubeTrailer;
-                       if (res.errorMessage.includes('Invalid')) {
+            if (res.errorMessage.includes('Invalid')) {
                 setUserData(({
                     ...userData,
                     selectedItem: {
@@ -60,8 +73,12 @@ export const AllDataComponent = (props: Props) => {
                 setYouTubeTrailer(undefined)
             }
             setYouTubeTrailer(youTubeTrailerRes)
-            setFoundData(res)
-            await MovieFinder.whereToWatch(res.fullTitle,props.id)
+            setFoundData(res);
+            setId(res.id);
+
+
+            // await MovieFinder.whereToWatch(res.fullTitle,props.id,'en','us')
+
 
         })()
 
@@ -69,13 +86,13 @@ export const AllDataComponent = (props: Props) => {
 
     return (
         <>
-            <BasicMovieInfo  foundData={foundData}/>
+            <BasicMovieInfo foundData={foundData}/>
             <div className="allDataElementBox">
                 {!foundData ? <Spinner returnRoute={'/userMain'}/> : (
                     <>
                         {switches.wiki ?
                             foundData.wikipedia ?
-                                <WikiDataComponent  setSwitches={setSwitches} foundData={foundData}/> : null : null}
+                                <WikiDataComponent setSwitches={setSwitches} foundData={foundData}/> : null : null}
                         <button name={'wiki'} className={'goBack'} onClick={() => {
                             setSwitches(prev => ({
                                 ...prev,
@@ -86,7 +103,8 @@ export const AllDataComponent = (props: Props) => {
 
                         {switches.trailer ?
                             youTubeTrailer ?
-                                <TrailerComponent offButton={setSwitches} foundData={foundData} youTubeTrailer={youTubeTrailer}/> : null : null}
+                                <TrailerComponent offButton={setSwitches} foundData={foundData}
+                                                  youTubeTrailer={youTubeTrailer}/> : null : null}
                         <button name={'trailer'} className={'goBack'} onClick={() => {
                             setSwitches(prev => ({
                                 ...prev,
@@ -94,7 +112,8 @@ export const AllDataComponent = (props: Props) => {
                             }))
                         }}
                         >{switches.trailer ? 'hide trailers' : 'show trailers'}</button>
-                        {switches.photos ? (foundData.images ? <ImagesComponent offButton={setSwitches} posters={false} foundData={foundData}/>
+                        {switches.photos ? (foundData.images ?
+                            <ImagesComponent offButton={setSwitches} posters={false} foundData={foundData}/>
                             : <p>no photos in IMDb database</p>) : null}
                         <button className={'goBack'} onClick={() => {
                             setSwitches(prev => ({
@@ -102,7 +121,8 @@ export const AllDataComponent = (props: Props) => {
                                 photos: !prev.photos,
                             }))
                         }}>{switches.photos ? 'hide pictures' : 'show pictures'}</button>
-                        {switches.posters ? (foundData.posters ? <ImagesComponent offButton={setSwitches} posters={true} foundData={foundData}/>
+                        {switches.posters ? (foundData.posters ?
+                            <ImagesComponent offButton={setSwitches} posters={true} foundData={foundData}/>
                             : <p>brak zdjęć w bazie IMDb</p>) : null}
                         <button className={'goBack'} onClick={() => {
                             setSwitches(prev => ({
@@ -141,12 +161,20 @@ export const AllDataComponent = (props: Props) => {
                         }}>{switches.similars ? 'hide similar movies' : 'similar movies '}
                         </button>
                     </>)}
+                {switches.comments ? <CommentsComponent id={id}/> : null}
+                <button className={'goBack'} onClick={() => {
+                    setSwitches((prev) => ({
+                        ...prev,
+                        comments: !prev.comments,
+                    }))
+                }}>{switches.comments ? 'hide comments' : 'comments'}
+                </button>
+
 
                 <button onClick={() => {
                     props.setSwitches(prev => ({
                             ...prev,
                             allDataComponent: false,
-                            // searchComponent: true,
                         })
                     )
                 }} className="goBack">close
