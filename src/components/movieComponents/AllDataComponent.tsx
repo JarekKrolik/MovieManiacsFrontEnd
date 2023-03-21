@@ -161,7 +161,7 @@ export const AllDataComponent = (props: Props) => {
                         }}>{switches.similars ? 'hide similar movies' : 'similar movies '}
                         </button>
                     </>)}
-                {switches.comments ? <CommentsComponent id={id}/> : null}
+                {switches.comments ? <CommentsComponent offButton={setSwitches} id={id}/> : null}
                 <button className={'goBack'} onClick={() => {
                     setSwitches((prev) => ({
                         ...prev,
