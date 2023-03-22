@@ -18,14 +18,16 @@
     transition: transform 0.3s,color 0.3s,background-color 0.3s;
 }
 
-
+.seeMore{
+    transition: transform 0.3s,color 0.3s,background-color 0.3s;
+}
 
 @media (min-width: 1024px) {
     .loginForm .goBack{
         width: 100%;
     }
     .goBack{width: 30%}
-    .goBack:hover{
+    .goBack:hover, .seeMore:hover{
         background-color: #1c1b1b;
         color:cornflowerblue;
         transform: scale(1.1);

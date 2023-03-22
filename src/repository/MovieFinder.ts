@@ -33,6 +33,39 @@ export class MovieFinder {
     //
     // }
 
+
+    static async getAnswersForComments(id:string){
+        const response = await fetch(`${apiUrl}/comments/answers/${id}`,{
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json'
+
+            },
+
+        })
+
+        return await response.json()
+
+    }
+    static async addAnswerToComment(commentId:string,comment:string,user:string,avatar:number){
+        const sentAnswer = await fetch(`${apiUrl}/comments/answers`,{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json'
+
+            },
+            body:JSON.stringify({
+                mainCommentId:commentId,
+                comment,
+                user,
+                avatar,
+            })
+        })
+
+        return sentAnswer.json()
+
+    }
+
     static async getComments(id: string, type: string) {
         const getComment = await fetch(`${apiUrl}/comments/${id}/${type}`, {
                 method: 'GET',

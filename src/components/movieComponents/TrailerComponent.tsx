@@ -24,7 +24,7 @@ export const TrailerComponent = (props: Props) => {
 
                 ></iframe>
             </div> : <p>No trailer available on YouTube...</p> : null}
-            {!whichTrailer ? foundData.trailer? <div className="frameContainer">
+            {!whichTrailer ? foundData.trailer.linkEmbed? <div className="frameContainer">
                 <object
                     aria-label="Alternative Text"
                     type="video/mp4"

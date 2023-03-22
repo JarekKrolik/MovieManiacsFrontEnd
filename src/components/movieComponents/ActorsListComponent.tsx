@@ -39,13 +39,13 @@ export const ActorsListComponent = (props: Props) => {
 
     return (<li className={'element'} id={id}>
         <FavouriteIcon image={image} switchedOn={list?list.includes(id):false}  id={id} user={userData.name} type={'actor'} title={title}/>
-        <h3>Imię i Nazwisko : <span>{title}</span></h3>
-        <p>Krótki opis : <span>{description}</span></p>
+        <h3>Name : <span>{title}</span></h3>
+        <p>short description : <span>{description}</span></p>
         <div className="picture">
-            {image ? (<img src={image} alt="plakat z filmu"/>) : (
+            {image ? (<img src={image} alt="actor"/>) : (
                 <img src={require('../../assets/img/vecteezy_icon-image-not-found-vector_.jpg')}
-                     alt="symbol braku zdjęcia"/>)}
+                     alt="actor"/>)}
         </div>
-        <button onClick={handleSeeMore} className="seeMore">zobacz więcej</button>
+        <button onClick={handleSeeMore} className="seeMore">see more</button>
     </li>)
 }

@@ -5,11 +5,14 @@ import {MovieFinder} from "../../repository/MovieFinder";
 import {Spinner} from "../Spinner";
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {AllDataSwitches} from "./AllDataComponent";
+import {CommentEditComponent} from "./CommentEditComponent";
+import {AnswerCommentComponent} from "./AnswerCommentComponent";
 
 interface Props {
     id: string;
     offButton: Dispatch<SetStateAction<AllDataSwitches>>;
 };
+
 
 export const CommentsComponent = (props: Props) => {
 
@@ -18,7 +21,10 @@ export const CommentsComponent = (props: Props) => {
     const [comment, setComment] = useState('')
     const [response, setResponse] = useState('')
     const [editCommentOn, setEditCommentOn] = useState(false)
+    const [sendAnswerOn, setSendAnswerOn] = useState(false)
     const [editedId, setEditedId] = useState('')
+    const[answeredCommentId,setAnsweredCommentId]=useState('')
+    const [answeredId, setAnsweredId] = useState<string[]>([]);
 
     const getComments = async () => {
         setComment('')
@@ -28,28 +34,57 @@ export const CommentsComponent = (props: Props) => {
 
     }
 
+    const handleSendAnswerToComment = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        const resp = await MovieFinder.addAnswerToComment(editedId, comment, userData.name, userData.avatar)
+        setSendAnswerOn(false)
+        setResponse(resp.message)
+        await getComments()
+
+    }
+
     const handleSendEditedComment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const resp = await MovieFinder.editComment(editedId,comment);
+        const resp = await MovieFinder.editComment(editedId, comment);
         setEditCommentOn(false)
         setResponse(resp.message)
         await getComments()
 
     }
 
-    const handleEditCommentFormOn = (e: any) => {
-        setEditedId(e.target.id)
-        setEditCommentOn(true)
-        setComment(e.target.name)
+    const handleCloseAnswer = (e: any) => {
+        const newArr = answeredId.filter(el => el !== e.target.id)
+        setAnsweredId(newArr)
+        setEditedId('')
 
 
+    }
 
+
+    const handleEditCommentFormOn = async (e: any) => {
+
+        if (e.target.name === 'answer') {
+            setEditedId(e.target.id)
+            const arr = answeredId;
+            arr.push(e.target.id);
+            setAnsweredId(arr)
+           const data =  await MovieFinder.getAnswersForComments(e.target.id);
+            console.log(data)
+
+
+        } else {
+            setEditedId(e.target.id)
+            setEditCommentOn(true)
+            setComment(e.target.name)
+        }
     }
 
     const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+
         setResponse('')
-        setComment(e.target.value);
-    }
+        setComment(e.target.value)
+    };
+
 
     const handleSendComment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -78,48 +113,71 @@ export const CommentsComponent = (props: Props) => {
     useEffect(() => {
         (async () => {
             await getComments()
+            // setAnsweredId([])
 
         })()
     }, [])
 
 
     return (<>
-            {editCommentOn ? <form onSubmit={handleSendEditedComment} className={'edit register'}>
-                <label>edit comment <textarea required={true} value={comment} onChange={handleTextChange}></textarea></label>
-                <button>edit</button>
-                <p onClick={() => {
-                    setEditCommentOn(false)
-                    setComment('')
-                }} className="seeMore comment">exit</p>
-            </form> : null}
+            {sendAnswerOn ? <AnswerCommentComponent setSendAnswerOn={setSendAnswerOn}
+                                                    text={'send answer'}
+                                                    setComment={setComment}
+                                                    handleTextChange={handleTextChange}
+                                                    comment={comment}
+                                                    handleSendAnswerToComment={handleSendAnswerToComment}
+            /> : null}
+
+            {editCommentOn ? <CommentEditComponent comment={comment}
+                                                   text={'edit comment'}
+                                                   setEditCommentOn={setEditCommentOn}
+                                                   handleSendEditedComment={handleSendEditedComment}
+                                                   handleTextChange={handleTextChange}
+                                                   setComment={setComment}
+            /> : null}
             <button onClick={() => {
                 props.offButton(prev => ({
                     ...prev,
                     comments: !prev.comments,
                 }))
-            }} className="return">hide full cast
+            }} className="return">hide comments
             </button>
             <div className="comments-area">
                 {comments ? <ul>
                     {comments.result?.length !== 0 ?
                         comments.result?.map(el => {
-                            return (
-                                <li key={el.id}>
+                            return (<div key={el.id} className="comments-answers">
+                                    <li key={el.id}>
                                 <span><div className="avatar">
                             <img src={require(`../../assets/img/avatars/${el.avatar}.png`)}
                                  alt="user avatar"/>
                             <p>{el.name}</p>
                         </div></span>
-                                    <p>{el.comment}</p><p>{new Date(el.created_at).toLocaleDateString()}</p>
-                                    <br/>{el.name === userData.name ? <div className={'buttons'}>
-                                    <button onClick={handleDeleteComment} id={el.id}
-                                            className={'comment-button'}>delete
-                                    </button>
-                                    <button onClick={handleEditCommentFormOn} id={el.id} name={el.comment}
-                                            className={'comment-button'}>edit
-                                    </button>
-                                </div> : null}
-                                </li>
+                                        <p>{el.comment}</p><p>{new Date(el.created_at).toLocaleDateString()}</p>
+                                        <br/>
+                                        <div className={'buttons'}>{el.name === userData.name ? <>
+                                            <button onClick={handleDeleteComment} id={el.id}
+                                                    className={'comment-button'}>delete
+                                            </button>
+                                            <button onClick={handleEditCommentFormOn} id={el.id} name={el.comment}
+                                                    className={'comment-button'}>edit
+                                            </button>
+                                        </> : null}
+                                            <button onClick={handleEditCommentFormOn} id={el.id} name={'answer'}
+                                                    className={'comment-button'}>answers
+                                            </button>
+                                        </div>
+
+                                    </li>
+
+                                    {answeredId.includes(el.id) ? <div className="comments-area">
+                                        <div onClick={handleCloseAnswer} id={el.id} className="closeBtn">X</div>
+                                        <button onClick={()=>{
+                                            setSendAnswerOn(prev=>!prev)
+                                        }} className="goBack">add answer</button>
+                                        <ul>
+                                        </ul>
+                                    </div> : null}</div>
                             )
                         }) : <h3>No comments...</h3>}
                     <button className={'seeMore'} onClick={handleRefreshComments}>refresh</button>
@@ -139,3 +197,4 @@ export const CommentsComponent = (props: Props) => {
         </>
     )
 }
+
