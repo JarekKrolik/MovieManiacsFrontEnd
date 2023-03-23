@@ -7,6 +7,7 @@ import {
     Response,
     SingleMovieSpecific,
     YoutubeTrailer,
+    AnswersResponse,
 } from 'types'
 import {apiUrl} from "../config/api";
 
@@ -33,9 +34,24 @@ export class MovieFinder {
     //
     // }
 
+    static async deleteAnswerForComment(id:string){
+        const deleteAnswer = await fetch(`${apiUrl}/comments/answers`,{
+            method:'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+
+            },
+            body:JSON.stringify({
+                id,
+            })
+
+        })
+
+        return  deleteAnswer.json();
+    }
 
     static async getAnswersForComments(id:string){
-        const response = await fetch(`${apiUrl}/comments/answers/${id}`,{
+        const getComments = await fetch(`${apiUrl}/comments/answers/${id}`,{
             method:'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -44,7 +60,7 @@ export class MovieFinder {
 
         })
 
-        return await response.json()
+        return await getComments.json() as AnswersResponse
 
     }
     static async addAnswerToComment(commentId:string,comment:string,user:string,avatar:number){

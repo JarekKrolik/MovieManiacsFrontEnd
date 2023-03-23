@@ -1,5 +1,5 @@
 import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
-import {CommentsResponse} from 'types'
+import {CommentsResponse, AnswersResponse} from 'types'
 import "../css/CommentsComponent.css"
 import {MovieFinder} from "../../repository/MovieFinder";
 import {Spinner} from "../Spinner";
@@ -23,7 +23,7 @@ export const CommentsComponent = (props: Props) => {
     const [editCommentOn, setEditCommentOn] = useState(false)
     const [sendAnswerOn, setSendAnswerOn] = useState(false)
     const [editedId, setEditedId] = useState('')
-    const[answeredCommentId,setAnsweredCommentId]=useState('')
+    const [answers, setAnswers] = useState<AnswersResponse | null>()
     const [answeredId, setAnsweredId] = useState<string[]>([]);
 
     const getComments = async () => {
@@ -39,7 +39,10 @@ export const CommentsComponent = (props: Props) => {
         const resp = await MovieFinder.addAnswerToComment(editedId, comment, userData.name, userData.avatar)
         setSendAnswerOn(false)
         setResponse(resp.message)
-        await getComments()
+        setComment('')
+        console.log(userData.name)
+        console.log()
+        setAnswers(await MovieFinder.getAnswersForComments(editedId))
 
     }
 
@@ -68,8 +71,9 @@ export const CommentsComponent = (props: Props) => {
             const arr = answeredId;
             arr.push(e.target.id);
             setAnsweredId(arr)
-           const data =  await MovieFinder.getAnswersForComments(e.target.id);
-            console.log(data)
+            const data = await MovieFinder.getAnswersForComments(e.target.id);
+            console.log(data.result)
+            setAnswers(data)
 
 
         } else {
@@ -95,12 +99,16 @@ export const CommentsComponent = (props: Props) => {
     }
 
     const handleDeleteComment = async (e: any) => {
+        if (e.target.name === 'answer') {
+            const response = await MovieFinder.deleteAnswerForComment(e.target.id)
+            setAnswers(await MovieFinder.getAnswersForComments(editedId))
+            setResponse(response.message)
+        } else {
+            const response = await MovieFinder.deleteComment(e.target.id);
+            setResponse(response.message)
+            await getComments()
 
-        const response = await MovieFinder.deleteComment(e.target.id);
-        setResponse(response.message)
-        await getComments()
-
-
+        }
     }
 
 
@@ -172,11 +180,41 @@ export const CommentsComponent = (props: Props) => {
 
                                     {answeredId.includes(el.id) ? <div className="comments-area">
                                         <div onClick={handleCloseAnswer} id={el.id} className="closeBtn">X</div>
-                                        <button onClick={()=>{
-                                            setSendAnswerOn(prev=>!prev)
-                                        }} className="goBack">add answer</button>
-                                        <ul>
-                                        </ul>
+                                        <button onClick={() => {
+                                            setSendAnswerOn(prev => !prev)
+                                        }} className="goBack">add answer
+                                        </button>
+
+                                        {answers ? <ul>
+                                            {answers.result.map(el => {
+                                                return (
+                                                    <li key={el.id}>
+                                <span><div className="avatar">
+                            <img src={require(`../../assets/img/avatars/${el.avatar}.png`)}
+                                 alt="user avatar"/>
+                            <p>{el.user}</p>
+                        </div></span>
+                                                        <p>{el.comment}</p>
+                                                        <p>{new Date(el.created_at).toLocaleDateString()}</p>
+                                                        <br/>
+                                                        <div className={'buttons'}>{el.user === userData.name ? <>
+                                                            <button onClick={handleDeleteComment} id={el.id}
+                                                                    name={'answer'}
+                                                                    className={'comment-button'}>delete
+                                                            </button>
+                                                            <button onClick={handleEditCommentFormOn} id={el.id}
+                                                                    name={el.comment}
+                                                                    className={'comment-button'}>edit
+                                                            </button>
+                                                        </> : null}
+
+                                                        </div>
+
+                                                    </li>
+                                                )
+                                            })}
+                                        </ul> : <Spinner returnRoute={'userMain'}/>}
+
                                     </div> : null}</div>
                             )
                         }) : <h3>No comments...</h3>}
