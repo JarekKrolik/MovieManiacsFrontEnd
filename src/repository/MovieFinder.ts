@@ -34,6 +34,23 @@ export class MovieFinder {
     //
     // }
 
+    static async editAnswerForComment(id:string,comment:string){
+        const editAnswer = await fetch(`${apiUrl}/comments/answers/${id}`,{
+            method:'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+
+            },
+            body:JSON.stringify({
+                comment,
+            })
+
+        })
+
+        return  editAnswer.json();
+
+    }
+
     static async deleteAnswerForComment(id:string){
         const deleteAnswer = await fetch(`${apiUrl}/comments/answers`,{
             method:'DELETE',

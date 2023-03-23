@@ -138,7 +138,7 @@
 
 }
 
-.goBack:last-of-type{
+.allDataElementBox .goBack:last-of-type{
     margin-bottom: 3em;
 }
 

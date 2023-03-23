@@ -7,6 +7,8 @@ import {UserDataContext} from "../../contexts/UserDataContext";
 import {AllDataSwitches} from "./AllDataComponent";
 import {CommentEditComponent} from "./CommentEditComponent";
 import {AnswerCommentComponent} from "./AnswerCommentComponent";
+import {SingleCommentComponent} from "./SingleCommentComponent";
+import {AddCommentForm} from "./AddCommentForm";
 
 interface Props {
     id: string;
@@ -25,13 +27,13 @@ export const CommentsComponent = (props: Props) => {
     const [editedId, setEditedId] = useState('')
     const [answers, setAnswers] = useState<AnswersResponse | null>()
     const [answeredId, setAnsweredId] = useState<string[]>([]);
+    const [answerSend, setAnswerSend] = useState(false)
+    const [mainCommentId, setMainCommentId] = useState('')
 
     const getComments = async () => {
         setComment('')
         const comments = await MovieFinder.getComments(props.id, 'movie');
         setComments(comments)
-
-
     }
 
     const handleSendAnswerToComment = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,18 +42,27 @@ export const CommentsComponent = (props: Props) => {
         setSendAnswerOn(false)
         setResponse(resp.message)
         setComment('')
-        console.log(userData.name)
-        console.log()
         setAnswers(await MovieFinder.getAnswersForComments(editedId))
 
     }
 
     const handleSendEditedComment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const resp = await MovieFinder.editComment(editedId, comment);
-        setEditCommentOn(false)
-        setResponse(resp.message)
-        await getComments()
+        if (answerSend) {
+
+            const resp = await MovieFinder.editAnswerForComment(editedId, comment)
+            setResponse(resp.message)
+            setComment('')
+            setEditCommentOn(false)
+            setAnswers(await MovieFinder.getAnswersForComments(mainCommentId))
+            await getComments()
+
+        } else {
+            const resp = await MovieFinder.editComment(editedId, comment);
+            setEditCommentOn(false)
+            setResponse(resp.message)
+            await getComments()
+        }
 
     }
 
@@ -67,19 +78,29 @@ export const CommentsComponent = (props: Props) => {
     const handleEditCommentFormOn = async (e: any) => {
 
         if (e.target.name === 'answer') {
+            setMainCommentId(e.target.id)
             setEditedId(e.target.id)
             const arr = answeredId;
             arr.push(e.target.id);
             setAnsweredId(arr)
             const data = await MovieFinder.getAnswersForComments(e.target.id);
-            console.log(data.result)
             setAnswers(data)
 
 
         } else {
-            setEditedId(e.target.id)
+            if (e.target.value === 'answer') {
+                setAnswerSend(true)
+                setEditedId(e.target.id)
+
+            } else {
+                setEditedId(e.target.id)
+                setAnswerSend(false)
+
+            }
+
             setEditCommentOn(true)
             setComment(e.target.name)
+
         }
     }
 
@@ -101,7 +122,7 @@ export const CommentsComponent = (props: Props) => {
     const handleDeleteComment = async (e: any) => {
         if (e.target.name === 'answer') {
             const response = await MovieFinder.deleteAnswerForComment(e.target.id)
-            setAnswers(await MovieFinder.getAnswersForComments(editedId))
+            setAnswers(await MovieFinder.getAnswersForComments(mainCommentId))
             setResponse(response.message)
         } else {
             const response = await MovieFinder.deleteComment(e.target.id);
@@ -121,8 +142,6 @@ export const CommentsComponent = (props: Props) => {
     useEffect(() => {
         (async () => {
             await getComments()
-            // setAnsweredId([])
-
         })()
     }, [])
 
@@ -155,83 +174,46 @@ export const CommentsComponent = (props: Props) => {
                     {comments.result?.length !== 0 ?
                         comments.result?.map(el => {
                             return (<div key={el.id} className="comments-answers">
-                                    <li key={el.id}>
-                                <span><div className="avatar">
-                            <img src={require(`../../assets/img/avatars/${el.avatar}.png`)}
-                                 alt="user avatar"/>
-                            <p>{el.name}</p>
-                        </div></span>
-                                        <p>{el.comment}</p><p>{new Date(el.created_at).toLocaleDateString()}</p>
-                                        <br/>
-                                        <div className={'buttons'}>{el.name === userData.name ? <>
-                                            <button onClick={handleDeleteComment} id={el.id}
-                                                    className={'comment-button'}>delete
-                                            </button>
-                                            <button onClick={handleEditCommentFormOn} id={el.id} name={el.comment}
-                                                    className={'comment-button'}>edit
-                                            </button>
-                                        </> : null}
-                                            <button onClick={handleEditCommentFormOn} id={el.id} name={'answer'}
-                                                    className={'comment-button'}>answers
-                                            </button>
-                                        </div>
-
-                                    </li>
+                                  <SingleCommentComponent
+                                      comment={el}
+                                      type={'comment'}
+                                      handleDeleteComment={handleDeleteComment}
+                                      handleEditCommentFormOn={handleEditCommentFormOn}
+                                  />
 
                                     {answeredId.includes(el.id) ? <div className="comments-area">
-                                        <div onClick={handleCloseAnswer} id={el.id} className="closeBtn">X</div>
+                                        <div
+                                            onClick={handleCloseAnswer}
+                                            id={el.id}
+                                            className="closeBtn">
+                                            X</div>
                                         <button onClick={() => {
                                             setSendAnswerOn(prev => !prev)
                                         }} className="goBack">add answer
                                         </button>
 
                                         {answers ? <ul>
-                                            {answers.result.map(el => {
+                                            {answers.result.length===0?<h3 className={'comments'}>No comments...</h3>:
+
+                                            answers.result.map(el => {
                                                 return (
-                                                    <li key={el.id}>
-                                <span><div className="avatar">
-                            <img src={require(`../../assets/img/avatars/${el.avatar}.png`)}
-                                 alt="user avatar"/>
-                            <p>{el.user}</p>
-                        </div></span>
-                                                        <p>{el.comment}</p>
-                                                        <p>{new Date(el.created_at).toLocaleDateString()}</p>
-                                                        <br/>
-                                                        <div className={'buttons'}>{el.user === userData.name ? <>
-                                                            <button onClick={handleDeleteComment} id={el.id}
-                                                                    name={'answer'}
-                                                                    className={'comment-button'}>delete
-                                                            </button>
-                                                            <button onClick={handleEditCommentFormOn} id={el.id}
-                                                                    name={el.comment}
-                                                                    className={'comment-button'}>edit
-                                                            </button>
-                                                        </> : null}
-
-                                                        </div>
-
-                                                    </li>
+                                                  <SingleCommentComponent type={'amswer'}
+                                                                          answer={el}
+                                                                          handleDeleteComment={handleDeleteComment}
+                                                                          handleEditCommentFormOn={handleEditCommentFormOn}
+                                                  />
                                                 )
                                             })}
                                         </ul> : <Spinner returnRoute={'userMain'}/>}
 
                                     </div> : null}</div>
                             )
-                        }) : <h3>No comments...</h3>}
+                        }) : <h3 className={'comments'}>No comments...</h3>}
                     <button className={'seeMore'} onClick={handleRefreshComments}>refresh</button>
                 </ul> : <Spinner returnRoute={'/userMain'}/>}
             </div>
             {response ? <h3 className={'response'}>{response}</h3> : null}
-            <div className="add-comment">
-                <form className={'register'} onSubmit={handleSendComment}>
-                    <label>your comment
-                        <textarea onChange={handleTextChange} value={comment} required={true}/>
-
-                        <button className="seeMore">send</button>
-                    </label>
-                </form>
-
-            </div>
+          <AddCommentForm comment={comment} handleSendComment={handleSendComment} handleTextChange={handleTextChange}/>
         </>
     )
 }

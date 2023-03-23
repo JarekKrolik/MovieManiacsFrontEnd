@@ -14,9 +14,59 @@
 
 }
 
-.closeBtn{
+.like-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0.3em;
+
+}
+
+.like {
+    display: flex;
+    flex-direction: column;
+
+    width: 5em;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+}
+
+
+.like.dislike img {
+    transform: rotate(180deg) translateY(8%);
+    border-radius: 50%;
+
+
+}
+
+.like.dislike {
+
+}
+
+.like.dislike p {
+    color: red;
+}
+
+.like img {
+    width: 100%;
+}
+
+.comment-btn {
+    width: 100%;
+}
+
+h3.comments {
+    text-transform: uppercase;
+    text-align: center;
+    padding: 4em;
+    font-size: 2.5rem;
+}
+
+.closeBtn {
     position: absolute;
-    top:4%;
+    top: 4%;
     right: 4%;
     border-radius: 50%;
     font-size: 2.5rem;
@@ -27,10 +77,11 @@
     transition: transform 0.4s, box-shadow 0.4s;
 }
 
-.closeBtn:hover{
+.closeBtn:hover {
     transform: scale(1.05);
     box-shadow: 0 0 25px cornflowerblue;
 }
+
 .comments-area p {
     font-size: 1.5rem;
 
@@ -64,8 +115,6 @@
 }
 
 
-
-
 .comments-area ul li p {
     font-size: 1.6rem;
     padding: 1em;
@@ -79,6 +128,7 @@
     width: 100%;
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .response {
@@ -124,6 +174,15 @@ textarea {
 
     }
 
+    .add-comment {
+        width: 100%;
+    }
+
+    .add-comment .register label {
+        width: 70%;
+    }
+
+
     .seeMore.comment {
         width: 30%;
         text-align: center;
@@ -147,7 +206,6 @@ textarea {
     }
 
 }
-
 
 
 
