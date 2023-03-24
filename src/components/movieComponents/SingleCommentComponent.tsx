@@ -17,6 +17,7 @@ export const SingleCommentComponent = (props:Props)=>
 {
     const {comment,answer,handleDeleteComment,handleEditCommentFormOn,type} = props
     const {userData} = useContext(UserDataContext)
+    console.log(comment)
 
 
 
@@ -44,8 +45,8 @@ export const SingleCommentComponent = (props:Props)=>
                         className={'comment-button'}>answers
                 </button>
                 <div className="like-buttons">
-                    <div className="like"><img src={require('../../assets/img/icon-like.png')} alt=""/> <p className={'counter'}>0</p> </div>
-                    <div className="like dislike"><img src={require('../../assets/img/icon-like.png')} alt=""/><p className={'counter'}>0</p></div>
+                    <div className="like"><img src={require('../../assets/img/icon-like.png')} alt=""/> <p className={'counter'}>{comment.liked}</p> </div>
+                    <div className="like dislike"><img src={require('../../assets/img/icon-like.png')} alt=""/><p className={'counter'}>{comment.disliked}</p></div>
                 </div>
             </div>
 
@@ -69,6 +70,10 @@ export const SingleCommentComponent = (props:Props)=>
                                 className={'comment-button'}>edit
                         </button>
                     </> : null}
+                        <div className="like-buttons">
+                            <div className="like"><img src={require('../../assets/img/icon-like.png')} alt=""/> <p className={'counter'}>{answer.liked}</p> </div>
+                            <div className="like dislike"><img src={require('../../assets/img/icon-like.png')} alt=""/><p className={'counter'}>{answer.disliked}</p></div>
+                        </div>
 
                     </div>
 
