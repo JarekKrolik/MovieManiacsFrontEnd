@@ -34,6 +34,41 @@ export class MovieFinder {
     //
     // }
 
+    static async dislikeComment(commentId:string,user:string){
+        const dislikedComment = await fetch(`${apiUrl}/comments/likes`,{
+            method:'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+
+            },
+            body:JSON.stringify({
+                commentId,
+                user,
+            })
+
+        })
+
+        return dislikedComment.json()
+    }
+
+    static async likeComment(commentId:string,user:string){
+        const likedComment = await fetch(`${apiUrl}/comments/likes`,{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json'
+
+            },
+            body:JSON.stringify({
+                commentId,
+                user,
+            })
+
+        })
+
+        return likedComment.json()
+
+    }
+
     static async editAnswerForComment(id:string,comment:string){
         const editAnswer = await fetch(`${apiUrl}/comments/answers/${id}`,{
             method:'PUT',

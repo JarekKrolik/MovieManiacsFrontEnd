@@ -179,6 +179,8 @@ export const CommentsComponent = (props: Props) => {
                                       type={'comment'}
                                       handleDeleteComment={handleDeleteComment}
                                       handleEditCommentFormOn={handleEditCommentFormOn}
+                                      getComments={getComments}
+                                      setResponse={setResponse}
                                   />
 
                                     {answeredId.includes(el.id) ? <div className="comments-area">
@@ -201,6 +203,8 @@ export const CommentsComponent = (props: Props) => {
                                                                           answer={el}
                                                                           handleDeleteComment={handleDeleteComment}
                                                                           handleEditCommentFormOn={handleEditCommentFormOn}
+                                                                          getComments={getComments}
+                                                                          setResponse={setResponse}
                                                   />
                                                 )
                                             })}
