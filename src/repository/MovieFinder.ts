@@ -34,7 +34,7 @@ export class MovieFinder {
     //
     // }
 
-    static async dislikeComment(commentId:string,user:string){
+    static async dislikeComment(commentId:string,user:string,type:string){
         const dislikedComment = await fetch(`${apiUrl}/comments/likes`,{
             method:'DELETE',
             headers: {
@@ -44,6 +44,7 @@ export class MovieFinder {
             body:JSON.stringify({
                 commentId,
                 user,
+                type,
             })
 
         })
@@ -51,7 +52,7 @@ export class MovieFinder {
         return dislikedComment.json()
     }
 
-    static async likeComment(commentId:string,user:string){
+    static async likeComment(commentId:string,user:string,type:string){
         const likedComment = await fetch(`${apiUrl}/comments/likes`,{
             method:'POST',
             headers: {
@@ -61,6 +62,7 @@ export class MovieFinder {
             body:JSON.stringify({
                 commentId,
                 user,
+                type,
             })
 
         })

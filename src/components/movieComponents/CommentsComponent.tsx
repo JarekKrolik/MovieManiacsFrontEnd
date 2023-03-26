@@ -29,6 +29,7 @@ export const CommentsComponent = (props: Props) => {
     const [answeredId, setAnsweredId] = useState<string[]>([]);
     const [answerSend, setAnswerSend] = useState(false)
     const [mainCommentId, setMainCommentId] = useState('')
+    const[answerId,setAnswerId]=useState('')
 
     const getComments = async () => {
         setComment('')
@@ -75,31 +76,32 @@ export const CommentsComponent = (props: Props) => {
     }
 
 
-    const handleEditCommentFormOn = async (e: any) => {
+    const handleEditCommentFormOn = async (e: React.MouseEvent<HTMLButtonElement>) => {
 
-        if (e.target.name === 'answer') {
-            setMainCommentId(e.target.id)
-            setEditedId(e.target.id)
+        if (e.currentTarget.name === 'answer') {
+            setMainCommentId(e.currentTarget.id)
+            setEditedId(e.currentTarget.id)
+            setAnswerId(e.currentTarget.id)
             const arr = answeredId;
-            arr.push(e.target.id);
+            arr.push(e.currentTarget.id);
             setAnsweredId(arr)
-            const data = await MovieFinder.getAnswersForComments(e.target.id);
+            const data = await MovieFinder.getAnswersForComments(e.currentTarget.id);
             setAnswers(data)
 
 
         } else {
-            if (e.target.value === 'answer') {
+            if (e.currentTarget.value === 'answer') {
                 setAnswerSend(true)
-                setEditedId(e.target.id)
+                setEditedId(e.currentTarget.id)
 
             } else {
-                setEditedId(e.target.id)
+                setEditedId(e.currentTarget.id)
                 setAnswerSend(false)
 
             }
 
             setEditCommentOn(true)
-            setComment(e.target.name)
+            setComment(e.currentTarget.name)
 
         }
     }
@@ -119,13 +121,13 @@ export const CommentsComponent = (props: Props) => {
 
     }
 
-    const handleDeleteComment = async (e: any) => {
-        if (e.target.name === 'answer') {
-            const response = await MovieFinder.deleteAnswerForComment(e.target.id)
+    const handleDeleteComment = async (e:React.MouseEvent<HTMLButtonElement>) => {
+        if (e.currentTarget.name === 'answer') {
+            const response = await MovieFinder.deleteAnswerForComment(e.currentTarget.id)
             setAnswers(await MovieFinder.getAnswersForComments(mainCommentId))
             setResponse(response.message)
         } else {
-            const response = await MovieFinder.deleteComment(e.target.id);
+            const response = await MovieFinder.deleteComment(e.currentTarget.id);
             setResponse(response.message)
             await getComments()
 
@@ -175,12 +177,16 @@ export const CommentsComponent = (props: Props) => {
                         comments.result?.map(el => {
                             return (<div key={el.id} className="comments-answers">
                                   <SingleCommentComponent
+                                      answerId={answerId}
+                                      setAnswers={setAnswers}
                                       comment={el}
                                       type={'comment'}
                                       handleDeleteComment={handleDeleteComment}
                                       handleEditCommentFormOn={handleEditCommentFormOn}
                                       getComments={getComments}
                                       setResponse={setResponse}
+                                      key={el.id}
+
                                   />
 
                                     {answeredId.includes(el.id) ? <div className="comments-area">
@@ -199,12 +205,16 @@ export const CommentsComponent = (props: Props) => {
 
                                             answers.result.map(el => {
                                                 return (
-                                                  <SingleCommentComponent type={'amswer'}
+                                                  <SingleCommentComponent type={'answer'}
+                                                                          setAnswers={setAnswers}
+                                                                          answerId={answerId}
                                                                           answer={el}
                                                                           handleDeleteComment={handleDeleteComment}
                                                                           handleEditCommentFormOn={handleEditCommentFormOn}
                                                                           getComments={getComments}
                                                                           setResponse={setResponse}
+                                                                          key={el.id}
+
                                                   />
                                                 )
                                             })}

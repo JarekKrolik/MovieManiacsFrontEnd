@@ -1,38 +1,43 @@
 import React, {Dispatch, SetStateAction, useContext} from "react";
-import {CommentsEntity, AnswerToComment} from 'types'
+import {CommentsEntity, AnswerToComment, AnswersResponse} from 'types'
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {MovieFinder} from "../../repository/MovieFinder";
 
 interface Props {
     comment?: CommentsEntity,
     answer?: AnswerToComment,
-    handleDeleteComment: (e: any) => Promise<void>,
-    handleEditCommentFormOn: (e: any) => Promise<void>,
+    handleDeleteComment: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>,
+    handleEditCommentFormOn: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>,
     type: string,
     getComments: () => Promise<void>,
     setResponse: Dispatch<SetStateAction<string>>,
+    answerId: string,
+    setAnswers: Dispatch<SetStateAction<AnswersResponse | null | undefined>>,
 
 
 }
 
 export const SingleCommentComponent = (props: Props) => {
-    const {comment, answer, handleDeleteComment, handleEditCommentFormOn, type} = props
+    const {comment, answer, handleDeleteComment, handleEditCommentFormOn, type, answerId, setAnswers} = props
     const {userData} = useContext(UserDataContext)
 
-    const handleLikeComment = async (e: any) => {
-        const data = await MovieFinder.likeComment(e.target.parentElement.id, userData.name)
+    const handleLikeComment = async (e:any) => {
+        const data = await MovieFinder.likeComment(e.target.parentElement.id, userData.name, e.target.parentElement.title)
         props.setResponse(data.message)
         await props.getComments()
+        if (e.target.parentElement.title === 'answer') {
+            setAnswers(await MovieFinder.getAnswersForComments(answerId))
+        }
     }
 
-    const handleDislikeComment = async(e:any)=>{
-        const data = await MovieFinder.dislikeComment(e.target.parentElement.id,userData.name)
+    const handleDislikeComment = async (e:any) => {
+        const data = await MovieFinder.dislikeComment(e.target.parentElement.id, userData.name, e.target.parentElement.title)
         props.setResponse(data.message)
         await props.getComments()
-
+        if (e.target.parentElement.title === 'answer') {
+            setAnswers(await MovieFinder.getAnswersForComments(answerId))
+        }
     }
-
-
     return (
         <>
             {type === 'comment' ?
@@ -57,12 +62,14 @@ export const SingleCommentComponent = (props: Props) => {
                                 className={'comment-button'}>answers
                         </button>
                         <div className="like-buttons">
-                            <div onClick={handleLikeComment} id={comment.id} className="like"><img
+                            <div onClick={handleLikeComment} id={comment.id} title={'comment'} className="like"><img
                                 src={require('../../assets/img/icon-like.png')} alt=""/> <p
                                 className={'counter'}>{comment.liked}</p></div>
-                            <div onClick={handleDislikeComment} id={comment.id} className="like dislike"><img src={require('../../assets/img/icon-like.png')} alt=""/>
+                            <div onClick={handleDislikeComment} id={comment.id} title={'comment'}
+                                 className="like dislike"><img src={require('../../assets/img/icon-like.png')} alt=""/>
                                 <p className={'counter'}>{comment.disliked}</p></div>
                         </div>
+
                     </div>
 
                 </li> : null}</> : <>{answer ? <li key={answer.id}>
@@ -86,9 +93,11 @@ export const SingleCommentComponent = (props: Props) => {
                         </button>
                     </> : null}
                         <div className="like-buttons">
-                            <div className="like"><img src={require('../../assets/img/icon-like.png')} alt=""/> <p
+                            <div onClick={handleLikeComment} id={answer.id} title={'answer'} className="like"><img
+                                src={require('../../assets/img/icon-like.png')} alt=""/> <p
                                 className={'counter'}>{answer.liked}</p></div>
-                            <div className="like dislike"><img src={require('../../assets/img/icon-like.png')} alt=""/>
+                            <div onClick={handleDislikeComment} id={answer.id} title={'answer'}
+                                 className="like dislike"><img src={require('../../assets/img/icon-like.png')} alt=""/>
                                 <p className={'counter'}>{answer.disliked}</p></div>
                         </div>
 
