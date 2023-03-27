@@ -14,25 +14,25 @@ import {apiUrl} from "../config/api";
 export class MovieFinder {
 
 
-    // static async whereToWatch(title:string,imdbId:string,lang:string,country:string){
-    //     try{
-    //     const res = await fetch(`https://streaming-availability.p.rapidapi.com/v2/search/title?title=${title}&country=${country}&type=movie&output_language=${lang}`,{
-    //         method: 'GET',
-    //         headers: {
-    //             'X-RapidAPI-Key': 'eee3e0efbemsh23dcfc7e2f8b735p1dbd2fjsn91a0da94641f',
-    //             'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com',
-    //         }
-    //     })
-    //     const data = await res.json()
-    //     const found = data.result.filter((el: { imdbId: string; })=>el.imdbId === imdbId)
-    //         console.log(Object.entries(found[0].streamingInfo ))
-    //     return found[0].streamingInfo}catch (e){
-    //         console.log(e);
-    //         return null;
-    //     }
-    //
-    //
-    // }
+    static async whereToWatch(title:string,imdbId:string,lang:string,country:string){
+        try{
+        const res = await fetch(`https://streaming-availability.p.rapidapi.com/v2/search/title?title=${title}&country=${country}&type=movie&output_language=${lang}`,{
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': 'eee3e0efbemsh23dcfc7e2f8b735p1dbd2fjsn91a0da94641f',
+                'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com',
+            }
+        })
+        const data = await res.json()
+        const found = data.result.filter((el: { imdbId: string; })=>el.imdbId === imdbId)
+            console.log(Object.entries(found[0].streamingInfo ))
+        return found[0].streamingInfo}catch (e){
+            console.log(e);
+            return null;
+        }
+
+
+    }
 
     static async dislikeComment(commentId:string,user:string,type:string){
         const dislikedComment = await fetch(`${apiUrl}/comments/likes`,{

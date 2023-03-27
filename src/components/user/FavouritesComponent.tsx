@@ -20,9 +20,13 @@ export const FavouritesComponent = (props: Props) => {
         favActors: false,
     })
 
-    const handleInputFilter = (e: React.ChangeEvent<HTMLInputElement>)=>{
-        if(e.target.name==='movie'){setFavMovies(userData.favMovies.filter(el=>el.name.toUpperCase().includes(e.target.value.toUpperCase())))}
-        if(e.target.name==='actor'){setFavActors(userData.favActors.filter(el=>el.name.toUpperCase().includes(e.target.value.toUpperCase())))}
+    const handleInputFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.name === 'movie') {
+            setFavMovies(userData.favMovies.filter(el => el.name.toUpperCase().includes(e.target.value.toUpperCase())))
+        }
+        if (e.target.name === 'actor') {
+            setFavActors(userData.favActors.filter(el => el.name.toUpperCase().includes(e.target.value.toUpperCase())))
+        }
 
     }
 
@@ -33,10 +37,10 @@ export const FavouritesComponent = (props: Props) => {
             nowInCinemas: false,
             searchComponent: false,
             allDataComponent: true,
-            whatToWatch:false,
+            whatToWatch: false,
 
         })
-        setUserData( ({
+        setUserData(({
             ...userData,
             selectedItem: {
                 id: e.target.id,
@@ -67,23 +71,23 @@ export const FavouritesComponent = (props: Props) => {
                 <div className="movies">
                     <h2>Your favourite movies list:</h2>
                     <form className={'register actor'}>
-                        <label>search by title : <input name={'movie'} onChange={handleInputFilter} type="text"/></label>
+                        <label>search by title : <input name={'movie'} onChange={handleInputFilter}
+                                                        type="text"/></label>
                     </form>
                     {favMovies ? <ul>
                         {favMovies.length > 0 ?
                             favMovies.map(el => {
                                 return (
-                                    <li key={el.movie_id}>
+                                    <li key={el.movie_id} style={{
+                                        backgroundImage: `url(${el.image})`
+                                    }}>
+                                        <div className="shade"></div>
                                         <div className={'text'}>
                                             <h3>{el.name}</h3>
                                             <button className={'favBtn'} onClick={handleSeeMore} datatype={'movie'}
                                                     id={el.movie_id}>see more
                                             </button>
                                         </div>
-                                        <div className="fav-picture">
-                                            <img src={el.image} alt=""/>
-                                        </div>
-
                                     </li>
                                 )
                             }) : <h3>no favourites on your list...</h3>}
@@ -97,7 +101,7 @@ export const FavouritesComponent = (props: Props) => {
                 }))
             }} className="goBack">{favVisible.favActors ? 'hide actors' : 'actors'}</button>
             {favVisible.favActors ?
-                <div className="actors movies">
+                <div className="movies actors">
                     <h2>Your favourite actors list:</h2>
                     <form className={'register actor'}>
                         <label>search by name : <input name={'actor'} onChange={handleInputFilter} type="text"/></label>
@@ -106,18 +110,16 @@ export const FavouritesComponent = (props: Props) => {
                         {favActors.length > 0 ?
                             favActors.map(el => {
                                 return (
-                                    <li key={el.actor_id}>
-
-                                        <div>
+                                    <li key={el.actor_id} style={{
+                                        backgroundImage: `url(${el.image})`
+                                    }}>
+                                        <div className="shade"></div>
+                                        <div className={'text'}>
                                             <h3>{el.name}</h3>
-                                            <button onClick={handleSeeMore}  datatype={'actor'} id={el.actor_id}>more
+                                            <button onClick={handleSeeMore} className={'favBtn'} datatype={'actor'}
+                                                    id={el.actor_id}>see more
                                             </button>
                                         </div>
-
-                                        <div className="fav-picture">
-                                            <img src={el.image} alt=""/>
-                                        </div>
-
                                     </li>
                                 )
                             }) : <h3>no favourites on your list...</h3>}

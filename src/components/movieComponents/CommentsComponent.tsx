@@ -1,5 +1,5 @@
 import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
-import {CommentsResponse, AnswersResponse} from 'types'
+import {CommentsResponse, AnswersResponse, CommentsEntity, AnswerToComment} from 'types'
 import "../css/CommentsComponent.css"
 import {MovieFinder} from "../../repository/MovieFinder";
 import {Spinner} from "../Spinner";
@@ -29,12 +29,20 @@ export const CommentsComponent = (props: Props) => {
     const [answeredId, setAnsweredId] = useState<string[]>([]);
     const [answerSend, setAnswerSend] = useState(false)
     const [mainCommentId, setMainCommentId] = useState('')
-    const[answerId,setAnswerId]=useState('')
+    const [answerId, setAnswerId] = useState('')
+    const [paginatedComments, setPaginatedComments] = useState<CommentsEntity[] | []>()
+    const [paginatedAnswers, setPaginatedAnswers] = useState<AnswerToComment [] | []>()
+    const [numberOfDisplayedComments, setNumberOfDisplayedComments] = useState(5)
+    const [numberOfDisplayedAnswers, setNumberOfDisplayedAnswers] = useState(5)
+
 
     const getComments = async () => {
         setComment('')
         const comments = await MovieFinder.getComments(props.id, 'movie');
         setComments(comments)
+        const commentsSlicedArray = comments.result.slice(0, numberOfDisplayedComments)
+        setPaginatedComments(commentsSlicedArray)
+        setAnswers(await MovieFinder.getAnswersForComments(mainCommentId))
     }
 
     const handleSendAnswerToComment = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -45,6 +53,14 @@ export const CommentsComponent = (props: Props) => {
         setComment('')
         setAnswers(await MovieFinder.getAnswersForComments(editedId))
 
+    }
+
+    const handleShowMoreComments = async () => {
+        setNumberOfDisplayedComments(prev => 5 + prev)
+    }
+
+    const handleShowMoreAnswers = async () => {
+        setNumberOfDisplayedAnswers(prev => 5 + prev)
     }
 
     const handleSendEditedComment = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -86,7 +102,9 @@ export const CommentsComponent = (props: Props) => {
             arr.push(e.currentTarget.id);
             setAnsweredId(arr)
             const data = await MovieFinder.getAnswersForComments(e.currentTarget.id);
+            const answersSlicedArray = data.result.slice(0, numberOfDisplayedAnswers)
             setAnswers(data)
+            setPaginatedAnswers(answersSlicedArray)
 
 
         } else {
@@ -121,7 +139,7 @@ export const CommentsComponent = (props: Props) => {
 
     }
 
-    const handleDeleteComment = async (e:React.MouseEvent<HTMLButtonElement>) => {
+    const handleDeleteComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
         if (e.currentTarget.name === 'answer') {
             const response = await MovieFinder.deleteAnswerForComment(e.currentTarget.id)
             setAnswers(await MovieFinder.getAnswersForComments(mainCommentId))
@@ -139,6 +157,16 @@ export const CommentsComponent = (props: Props) => {
         setResponse('')
         await getComments();
     }
+
+    useEffect(() => {
+        const answersSlicedArray = answers?.result.slice(0, numberOfDisplayedAnswers)
+        setPaginatedAnswers(answersSlicedArray)
+    }, [numberOfDisplayedAnswers])
+
+    useEffect(() => {
+        const commentsSlicedArray = comments?.result.slice(0, numberOfDisplayedComments)
+        setPaginatedComments(commentsSlicedArray)
+    }, [numberOfDisplayedComments])
 
 
     useEffect(() => {
@@ -174,60 +202,70 @@ export const CommentsComponent = (props: Props) => {
             <div className="comments-area">
                 {comments ? <ul>
                     {comments.result?.length !== 0 ?
-                        comments.result?.map(el => {
+                        paginatedComments?.map(el => {
                             return (<div key={el.id} className="comments-answers">
-                                  <SingleCommentComponent
-                                      answerId={answerId}
-                                      setAnswers={setAnswers}
-                                      comment={el}
-                                      type={'comment'}
-                                      handleDeleteComment={handleDeleteComment}
-                                      handleEditCommentFormOn={handleEditCommentFormOn}
-                                      getComments={getComments}
-                                      setResponse={setResponse}
-                                      key={el.id}
+                                    <SingleCommentComponent
+                                        answerId={answerId}
+                                        setAnswers={setAnswers}
+                                        comment={el}
+                                        type={'comment'}
+                                        handleDeleteComment={handleDeleteComment}
+                                        handleEditCommentFormOn={handleEditCommentFormOn}
+                                        getComments={getComments}
+                                        setResponse={setResponse}
+                                        key={el.id}
 
-                                  />
+                                    />
 
                                     {answeredId.includes(el.id) ? <div className="comments-area">
                                         <div
                                             onClick={handleCloseAnswer}
                                             id={el.id}
                                             className="closeBtn">
-                                            X</div>
+                                            X
+                                        </div>
                                         <button onClick={() => {
                                             setSendAnswerOn(prev => !prev)
                                         }} className="goBack">add answer
                                         </button>
 
                                         {answers ? <ul>
-                                            {answers.result.length===0?<h3 className={'comments'}>No comments...</h3>:
+                                            {answers.result.length === 0 ?
+                                                <h3 className={'comments'}>No comments...</h3> :
 
-                                            answers.result.map(el => {
-                                                return (
-                                                  <SingleCommentComponent type={'answer'}
-                                                                          setAnswers={setAnswers}
-                                                                          answerId={answerId}
-                                                                          answer={el}
-                                                                          handleDeleteComment={handleDeleteComment}
-                                                                          handleEditCommentFormOn={handleEditCommentFormOn}
-                                                                          getComments={getComments}
-                                                                          setResponse={setResponse}
-                                                                          key={el.id}
+                                                paginatedAnswers?.map(el => {
+                                                    return (
+                                                        <SingleCommentComponent type={'answer'}
+                                                                                setAnswers={setAnswers}
+                                                                                answerId={answerId}
+                                                                                answer={el}
+                                                                                handleDeleteComment={handleDeleteComment}
+                                                                                handleEditCommentFormOn={handleEditCommentFormOn}
+                                                                                getComments={getComments}
+                                                                                setResponse={setResponse}
+                                                                                key={el.id}
 
-                                                  />
-                                                )
-                                            })}
+                                                        />
+                                                    )
+                                                })}
+                                            <h3 className="counter">{paginatedAnswers?.length} of {answers.result.length} comments</h3>
+                                            {answers.result.length <= numberOfDisplayedAnswers ? null :
+                                                <button className={'seeMore'}
+                                                        onClick={handleShowMoreAnswers}>more</button>}
                                         </ul> : <Spinner returnRoute={'userMain'}/>}
 
                                     </div> : null}</div>
                             )
                         }) : <h3 className={'comments'}>No comments...</h3>}
+                    <h3 className="counter">{paginatedComments?.length} of {comments.result.length} comments</h3>
+                    {comments.result.length <= numberOfDisplayedComments ? null :
+                        <button className={'seeMore'} onClick={handleShowMoreComments}>more</button>}
                     <button className={'seeMore'} onClick={handleRefreshComments}>refresh</button>
                 </ul> : <Spinner returnRoute={'/userMain'}/>}
             </div>
             {response ? <h3 className={'response'}>{response}</h3> : null}
-          <AddCommentForm comment={comment} handleSendComment={handleSendComment} handleTextChange={handleTextChange}/>
+            <AddCommentForm comment={comment} handleSendComment={handleSendComment}
+                            handleTextChange={handleTextChange}/>
         </>
     )
 }
