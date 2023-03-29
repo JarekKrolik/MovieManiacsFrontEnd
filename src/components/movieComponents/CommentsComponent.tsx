@@ -42,7 +42,7 @@ export const CommentsComponent = (props: Props) => {
         setComments(comments)
         const commentsSlicedArray = comments.result.slice(0, numberOfDisplayedComments)
         setPaginatedComments(commentsSlicedArray)
-        setAnswers(await MovieFinder.getAnswersForComments(mainCommentId))
+        if(mainCommentId)(await MovieFinder.getAnswersForComments(mainCommentId))
     }
 
     const handleSendAnswerToComment = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -51,7 +51,10 @@ export const CommentsComponent = (props: Props) => {
         setSendAnswerOn(false)
         setResponse(resp.message)
         setComment('')
-        setAnswers(await MovieFinder.getAnswersForComments(editedId))
+        const data = await MovieFinder.getAnswersForComments(editedId);
+        const answersSlicedArray = data.result.slice(0, numberOfDisplayedAnswers)
+        setAnswers(data)
+        setPaginatedAnswers(answersSlicedArray)
 
     }
 
@@ -71,7 +74,11 @@ export const CommentsComponent = (props: Props) => {
             setResponse(resp.message)
             setComment('')
             setEditCommentOn(false)
-            setAnswers(await MovieFinder.getAnswersForComments(mainCommentId))
+            const data = await MovieFinder.getAnswersForComments(mainCommentId);
+            const answersSlicedArray = data.result.slice(0, numberOfDisplayedAnswers)
+            setAnswers(data)
+            setPaginatedAnswers(answersSlicedArray)
+
             await getComments()
 
         } else {
@@ -142,7 +149,10 @@ export const CommentsComponent = (props: Props) => {
     const handleDeleteComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
         if (e.currentTarget.name === 'answer') {
             const response = await MovieFinder.deleteAnswerForComment(e.currentTarget.id)
-            setAnswers(await MovieFinder.getAnswersForComments(mainCommentId))
+            const responseAnswers = await MovieFinder.getAnswersForComments(mainCommentId)
+            const answersSlicedArray = responseAnswers.result.slice(0, numberOfDisplayedAnswers)
+            setPaginatedAnswers(answersSlicedArray)
+            setAnswers(responseAnswers)
             setResponse(response.message)
         } else {
             const response = await MovieFinder.deleteComment(e.currentTarget.id);
@@ -159,11 +169,18 @@ export const CommentsComponent = (props: Props) => {
     }
 
     useEffect(() => {
-        const answersSlicedArray = answers?.result.slice(0, numberOfDisplayedAnswers)
-        setPaginatedAnswers(answersSlicedArray)
+        (async () => {if(mainCommentId){
+            const responseAnswers = await MovieFinder.getAnswersForComments(mainCommentId)
+            const answersSlicedArray = responseAnswers.result.slice(0, numberOfDisplayedAnswers)
+            setPaginatedAnswers(answersSlicedArray)
+        }
+
+        })()
+
     }, [numberOfDisplayedAnswers])
 
     useEffect(() => {
+
         const commentsSlicedArray = comments?.result.slice(0, numberOfDisplayedComments)
         setPaginatedComments(commentsSlicedArray)
     }, [numberOfDisplayedComments])

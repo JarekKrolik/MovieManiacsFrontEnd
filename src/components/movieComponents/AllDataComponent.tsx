@@ -15,6 +15,7 @@ import {UserDataContext} from "../../contexts/UserDataContext";
 import {OthersCastComponent} from "./OthersCastComponent";
 import {Switches} from "../LoginComponent";
 import {CommentsComponent} from "./CommentsComponent";
+import {ProposedMovieComponent} from "./ProposedMovieComponent";
 
 interface Props {
     setSwitches: Dispatch<SetStateAction<Switches>>;
@@ -31,6 +32,7 @@ export interface AllDataSwitches {
     wiki: boolean;
     others: boolean;
     comments: boolean;
+    streamingProviders: boolean;
 }
 
 export const AllDataComponent = (props: Props) => {
@@ -43,6 +45,7 @@ export const AllDataComponent = (props: Props) => {
         wiki: false,
         others: false,
         comments: false,
+        streamingProviders: false,
     });
     const [foundData, setFoundData] = useState<SingleMovieSpecific>();
     const [youTubeTrailer, setYouTubeTrailer] = useState<YoutubeTrailer>();
@@ -75,9 +78,6 @@ export const AllDataComponent = (props: Props) => {
             setYouTubeTrailer(youTubeTrailerRes)
             setFoundData(res);
             setId(res.id);
-
-
-            // await MovieFinder.whereToWatch(res.fullTitle,props.id,'en','us')
 
 
         })()
@@ -161,6 +161,23 @@ export const AllDataComponent = (props: Props) => {
                         }}>{switches.similars ? 'hide similar movies' : 'similar movies '}
                         </button>
                     </>)}
+
+                {switches.streamingProviders && foundData ?
+                    <ProposedMovieComponent seeMore={false} setSwitches={props.setSwitches} movie={{
+                        id: foundData.id,
+                        imDbRating: foundData.imDbRating,
+                        image: '',
+                        title: foundData.fullTitle,
+                    }} offButton={setSwitches} id={id}/> : null}
+                <button className={'goBack'} onClick={() => {
+                    setSwitches((prev) => ({
+                        ...prev,
+                        streamingProviders: !prev.streamingProviders,
+                    }))
+                }}>{switches.streamingProviders ? 'hide where to watch' : 'where to watch'}
+                </button>
+
+
                 {switches.comments ? <CommentsComponent offButton={setSwitches} id={id}/> : null}
                 <button className={'goBack'} onClick={() => {
                     setSwitches((prev) => ({

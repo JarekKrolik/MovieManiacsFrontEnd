@@ -56,5 +56,5 @@ const{setUserData,userData}=useContext(UserDataContext)
                 </div>
             </li>)
         })}
-    </ul> : <p>No data in IMDb database</p>) : null)
+    </ul> : <p>No data in IMDb database</p>) : <p>sorry, no data...</p>)
 }

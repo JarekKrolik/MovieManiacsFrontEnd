@@ -25,9 +25,8 @@ export class MovieFinder {
         })
         const data = await res.json()
         const found = data.result.filter((el: { imdbId: string; })=>el.imdbId === imdbId)
-            console.log(Object.entries(found[0].streamingInfo ))
         return found[0].streamingInfo}catch (e){
-            console.log(e);
+
             return null;
         }
 

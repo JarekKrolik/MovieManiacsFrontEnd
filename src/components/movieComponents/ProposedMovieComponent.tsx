@@ -1,30 +1,50 @@
-import React, {Dispatch, SetStateAction, useContext} from "react";
+import React, {Dispatch, SetStateAction, useContext, useState} from "react";
 import {ProposedMovie} from "./WhatToWatchComponent";
 import '../css/ProposedMovieComponent.css'
 import {GoUpArrow} from "../GoUpArrow";
 import {Switches} from "../LoginComponent";
 import {UserDataContext} from "../../contexts/UserDataContext";
-import {deflateRaw} from "zlib";
 import {MovieFinder} from "../../repository/MovieFinder";
-
+import {Spinner} from "../Spinner";
+import {StreamingAvailability} from 'types'
+import {StreamingLink} from "./StreamingProviders";
 
 
 interface Props {
+    seeMore:boolean,
+    id?: string,
+    offButton?: Dispatch<SetStateAction<{
+        fullCast: boolean;
+        trailer: boolean;
+        photos: boolean; posters: boolean;
+        similars: boolean; wiki: boolean;
+        others: boolean; comments: boolean;
+        streamingProviders: boolean;
+    }>>
     movie: ProposedMovie;
-    setSwitches: Dispatch<SetStateAction<Switches>>;
+    setSwitches?: Dispatch<SetStateAction<Switches>>;
 }
 
 export const ProposedMovieComponent = (props: Props) => {
     const {movie, setSwitches} = props
     const {userData, setUserData} = useContext(UserDataContext)
+    const [streamingPanelSwitch, setStreamingPanelSwitch] = useState(false)
+    const [streamingProvidersList, setStreamingProvidersList] = useState<string[]>()
+    const [streamingAvailability, setStreamingAvailability] = useState<StreamingAvailability>()
 
     const whereToWatchHandler = async () => {
-        const test = await MovieFinder.whereToWatch(movie.title,movie.id,'en','us')
-        for (const [key, value] of Object.entries(test.us)) {
-            console.log(`${key}: ${value}`);
+        setStreamingPanelSwitch(prev => !prev)
+        const tempArray = []
+        const streamingAvailability = await MovieFinder.whereToWatch(movie.title, movie.id, 'en', 'us') as StreamingAvailability
+        setStreamingAvailability(streamingAvailability)
+        for (const [key] of Object.entries(streamingAvailability.us)) {
+
+            tempArray.push(key)
+            setStreamingProvidersList(tempArray)
         }
-        console.log(test.us.prime)
+
     }
+
 
     return (
         <div className="proposed">
@@ -33,9 +53,18 @@ export const ProposedMovieComponent = (props: Props) => {
             <div className="picture">
                 <img src={movie.image} alt=""/>
             </div>
-            <button onClick={whereToWatchHandler}>where to watch ?</button>
+            {streamingPanelSwitch ? <div>
+                <h2>streaming available on:</h2>
+                {streamingProvidersList ? streamingProvidersList.map(el => {
+                    return (
+                        <StreamingLink key={Math.random() * 10} streamingAvailability={streamingAvailability} el={el}/>
+                    )
+                }) : <Spinner returnRoute={'userMain'}/>}
+            </div> : null}
+            <button className={'seeMore'}
+                    onClick={whereToWatchHandler}>{!streamingPanelSwitch ? 'where to watch ?' : 'close'}</button>
             <GoUpArrow/>
-            <button id={movie.id} onClick={(e: any) => {
+            {setSwitches&&props.seeMore?<button id={movie.id} onClick={(e: any) => {
                 setSwitches(prev => ({
                     ...prev,
                     allDataComponent: true,
@@ -48,7 +77,7 @@ export const ProposedMovieComponent = (props: Props) => {
                     }
                 }))
             }} className="seeMore">see more
-            </button>
+            </button>:null}
         </div>
     )
 }

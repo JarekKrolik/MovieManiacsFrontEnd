@@ -15,7 +15,8 @@ interface Props {
 export const OthersCastComponent = (props: Props) => {
     const {setUserData, userData} = useContext(UserDataContext)
     const {foundData} = props
-    const [listOfOthers, setListOfOthers] = useState(foundData.fullCast.others)
+
+    const [listOfOthers, setListOfOthers] = useState(foundData.fullCast?.others)
     const handleInputFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
         setListOfOthers(foundData.fullCast.others.filter(el => el.job.toUpperCase().includes(e.target.value.toUpperCase())))
     }

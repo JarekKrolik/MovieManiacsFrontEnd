@@ -51,7 +51,7 @@ export const WhatToWatchComponent = (props: Props) => {
             {!favListEmpty ?
                 <>
                     {displayMovie ? <h2>{answers[Math.floor(Math.random() * answers.length)]}</h2> : null}
-                    {displayMovie ? proposedMovie ? <ProposedMovieComponent setSwitches={props.setSwitches} movie={proposedMovie}/> :
+                    {displayMovie ? proposedMovie ? <ProposedMovieComponent seeMore={true} setSwitches={props.setSwitches} movie={proposedMovie}/> :
                         <Spinner returnRoute={'/'}/> : null}
                     <button onClick={handleFindMovie}
                             className="goBack">{!displayMovie ? 'propose something...' : 'want something else?'}</button>
