@@ -20,7 +20,6 @@ export const StreamingLink = (props: Props) => {
         const streamingLinks = streamingAvailability?.us[provider]
         setListOfLinksOn(prev => !prev)
         setListOfLinks(streamingLinks)
-        console.log(streamingLinks.map((el: StreamingProviderLinks) => el.link))
 
 
     }
@@ -32,7 +31,7 @@ export const StreamingLink = (props: Props) => {
             {listOfLinksOn && listOfLinks ? <div>
                 {listOfLinks.length > 0 ? listOfLinks.map(el => {
                     return (
-                        <div className="link">
+                        <div className="link" key={Math.random()*10}>
                             <p>type : {el.type}</p><p>quality : {el.quality}</p><a className={'seeMore link'} target={'_blank'} href={el.link}>streaming service</a>
                         </div>
                     )

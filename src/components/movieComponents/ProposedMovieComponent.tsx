@@ -11,7 +11,7 @@ import {StreamingLink} from "./StreamingProviders";
 
 
 interface Props {
-    seeMore:boolean,
+    seeMore: boolean,
     id?: string,
     offButton?: Dispatch<SetStateAction<{
         fullCast: boolean;
@@ -36,12 +36,17 @@ export const ProposedMovieComponent = (props: Props) => {
         setStreamingPanelSwitch(prev => !prev)
         const tempArray = []
         const streamingAvailability = await MovieFinder.whereToWatch(movie.title, movie.id, 'en', 'us') as StreamingAvailability
-        setStreamingAvailability(streamingAvailability)
-        for (const [key] of Object.entries(streamingAvailability.us)) {
+        if (streamingAvailability.us) {
+            setStreamingAvailability(streamingAvailability)
+            for (const [key] of Object.entries(streamingAvailability.us)) {
 
-            tempArray.push(key)
-            setStreamingProvidersList(tempArray)
+                tempArray.push(key)
+                setStreamingProvidersList(tempArray)
+            }
+        } else {
+            setStreamingProvidersList([])
         }
+
 
     }
 
@@ -55,16 +60,17 @@ export const ProposedMovieComponent = (props: Props) => {
             </div>
             {streamingPanelSwitch ? <div>
                 <h2>streaming available on:</h2>
-                {streamingProvidersList ? streamingProvidersList.map(el => {
+                {streamingProvidersList ? streamingProvidersList.length > 0 ? streamingProvidersList.map(el => {
                     return (
+
                         <StreamingLink key={Math.random() * 10} streamingAvailability={streamingAvailability} el={el}/>
                     )
-                }) : <Spinner returnRoute={'userMain'}/>}
+                }) : <h2>sorry, no streaming available for this movie...</h2> : <Spinner returnRoute={'userMain'}/>}
             </div> : null}
             <button className={'seeMore'}
                     onClick={whereToWatchHandler}>{!streamingPanelSwitch ? 'where to watch ?' : 'close'}</button>
             <GoUpArrow/>
-            {setSwitches&&props.seeMore?<button id={movie.id} onClick={(e: any) => {
+            {setSwitches && props.seeMore ? <button id={movie.id} onClick={(e: any) => {
                 setSwitches(prev => ({
                     ...prev,
                     allDataComponent: true,
@@ -77,7 +83,7 @@ export const ProposedMovieComponent = (props: Props) => {
                     }
                 }))
             }} className="seeMore">see more
-            </button>:null}
+            </button> : null}
         </div>
     )
 }
