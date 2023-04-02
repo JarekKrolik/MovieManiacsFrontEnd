@@ -13,7 +13,7 @@ export const ImagesComponent = (props: Props) => {
     const {foundData, posters} = props
 
     return (
-        !posters ? <> <Carousel showArrows={true} emulateTouch={true} useKeyboardArrows={true}
+        !posters ? <> <Carousel showArrows={true} emulateTouch={true} useKeyboardArrows={true} showThumbs={false}
                                 dynamicHeight={true} infiniteLoop={true} className={'main-slide'}>
             {foundData.images.items.map(e => {
                 return (

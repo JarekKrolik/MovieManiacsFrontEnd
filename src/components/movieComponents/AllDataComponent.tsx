@@ -1,6 +1,6 @@
 import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
 import {MovieFinder} from "../../repository/MovieFinder";
-import {SingleMovieSpecific, YoutubeTrailer, CommentsResponse} from 'types'
+import {SingleMovieSpecific, YoutubeTrailer} from 'types'
 import {Spinner} from "../Spinner";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import '../css/AllDataComponent.css'
@@ -51,6 +51,7 @@ export const AllDataComponent = (props: Props) => {
     const [youTubeTrailer, setYouTubeTrailer] = useState<YoutubeTrailer>();
     const {setUserData, userData} = useContext(UserDataContext);
     const [id, setId] = useState('');
+
     (async () => {
 
     })()
@@ -58,7 +59,6 @@ export const AllDataComponent = (props: Props) => {
 
     useEffect(() => {
         (async () => {
-
             window.scrollTo(0, 0)
             const res = await MovieFinder.getOneMovieById(props.id) as SingleMovieSpecific;
             const youTubeTrailerRes = await MovieFinder.getYouTubeTrailer(props.id) as YoutubeTrailer;

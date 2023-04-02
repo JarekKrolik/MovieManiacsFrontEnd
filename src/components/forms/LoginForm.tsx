@@ -1,6 +1,6 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {apiUrl} from "../../config/api";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import {GoBackBtn} from "../GoBackBtn";
 import {Header} from "../Header";
 import {UserDataContext} from "../../contexts/UserDataContext";
@@ -17,6 +17,7 @@ export const LoginForm = (props: Props) => {
         email: '',
         user: '',
     })
+    const navigate = useNavigate()
     const [loginData, setLoginData] = useState({
         userName: props.login,
         password: props.password,
@@ -164,6 +165,11 @@ export const LoginForm = (props: Props) => {
 
         })()
     }
+    useEffect(()=>{
+        if(userData.id){
+            navigate('/userMain')
+        }
+    },[userData.id])
 
     return (<>
             <Header/>
@@ -196,7 +202,7 @@ export const LoginForm = (props: Props) => {
 
 
                     <button>log in</button>
-                    <GoBackBtn text={'main paige'} path={'/'}/>
+                    <GoBackBtn text={'main page'} path={'/'}/>
                 </form> : null}
                 <p onClick={() => {
                     setShowPasswordReset(prev => !prev)

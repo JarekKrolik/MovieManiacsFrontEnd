@@ -91,6 +91,10 @@
     width: 100px;
 }
 
+/*.main-slide div.carousel{*/
+/*    display: none!important;*/
+/*}*/
+
 .carousel-root.main-slide .control-arrow.control-next {
     position: absolute;
     top: 0;
@@ -350,7 +354,13 @@ text.actor.similars {
         width: 33%;
 
     }
-
+.cast li:last-of-type{
+    width: 100%;
+    text-align: center;
+}
+.seeMore.cast{
+    margin: 0.5em auto;
+}
     .basicInfo.actor {
         display: flex;
         flex-direction: row;

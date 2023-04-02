@@ -57,7 +57,6 @@ function App() {
     return (
         <>
             <div className={'mainBox'}>
-                {/*<BackGroundPicture/>*/}
                 <UserDataContext.Provider value={{userData: userData, setUserData}}>
                     <Routes>
                         <Route path={'/'} element={<LoginComponent/>}/>

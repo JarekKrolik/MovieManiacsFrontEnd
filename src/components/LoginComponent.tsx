@@ -3,15 +3,17 @@ import {Link} from "react-router-dom";
 import "./css/LoginComponent.css"
 import {Header} from "./Header";
 
+
+
 const quotes = require('popular-movie-quotes')
 
-export  interface Switches {
+export interface Switches {
     searchComponent: boolean;
     nowInCinemas: boolean;
     soonInCinemas: boolean;
-    favourites:boolean;
-    allDataComponent:boolean,
-    whatToWatch:boolean,
+    favourites: boolean;
+    allDataComponent: boolean,
+    whatToWatch: boolean,
 }
 
 interface Quote {
@@ -24,6 +26,8 @@ interface Quote {
 export const LoginComponent = () => {
     const [quoteObj] = quotes.getSomeRandom(1)
     const quote = quoteObj as Quote
+
+
     return (
         <>
             <Header/>
