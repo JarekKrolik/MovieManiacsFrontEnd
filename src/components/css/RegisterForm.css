@@ -93,10 +93,10 @@ form.register button,.btn {
 
 p.textInfo{
     position: absolute;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0,0,0,0.95);
     top:50%;
     transform: translateY(-50%);
-    z-index: 3;
+    z-index: 15;
     left: 0;
     font-size: 1.8rem;
     color: cornflowerblue;

@@ -13,19 +13,49 @@ import {apiUrl} from "../config/api";
 
 export class MovieFinder {
 
-
-    static async whereToWatch(title:string,imdbId:string,lang:string,country:string){
-        try{
-        const res = await fetch(`https://streaming-availability.p.rapidapi.com/v2/search/title?title=${title}&country=${country}&type=movie&output_language=${lang}`,{
-            method: 'GET',
+    static async deleteUserAccount(userName: string, userId: string) {
+        const data = await fetch(`${apiUrl}/user`, {
+            method: "DELETE",
             headers: {
-                'X-RapidAPI-Key': 'eee3e0efbemsh23dcfc7e2f8b735p1dbd2fjsn91a0da94641f',
-                'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com',
-            }
+                'Content-Type': 'application/json'
+
+            },
+            body: JSON.stringify({
+                userName,
+                userId,
+            })
         })
-        const data = await res.json()
-        const found = data.result.filter((el: { imdbId: string; })=>el.imdbId === imdbId)
-        return found[0].streamingInfo}catch (e){
+
+        return data.json()
+
+    }
+
+    static async changeUserPassword(userId: string, newPassword: string) {
+        const data = await fetch(`${apiUrl}/user/change_password/${userId}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+
+            },
+            body: JSON.stringify({password: newPassword})
+        })
+        return data.json()
+    }
+
+
+    static async whereToWatch(title: string, imdbId: string, lang: string, country: string) {
+        try {
+            const res = await fetch(`https://streaming-availability.p.rapidapi.com/v2/search/title?title=${title}&country=${country}&type=movie&output_language=${lang}`, {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': 'eee3e0efbemsh23dcfc7e2f8b735p1dbd2fjsn91a0da94641f',
+                    'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com',
+                }
+            })
+            const data = await res.json()
+            const found = data.result.filter((el: { imdbId: string; }) => el.imdbId === imdbId)
+            return found[0].streamingInfo
+        } catch (e) {
 
             return null;
         }
@@ -33,14 +63,14 @@ export class MovieFinder {
 
     }
 
-    static async dislikeComment(commentId:string,user:string,type:string){
-        const dislikedComment = await fetch(`${apiUrl}/comments/likes`,{
-            method:'DELETE',
+    static async dislikeComment(commentId: string, user: string, type: string) {
+        const dislikedComment = await fetch(`${apiUrl}/comments/likes`, {
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
 
             },
-            body:JSON.stringify({
+            body: JSON.stringify({
                 commentId,
                 user,
                 type,
@@ -51,14 +81,14 @@ export class MovieFinder {
         return dislikedComment.json()
     }
 
-    static async likeComment(commentId:string,user:string,type:string){
-        const likedComment = await fetch(`${apiUrl}/comments/likes`,{
-            method:'POST',
+    static async likeComment(commentId: string, user: string, type: string) {
+        const likedComment = await fetch(`${apiUrl}/comments/likes`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
 
             },
-            body:JSON.stringify({
+            body: JSON.stringify({
                 commentId,
                 user,
                 type,
@@ -70,42 +100,42 @@ export class MovieFinder {
 
     }
 
-    static async editAnswerForComment(id:string,comment:string){
-        const editAnswer = await fetch(`${apiUrl}/comments/answers/${id}`,{
-            method:'PUT',
+    static async editAnswerForComment(id: string, comment: string) {
+        const editAnswer = await fetch(`${apiUrl}/comments/answers/${id}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
 
             },
-            body:JSON.stringify({
+            body: JSON.stringify({
                 comment,
             })
 
         })
 
-        return  editAnswer.json();
+        return editAnswer.json();
 
     }
 
-    static async deleteAnswerForComment(id:string){
-        const deleteAnswer = await fetch(`${apiUrl}/comments/answers`,{
-            method:'DELETE',
+    static async deleteAnswerForComment(id: string) {
+        const deleteAnswer = await fetch(`${apiUrl}/comments/answers`, {
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
 
             },
-            body:JSON.stringify({
+            body: JSON.stringify({
                 id,
             })
 
         })
 
-        return  deleteAnswer.json();
+        return deleteAnswer.json();
     }
 
-    static async getAnswersForComments(id:string){
-        const getComments = await fetch(`${apiUrl}/comments/answers/${id}`,{
-            method:'GET',
+    static async getAnswersForComments(id: string) {
+        const getComments = await fetch(`${apiUrl}/comments/answers/${id}`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
 
@@ -116,15 +146,16 @@ export class MovieFinder {
         return await getComments.json() as AnswersResponse
 
     }
-    static async addAnswerToComment(commentId:string,comment:string,user:string,avatar:number){
-        const sentAnswer = await fetch(`${apiUrl}/comments/answers`,{
-            method:'POST',
+
+    static async addAnswerToComment(commentId: string, comment: string, user: string, avatar: number) {
+        const sentAnswer = await fetch(`${apiUrl}/comments/answers`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
 
             },
-            body:JSON.stringify({
-                mainCommentId:commentId,
+            body: JSON.stringify({
+                mainCommentId: commentId,
                 comment,
                 user,
                 avatar,
@@ -169,7 +200,7 @@ export class MovieFinder {
 
     }
 
-    static async editComment(id:string,comment:string){
+    static async editComment(id: string, comment: string) {
         const response = await fetch(`${apiUrl}/comments`, {
                 method: 'PUT',
                 headers: {
@@ -177,8 +208,8 @@ export class MovieFinder {
 
                 },
                 body: JSON.stringify({
-                    newComment:comment,
-                    id:id,
+                    newComment: comment,
+                    id: id,
 
                 })
             }
@@ -186,7 +217,7 @@ export class MovieFinder {
         return await response.json();
     }
 
-    static async addComment(id: string, avatar: number, type: string, name: string, comment: string):Promise<any> {
+    static async addComment(id: string, avatar: number, type: string, name: string, comment: string): Promise<any> {
 
         const response = await fetch(`${apiUrl}/comments`, {
                 method: 'POST',
