@@ -20,6 +20,10 @@ App functions :
 
 https://madmaxlastv8.networkmanager.pl/
 
+## For testing without making account
+user : TestUser
+password :TestUser
+
 
 ## Related
 
