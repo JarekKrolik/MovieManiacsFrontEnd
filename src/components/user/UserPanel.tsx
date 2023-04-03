@@ -62,7 +62,7 @@ export const UserPanel = () => {
         }
     }
     const handleDeleteAccountPanel = () => {
-        setShowDeleteAccountConfirmation(prev=>!prev)
+        setShowDeleteAccountConfirmation(prev => !prev)
     }
     const handleAvatarSelect = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -97,7 +97,8 @@ export const UserPanel = () => {
             {userData.id ? null : <Navigate to={'/'}/>}
             (
             <div className="userPanel">
-                {showDeleteAccountConfirmation ? <DeleteAccountPanel modalOff={setShowDeleteAccountConfirmation}/> : null}
+                {showDeleteAccountConfirmation ?
+                    <DeleteAccountPanel modalOff={setShowDeleteAccountConfirmation}/> : null}
                 {showError.display ? <p onClick={() => {
                     setShowError({
                         display: false,
@@ -129,10 +130,11 @@ export const UserPanel = () => {
                                                                                 type={'password'}/></label>
                     <button>send</button>
                 </form> : null}
-                <button onClick={() => {
+                {userData.name === 'TestUser' ? null : <button onClick={() => {
                     setShowNewPassword(prev => !prev)
-                }} className="goBack">{showNewPassword ? 'close' : 'change password'}</button>
-                <button onClick={handleDeleteAccountPanel} className={'goBack'}>delete account</button>
+                }} className="goBack">{showNewPassword ? 'close' : 'change password'}</button>}
+                {userData.name === 'TestUser' ? null :
+                    <button onClick={handleDeleteAccountPanel} className={'goBack'}>delete account</button>}
 
                 <GoBackBtn text={'go back'} path={'/userMain'}/>
             </div>
