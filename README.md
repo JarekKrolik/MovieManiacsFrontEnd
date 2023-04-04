@@ -4,11 +4,11 @@
 Front-end for MovieManiac application.
 Created with Typescript and React.
 App functions :
- - allowing users to create and manage accounts in MovieManiac
+ - creating and managing accounts in MovieManiac
  - gives quick and easy access to IMDb database, where you can find any kind of data about a movie or series (trailers, photos, posters, full cast with specific information about every included person , etc.)
  - making and managing personal lists of favourite movies and actors
  - adding comments for movies with likes and dislikes option
- - "what to watch?" option that is based on your favourite movies list, it suggests what movie you might like, and search for its streaming availability
+ - "what to watch?" option that based on your favourite movies list suggests what movie you might like, and search for its streaming availability
  
 
 
