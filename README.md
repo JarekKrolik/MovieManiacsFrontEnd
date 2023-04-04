@@ -1,5 +1,6 @@
 
 # MovieManiac Front - End
+[![My Skills](https://skillicons.dev/icons?i=js,html,css,react,ts)](https://skillicons.dev)
 
 Front-end for MovieManiac application.
 Created with Typescript and React.
