@@ -1,7 +1,7 @@
 import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
-import '../css/RegisterForm.css'
-import '../css/moviesList.css'
-import {MovieListEntity, ActorsListEntity, FavouriteMoviesList, FavouriteActorsList} from 'types'
+import '../css/RegisterForm.css';
+import '../css/moviesList.css';
+import {MovieListEntity, ActorsListEntity, FavouriteMoviesList, FavouriteActorsList} from 'types';
 import {Spinner} from "../Spinner";
 import {ActorsListComponent} from "../movieComponents/ActorsListComponent";
 import {UserDataContext} from "../../contexts/UserDataContext";
@@ -13,7 +13,6 @@ import {Switches} from "../LoginComponent";
 
 interface Props {
     setSwitches: Dispatch<SetStateAction<Switches>>,
-    // returnData: MovieListEntity[] | ActorsListEntity[] | undefined,
     type: string,
     favList: FavouriteMoviesList[] | undefined,
     favActorsList: FavouriteActorsList[] | undefined,
@@ -21,10 +20,10 @@ interface Props {
 
 export const SearchComponent = (props: Props) => {
     const {userData} = useContext(UserDataContext)
-    const [searchText, setSearchText] = useState('');
-    const [foundData, setFoundData] = useState<MovieListEntity[] | ActorsListEntity[]>();
-    const [showList, setShowList] = useState(false);
-    const [select, setSelect] = useState<string>();
+    const [searchText, setSearchText] = useState('')
+    const [foundData, setFoundData] = useState<MovieListEntity[] | ActorsListEntity[]>()
+    const [showList, setShowList] = useState(false)
+    const [select, setSelect] = useState<string>()
 
     const [errors, setErrors] = useState({
         notFound: false,
@@ -44,7 +43,6 @@ export const SearchComponent = (props: Props) => {
             } else {
                 setSelect('movie')
             }
-
 
         if (userData.searchList) {
             setShowList(true)

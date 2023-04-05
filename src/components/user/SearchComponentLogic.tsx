@@ -1,6 +1,6 @@
 import React, {Dispatch, SetStateAction, useContext} from "react";
 import {MovieFinder} from "../../repository/MovieFinder";
-import {MovieListEntity, ActorsListEntity, Response} from 'types'
+import {MovieListEntity, ActorsListEntity, Response} from 'types';
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {SearchComponentForm} from "./SearchComponentForm";
 
@@ -15,14 +15,11 @@ interface Props {
     searchText: string,
     errors: { notFound: boolean; errorMessage: string; },
     foundData: MovieListEntity[] | ActorsListEntity[] | undefined,
-
-
 }
-
 
 export const SearchComponentLogic = (props: Props) => {
     const {setSearchText, setShowList, setFoundData, setSelect, setErrors, select, searchText, foundData} = props
-    const {userData,setUserData} = useContext(UserDataContext)
+    const {userData, setUserData} = useContext(UserDataContext)
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -33,22 +30,21 @@ export const SearchComponentLogic = (props: Props) => {
     }
 
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setUserData(  ({
+        setUserData(({
             ...userData,
             selectedItem: {
                 ...userData.selectedItem,
                 type: e.target.value
             }
         }))
-        setSelect(e.target.value);
-        setShowList(false);
-        setFoundData(undefined);
+        setSelect(e.target.value)
+        setShowList(false)
+        setFoundData(undefined)
 
     }
 
     const handleFind = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
+        e.preventDefault()
 
         try {
 
@@ -60,7 +56,7 @@ export const SearchComponentLogic = (props: Props) => {
             setShowList(true)
 
             if (select === 'movie') {
-                const result = await MovieFinder.getAllByTitle(searchText, 'pl') as unknown as Response;
+                const result = await MovieFinder.getAllByTitle(searchText, 'pl') as unknown as Response
                 if (result.errorMessage) {
                     setErrors(prev => ({
                         ...prev,
@@ -75,12 +71,12 @@ export const SearchComponentLogic = (props: Props) => {
                     ...userData,
                     searchList: finalData,
                 }))
-                setFoundData(finalData);
+                setFoundData(finalData)
 
             }
 
             if (select === 'series') {
-                const result = await MovieFinder.getAllSeriesByTitle(searchText) as unknown as Response;
+                const result = await MovieFinder.getAllSeriesByTitle(searchText) as unknown as Response
                 if (result.errorMessage) {
                     setErrors(prev => ({
                         ...prev,
@@ -88,7 +84,7 @@ export const SearchComponentLogic = (props: Props) => {
                         errorMessage: result.errorMessage,
                     }))
                 }
-                const finalData = result.results.filter(el => el.resultType === 'Series');
+                const finalData = result.results.filter(el => el.resultType === 'Series')
                 if (finalData.length === 0) {
                     setErrors(prev => ({
                         ...prev,
@@ -99,7 +95,7 @@ export const SearchComponentLogic = (props: Props) => {
                     ...prev,
                     notFound: false,
                 }))
-                setUserData( ({
+                setUserData(({
                     ...userData,
                     searchList: finalData,
                 }))
@@ -108,7 +104,7 @@ export const SearchComponentLogic = (props: Props) => {
 
 
             if (select === 'actor') {
-                const result = await MovieFinder.findActorByName(searchText) as Response;
+                const result = await MovieFinder.findActorByName(searchText) as Response
                 if (result.errorMessage) {
                     setErrors(prev => ({
                         ...prev,
@@ -129,7 +125,7 @@ export const SearchComponentLogic = (props: Props) => {
                     ...prev,
                     notFound: false,
                 }))
-                setUserData( ({
+                setUserData(({
                     ...userData,
                     searchList: finalData,
                 }))
@@ -137,11 +133,11 @@ export const SearchComponentLogic = (props: Props) => {
             }
 
         } catch (err) {
+            console.log(err)
         }
     }
 
-
     return (<SearchComponentForm foundData={foundData} handleFind={handleFind} searchText={searchText}
-                                handleInput={handleInput} handleSelect={handleSelect} select={select}/>)
+                                 handleInput={handleInput} handleSelect={handleSelect} select={select}/>)
 
 }

@@ -1,12 +1,12 @@
 import React, {Dispatch, SetStateAction, useContext, useState} from "react";
 import {ProposedMovie} from "./WhatToWatchComponent";
-import '../css/ProposedMovieComponent.css'
+import '../css/ProposedMovieComponent.css';
 import {GoUpArrow} from "../GoUpArrow";
 import {Switches} from "../LoginComponent";
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {MovieFinder} from "../../repository/MovieFinder";
 import {Spinner} from "../Spinner";
-import {StreamingAvailability} from 'types'
+import {StreamingAvailability} from 'types';
 import {StreamingLink} from "./StreamingProviders";
 
 
@@ -14,15 +14,18 @@ interface Props {
     seeMore: boolean,
     id?: string,
     offButton?: Dispatch<SetStateAction<{
-        fullCast: boolean;
-        trailer: boolean;
-        photos: boolean; posters: boolean;
-        similars: boolean; wiki: boolean;
-        others: boolean; comments: boolean;
-        streamingProviders: boolean;
+        fullCast: boolean,
+        trailer: boolean,
+        photos: boolean,
+        posters: boolean,
+        similars: boolean,
+        wiki: boolean,
+        others: boolean,
+        comments: boolean,
+        streamingProviders: boolean,
     }>>
-    movie: ProposedMovie;
-    setSwitches?: Dispatch<SetStateAction<Switches>>;
+    movie: ProposedMovie,
+    setSwitches?: Dispatch<SetStateAction<Switches>>
 }
 
 export const ProposedMovieComponent = (props: Props) => {

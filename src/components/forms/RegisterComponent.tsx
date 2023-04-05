@@ -1,12 +1,9 @@
 import React, {useState} from "react";
-import '../css/RegisterForm.css'
-import {apiUrl} from "../../config/api";
-import {UserEntity} from 'types'
-import {GoBackBtn} from "../GoBackBtn";
-import {Navigate} from "react-router-dom";
+import '../css/RegisterForm.css';
+import {UserEntity} from 'types';
 import {Header} from "../Header";
-import {Spinner} from "../Spinner";
 import {RegisterForm} from "./RegisterForm";
+import {saveUserToDatabase} from "../../utils/getUser";
 
 export const FormAdd = () => {
     const [loggedIn, setLoggedIn] = useState(false)
@@ -44,7 +41,7 @@ export const FormAdd = () => {
     }
 
     const handleNewUser = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+        e.preventDefault()
         if (registerData.password !== registerData.passwordCheck) {
             setErrorMsg((prev) => ({
                 ...prev,
@@ -68,19 +65,11 @@ export const FormAdd = () => {
             setErrorMsg(prev => ({
                 ...prev,
                 passwordCheck: false,
-                spinnerOn: true,
+                spinnerOn: false,
             }));
             (async () => {
 
-                const res = await fetch(`${apiUrl}/user`, {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json'
-
-                    },
-                    body: JSON.stringify(newUser)
-                });
-                const data = await res.json()
+                const data = await saveUserToDatabase(newUser)
 
                 if (!data.userVerified) {
                     setErrorMsg(prev => ({

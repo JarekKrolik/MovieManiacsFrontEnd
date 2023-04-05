@@ -1,8 +1,8 @@
 import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
-import {NowInCinemasMovieEntity} from 'types'
+import {NowInCinemasMovieEntity} from 'types';
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {MovieFinder} from "../../repository/MovieFinder";
-import "../css/NowInCinemas.css"
+import "../css/NowInCinemas.css";
 import {Spinner} from "../Spinner";
 import {NowInCinemasElement} from "./NowInCinemasElement";
 import {GoUpArrow} from "../GoUpArrow";
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const NowInCinemasComponent = (props: Props) => {
-    const {userData} = useContext(UserDataContext);
+    const {userData} = useContext(UserDataContext)
     const [foundData, setFoundData] = useState<NowInCinemasMovieEntity[]>()
     const [numberOfDisplayedMovies, setNumberOfDisplayedMovies] = useState(5)
     const [filteredData, setFilteredData] = useState<NowInCinemasMovieEntity[]>()
@@ -25,7 +25,7 @@ export const NowInCinemasComponent = (props: Props) => {
         (async () => {
             if (!foundData) {
                 const data = await MovieFinder.nowInCinemas() as NowInCinemasMovieEntity[]
-                setFoundData(data);
+                setFoundData(data)
             }
             const slicedArray = foundData?.slice(0, numberOfDisplayedMovies)
             setFilteredData(slicedArray)
@@ -52,7 +52,8 @@ export const NowInCinemasComponent = (props: Props) => {
             {filteredData?.length === 0 ? <h2>No data, try again later...</h2> : null}
             <ul className={'moviesList'}>
                 {!filteredData ? <Spinner returnRoute={'/delay'}/> : filteredData.map(el => (
-                    <NowInCinemasElement setSwitches={props.setSwitches} key={el.id} favList={userData.favMovies} fullTitle={el.fullTitle}
+                    <NowInCinemasElement setSwitches={props.setSwitches} key={el.id} favList={userData.favMovies}
+                                         fullTitle={el.fullTitle}
                                          genres={el.genres} year={el.year} stars={el.stars}
                                          releaseState={el.releaseState} errorMessage={""} image={el.image}
                                          id={el.id} contentRating={el.contentRating} directors={el.directors}
@@ -62,7 +63,8 @@ export const NowInCinemasComponent = (props: Props) => {
             </ul>
             )
             <GoUpArrow/>
-            {showMoreButton ? <button onClick={handleMoreMoviesDisplay} className={'goBack'}>see more...</button> : null}
+            {showMoreButton ?
+                <button onClick={handleMoreMoviesDisplay} className={'goBack'}>see more...</button> : null}
             <button onClick={() => {
                 if (props.setSwitches) {
                     props.setSwitches(prev => ({

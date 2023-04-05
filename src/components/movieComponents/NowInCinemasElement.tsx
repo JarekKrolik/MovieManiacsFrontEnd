@@ -1,11 +1,11 @@
 import React, {Dispatch, SetStateAction, useContext} from "react";
 import {FavouriteIcon} from "../FavouriteIcon";
 import {UserDataContext} from "../../contexts/UserDataContext";
-import {NowInCinemasMovieEntity, FavouriteMoviesList} from 'types'
+import {NowInCinemasMovieEntity, FavouriteMoviesList} from 'types';
 import {Switches} from "../LoginComponent";
 
 interface Props extends NowInCinemasMovieEntity {
-    favList: FavouriteMoviesList[] | undefined;
+    favList: FavouriteMoviesList[] | undefined,
     setSwitches: Dispatch<SetStateAction<Switches>>,
 
 }
@@ -19,10 +19,10 @@ export const NowInCinemasElement = (props: Props) => {
             nowInCinemas: false,
             searchComponent: false,
             allDataComponent: true,
-            whatToWatch:false,
+            whatToWatch: false,
 
         })
-        setUserData( ({
+        setUserData(({
             ...userData,
             selectedItem: {
                 id: e.target.id,
@@ -33,7 +33,7 @@ export const NowInCinemasElement = (props: Props) => {
     }
 
     const {userData} = useContext(UserDataContext)
-    const {favList} = props;
+    const {favList} = props
     const list = favList?.map(e => e.movie_id)
 
     return (

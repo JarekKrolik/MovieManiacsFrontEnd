@@ -1,5 +1,5 @@
 import React from "react";
-import {MovieListEntity, ActorsListEntity} from 'types'
+import {MovieListEntity, ActorsListEntity} from 'types';
 
 interface Props {
     handleFind: (e: React.FormEvent<HTMLFormElement>) => Promise<void>,

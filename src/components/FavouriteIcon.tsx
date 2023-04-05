@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
-import '../components/css/FavouriteIcon.css'
+import '../components/css/FavouriteIcon.css';
 import {MovieFinder} from "../repository/MovieFinder";
 import {UserDataContext} from "../contexts/UserDataContext";
-import{UserData}from'types'
+
 
 interface Props {
     id: string,
@@ -16,7 +16,7 @@ interface Props {
 
 export const FavouriteIcon = (props: Props) => {
     const [switchOn, setSwitch] = useState(false)
-    const {userData,setUserData} = useContext(UserDataContext)
+    const {userData, setUserData} = useContext(UserDataContext)
 
     useEffect(() => {
         setSwitch(props.switchedOn)
@@ -26,9 +26,7 @@ export const FavouriteIcon = (props: Props) => {
 
         if (!switchOn) {
             if (props.type === 'movie') {
-
-
-                setUserData( ({
+                setUserData(({
                     ...userData,
                     favMovies: [...userData.favMovies, {
                         user: '',
@@ -36,10 +34,10 @@ export const FavouriteIcon = (props: Props) => {
                         image: props.image,
                         name: props.title,
                     }]
-                }));
+                }))
             }
             if (props.type === 'actor') {
-                setUserData( ({
+                setUserData(({
                     ...userData,
                     favActors: [...userData.favActors,
                         {
@@ -49,21 +47,19 @@ export const FavouriteIcon = (props: Props) => {
                             name: props.title,
 
                         }]
-                }));
+                }))
             }
+            const res = await MovieFinder.addToFavouriteList(props.id, props.user, props.type, props.title, props.image)
+            if (res.response === 'ok') {
 
-
-               const res = await MovieFinder.addToFavouriteList(props.id, props.user, props.type, props.title, props.image)
-            if(res.response==='ok'){
                 setSwitch(true)
-            }else{return}
 
-
-
+            } else {
+                return
+            }
         }
 
         if (switchOn) {
-
 
             if (props.type === 'actor') {
                 const newArr = userData.favActors.filter(e => e.actor_id !== props.id)
@@ -75,31 +71,24 @@ export const FavouriteIcon = (props: Props) => {
 
             if (props.type === 'movie') {
                 const newArr = userData.favMovies.filter(e => e.movie_id !== props.id)
-                setUserData( ({
+                setUserData(({
                     ...userData,
                     favMovies: newArr,
                 }))
             }
 
-
-                const res = await MovieFinder.removeFromFavouriteList(props.id, props.user, props.type);
-                if(res.response==='ok'){
-                    setSwitch(false)
-                }else{return}
-
-
-
+            const res = await MovieFinder.removeFromFavouriteList(props.id, props.user, props.type);
+            if (res.response === 'ok') {
+                setSwitch(false)
+            } else {
+                return
+            }
         }
 
-
     }
-
     return (
         <div onClick={handleIconClick} className={switchOn ? 'icon on' : 'icon'}>
-
-
             <img src={require("../assets/img/star-1915449_640.png")} alt=""/>
-
         </div>
     )
 }

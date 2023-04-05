@@ -1,13 +1,13 @@
 import React, {Dispatch, SetStateAction, useContext} from "react";
-import {SingleMovieSpecific} from 'types'
+import {SingleMovieSpecific} from 'types';
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {Switches} from "../LoginComponent";
 import {AllDataSwitches} from "./AllDataComponent";
 
 interface Props {
-    offButton: Dispatch<SetStateAction<AllDataSwitches>>;
+    offButton: Dispatch<SetStateAction<AllDataSwitches>>,
     foundData: SingleMovieSpecific,
-    setSwitches: Dispatch<SetStateAction<Switches>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>,
 }
 
 export const SimilarsComponent = (props: Props) => {
@@ -22,7 +22,7 @@ export const SimilarsComponent = (props: Props) => {
             nowInCinemas: false,
             searchComponent: false,
             allDataComponent: true,
-            whatToWatch:false,
+            whatToWatch: false,
 
         })
         setUserData(({
@@ -47,12 +47,13 @@ export const SimilarsComponent = (props: Props) => {
                     {el.title ? <h2>{el.title}{}</h2> : null}
                     {el.imDbRating ? <h3>IMDb rating: <span>{el.imDbRating}</span></h3> : null}
                     <button onClick={handleSeeMore} id={el.id} className="seeMore">see more</button>
-                    <button onClick={()=>{
-                        props.offButton(prev=>({
+                    <button onClick={() => {
+                        props.offButton(prev => ({
                             ...prev,
-                            similars:!prev.similars,
+                            similars: !prev.similars,
                         }))
-                    }} className="return">hide similar movies</button>
+                    }} className="return">hide similar movies
+                    </button>
                 </div>
             </li>)
         })}

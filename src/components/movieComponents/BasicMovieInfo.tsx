@@ -1,13 +1,11 @@
 import React, {useContext} from "react";
-import {SingleMovieSpecific} from 'types'
+import {SingleMovieSpecific} from 'types';
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {FavouriteIcon} from "../FavouriteIcon";
 
 
-
-
 interface Props {
-    foundData: SingleMovieSpecific | undefined;
+    foundData: SingleMovieSpecific | undefined,
 }
 
 export const BasicMovieInfo = (props: Props) => {
@@ -22,7 +20,8 @@ export const BasicMovieInfo = (props: Props) => {
                 backgroundImage: `url(${foundData.image})`
             }}>
                 <div className="shade"></div>
-                <FavouriteIcon id={foundData.id} user={userData.name} type={'movie'} title={foundData.fullTitle} switchedOn={list?list.includes(foundData.id):false} image={foundData.image}/>
+                <FavouriteIcon id={foundData.id} user={userData.name} type={'movie'} title={foundData.fullTitle}
+                               switchedOn={list ? list.includes(foundData.id) : false} image={foundData.image}/>
                 {foundData.fullTitle ? <h2>Title : <span>{foundData.fullTitle}</span></h2> :
                     <h2>No data in IMDb...</h2>}
                 {foundData.year ? <h3>Year : <span>{foundData.year}</span></h3> : null}

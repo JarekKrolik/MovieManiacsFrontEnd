@@ -1,9 +1,9 @@
 import React, {Dispatch, SetStateAction, useState} from "react";
-import {YoutubeTrailer, SingleMovieSpecific} from 'types'
+import {YoutubeTrailer, SingleMovieSpecific} from 'types';
 import {AllDataSwitches} from "./AllDataComponent";
 
 interface Props {
-    offButton: Dispatch<SetStateAction<AllDataSwitches>>;
+    offButton: Dispatch<SetStateAction<AllDataSwitches>>,
     youTubeTrailer: YoutubeTrailer,
     foundData: SingleMovieSpecific,
 }
@@ -24,14 +24,15 @@ export const TrailerComponent = (props: Props) => {
 
                 ></iframe>
             </div> : <p>No trailer available on YouTube...</p> : null}
-            {!whichTrailer ? foundData.trailer.linkEmbed? <div className="frameContainer">
+            {!whichTrailer ? foundData.trailer.linkEmbed ? <div className="frameContainer">
                 <object
                     aria-label="Alternative Text"
                     type="video/mp4"
                     data={`${foundData.trailer.linkEmbed}?autoplay=true`}
                     width="100%"
                     height="100%"
-                >No trailer available...</object>
+                >No trailer available...
+                </object>
 
             </div> : <p>No trailer available on IMDb...</p> : null
 
@@ -39,12 +40,13 @@ export const TrailerComponent = (props: Props) => {
             <button onClick={() => {
                 setWhichTrailer(prev => !prev)
             }} className={'goBack'}>{whichTrailer ? 'trailer IMDb' : 'trailer YouTube'}</button>
-            <button onClick={()=>{
-                props.offButton(prev=>({
+            <button onClick={() => {
+                props.offButton(prev => ({
                     ...prev,
-                    trailer:!prev.trailer,
+                    trailer: !prev.trailer,
                 }))
-            }} className="return">hide trailers</button>
+            }} className="return">hide trailers
+            </button>
         </>
     )
 }

@@ -1,6 +1,6 @@
 import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
-import {CommentsResponse, AnswersResponse, CommentsEntity, AnswerToComment} from 'types'
-import "../css/CommentsComponent.css"
+import {CommentsResponse, AnswersResponse, CommentsEntity, AnswerToComment} from 'types';
+import "../css/CommentsComponent.css";
 import {MovieFinder} from "../../repository/MovieFinder";
 import {Spinner} from "../Spinner";
 import {UserDataContext} from "../../contexts/UserDataContext";
@@ -11,9 +11,9 @@ import {SingleCommentComponent} from "./SingleCommentComponent";
 import {AddCommentForm} from "./AddCommentForm";
 
 interface Props {
-    id: string;
-    offButton: Dispatch<SetStateAction<AllDataSwitches>>;
-};
+    id: string,
+    offButton: Dispatch<SetStateAction<AllDataSwitches>>,
+}
 
 
 export const CommentsComponent = (props: Props) => {
@@ -26,7 +26,7 @@ export const CommentsComponent = (props: Props) => {
     const [sendAnswerOn, setSendAnswerOn] = useState(false)
     const [editedId, setEditedId] = useState('')
     const [answers, setAnswers] = useState<AnswersResponse | null>()
-    const [answeredId, setAnsweredId] = useState<string[]>([]);
+    const [answeredId, setAnsweredId] = useState<string[]>([])
     const [answerSend, setAnswerSend] = useState(false)
     const [mainCommentId, setMainCommentId] = useState('')
     const [answerId, setAnswerId] = useState('')
@@ -38,11 +38,11 @@ export const CommentsComponent = (props: Props) => {
 
     const getComments = async () => {
         setComment('')
-        const comments = await MovieFinder.getComments(props.id, 'movie');
+        const comments = await MovieFinder.getComments(props.id, 'movie')
         setComments(comments)
         const commentsSlicedArray = comments.result.slice(0, numberOfDisplayedComments)
         setPaginatedComments(commentsSlicedArray)
-        if(mainCommentId)(await MovieFinder.getAnswersForComments(mainCommentId))
+        if (mainCommentId) (await MovieFinder.getAnswersForComments(mainCommentId))
     }
 
     const handleSendAnswerToComment = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -51,7 +51,7 @@ export const CommentsComponent = (props: Props) => {
         setSendAnswerOn(false)
         setResponse(resp.message)
         setComment('')
-        const data = await MovieFinder.getAnswersForComments(editedId);
+        const data = await MovieFinder.getAnswersForComments(editedId)
         const answersSlicedArray = data.result.slice(0, numberOfDisplayedAnswers)
         setAnswers(data)
         setPaginatedAnswers(answersSlicedArray)
@@ -74,7 +74,7 @@ export const CommentsComponent = (props: Props) => {
             setResponse(resp.message)
             setComment('')
             setEditCommentOn(false)
-            const data = await MovieFinder.getAnswersForComments(mainCommentId);
+            const data = await MovieFinder.getAnswersForComments(mainCommentId)
             const answersSlicedArray = data.result.slice(0, numberOfDisplayedAnswers)
             setAnswers(data)
             setPaginatedAnswers(answersSlicedArray)
@@ -82,7 +82,7 @@ export const CommentsComponent = (props: Props) => {
             await getComments()
 
         } else {
-            const resp = await MovieFinder.editComment(editedId, comment);
+            const resp = await MovieFinder.editComment(editedId, comment)
             setEditCommentOn(false)
             setResponse(resp.message)
             await getComments()
@@ -94,10 +94,7 @@ export const CommentsComponent = (props: Props) => {
         const newArr = answeredId.filter(el => el !== e.target.id)
         setAnsweredId(newArr)
         setEditedId('')
-
-
     }
-
 
     const handleEditCommentFormOn = async (e: React.MouseEvent<HTMLButtonElement>) => {
 
@@ -105,10 +102,10 @@ export const CommentsComponent = (props: Props) => {
             setMainCommentId(e.currentTarget.id)
             setEditedId(e.currentTarget.id)
             setAnswerId(e.currentTarget.id)
-            const arr = answeredId;
-            arr.push(e.currentTarget.id);
+            const arr = answeredId
+            arr.push(e.currentTarget.id)
             setAnsweredId(arr)
-            const data = await MovieFinder.getAnswersForComments(e.currentTarget.id);
+            const data = await MovieFinder.getAnswersForComments(e.currentTarget.id)
             const answersSlicedArray = data.result.slice(0, numberOfDisplayedAnswers)
             setAnswers(data)
             setPaginatedAnswers(answersSlicedArray)
@@ -139,7 +136,7 @@ export const CommentsComponent = (props: Props) => {
 
 
     const handleSendComment = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+        e.preventDefault()
         const resp = await MovieFinder.addComment(props.id, userData.avatar, 'movie', userData.name, comment)
         setResponse(resp.message)
         await getComments()
@@ -155,7 +152,7 @@ export const CommentsComponent = (props: Props) => {
             setAnswers(responseAnswers)
             setResponse(response.message)
         } else {
-            const response = await MovieFinder.deleteComment(e.currentTarget.id);
+            const response = await MovieFinder.deleteComment(e.currentTarget.id)
             setResponse(response.message)
             await getComments()
 
@@ -165,15 +162,16 @@ export const CommentsComponent = (props: Props) => {
 
     const handleRefreshComments = async () => {
         setResponse('')
-        await getComments();
+        await getComments()
     }
 
     useEffect(() => {
-        (async () => {if(mainCommentId){
-            const responseAnswers = await MovieFinder.getAnswersForComments(mainCommentId)
-            const answersSlicedArray = responseAnswers.result.slice(0, numberOfDisplayedAnswers)
-            setPaginatedAnswers(answersSlicedArray)
-        }
+        (async () => {
+            if (mainCommentId) {
+                const responseAnswers = await MovieFinder.getAnswersForComments(mainCommentId)
+                const answersSlicedArray = responseAnswers.result.slice(0, numberOfDisplayedAnswers)
+                setPaginatedAnswers(answersSlicedArray)
+            }
 
         })()
 
@@ -231,7 +229,6 @@ export const CommentsComponent = (props: Props) => {
                                         getComments={getComments}
                                         setResponse={setResponse}
                                         key={el.id}
-
                                     />
 
                                     {answeredId.includes(el.id) ? <div className="comments-area">

@@ -1,14 +1,14 @@
 import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
-import {SingleMovieSpecific} from 'types'
+import {SingleMovieSpecific} from 'types';
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {Switches} from "../LoginComponent";
 import {AllDataSwitches} from "./AllDataComponent";
 
 
 interface Props {
-    offButton: Dispatch<SetStateAction<AllDataSwitches>>;
+    offButton: Dispatch<SetStateAction<AllDataSwitches>>,
     foundData: SingleMovieSpecific,
-    setSwitches: Dispatch<SetStateAction<Switches>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>,
 }
 
 interface Cast {
@@ -50,7 +50,7 @@ export const FullCastComponent = (props: Props) => {
     const {foundData} = props
     useEffect(() => {
         const temporaryCastArr = foundData.fullCast.actors.slice(0, numberOfShownCast)
-        setListOfCast(temporaryCastArr);
+        setListOfCast(temporaryCastArr)
 
 
     }, [numberOfShownCast])

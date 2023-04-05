@@ -1,17 +1,17 @@
 import React, {useContext, useEffect, useState} from "react";
-import {apiUrl} from "../../config/api";
 import {Navigate, useNavigate} from "react-router-dom";
 import {GoBackBtn} from "../GoBackBtn";
 import {Header} from "../Header";
 import {UserDataContext} from "../../contexts/UserDataContext";
+import {checkUserVerificationCode, logInUser, userPasswordReset} from "../../utils/getUser";
 
 interface Props {
-    password: string;
-    login: string;
+    password: string,
+    login: string,
 }
 
 export const LoginForm = (props: Props) => {
-    const {setUserData,userData} = useContext(UserDataContext)
+    const {setUserData, userData} = useContext(UserDataContext)
     const [showPasswordReset, setShowPasswordReset] = useState(false)
     const [reset, setReset] = useState({
         email: '',
@@ -28,25 +28,13 @@ export const LoginForm = (props: Props) => {
         spinnerOn: false,
     })
     const handleVerificationCode = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const res = await fetch(`${apiUrl}/verify/${loginData.userName}`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-
-            },
-            body: JSON.stringify({code: loginData.verificationCode})
-
-        });
-        const data = await res.json();
+        e.preventDefault()
+        const data = await checkUserVerificationCode(loginData.userName, loginData.verificationCode)
         if (data.verificationOk) {
-
             setLoginData(prev => ({
                 ...prev,
                 errorMessage: 'verification code correct.',
                 notVerified: false,
-
-
             }))
 
         } else {
@@ -57,7 +45,6 @@ export const LoginForm = (props: Props) => {
             }))
 
         }
-
 
     }
     const handleInputData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,19 +65,8 @@ export const LoginForm = (props: Props) => {
 
     const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const res = await fetch(`${apiUrl}/verify/reset`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
 
-            },
-            body: JSON.stringify({
-                user: reset.user,
-                email: reset.email,
-            })
-
-        });
-        const data = await res.json()
+        const data = await userPasswordReset(reset.user, reset.email)
         if (data.response) {
             setLoginData(prev => ({
                 ...prev,
@@ -103,27 +79,13 @@ export const LoginForm = (props: Props) => {
                 errorMessage: 'try again later...'
             }));
         }
-
-
     }
-
     const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-
         (async () => {
-            const res = await fetch(`${apiUrl}/user/${loginData.userName}`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
 
-                },
-                body: JSON.stringify({pass: loginData.password})
-            })
-
-            const data = await res.json()
-
-
+            const data = await logInUser(loginData.userName, loginData.password)
             if (!data) {
                 setLoginData(prev => ({
                     ...prev,
@@ -165,11 +127,11 @@ export const LoginForm = (props: Props) => {
 
         })()
     }
-    useEffect(()=>{
-        if(userData.id){
+    useEffect(() => {
+        if (userData.id) {
             navigate('/userMain')
         }
-    },[userData.id])
+    }, [userData.id])
 
     return (<>
             <Header/>
@@ -190,6 +152,14 @@ export const LoginForm = (props: Props) => {
                     }} type="email"/></label>
                     <button className={'goBack'}>send</button>
                 </form> : null}
+                {loginData.notVerified ? (
+                    <form className={'register'} onSubmit={handleVerificationCode}>
+                        <label className={'loginLabels'}>verification code <input onChange={handleInputData} required
+                                                                                  value={loginData.verificationCode}
+                                                                                  name={'verificationCode'} type="number"/></label>
+                        <button>send</button>
+                    </form>
+                ) : null}
                 {!showPasswordReset ? <form onSubmit={handleForm} className='register loginForm'>
                     <label className={'loginLabels'}>
                         user name <input onChange={handleInputData} name={'userName'} value={loginData.userName}
@@ -210,14 +180,7 @@ export const LoginForm = (props: Props) => {
             </div>
             {loginData.errorMessage ?
                 <p onClick={handleErrorMessage} className={'textInfo'}>{loginData.errorMessage}</p> : null}
-            {loginData.notVerified ? (
-                <form className={'register'} onSubmit={handleVerificationCode}>
-                    <label className={'loginLabels'}>verification code <input onChange={handleInputData} required
-                                                                              value={loginData.verificationCode}
-                                                                              name={'verificationCode'} type="number"/></label>
-                    <button>send</button>
-                </form>
-            ) : null}
+
             {!loginData.loggedIn ? null : <Navigate to={'/userMain'}/>}
 
         </>

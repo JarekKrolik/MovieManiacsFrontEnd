@@ -1,10 +1,10 @@
 import React, {Dispatch, SetStateAction} from "react";
 import {Carousel} from "react-responsive-carousel";
-import {SingleMovieSpecific} from 'types'
+import {SingleMovieSpecific} from 'types';
 import {AllDataSwitches} from "./AllDataComponent";
 
 interface Props {
-    offButton: Dispatch<SetStateAction<AllDataSwitches>>;
+    offButton: Dispatch<SetStateAction<AllDataSwitches>>,
     foundData: SingleMovieSpecific,
     posters: boolean,
 }

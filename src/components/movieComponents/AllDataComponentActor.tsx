@@ -1,9 +1,9 @@
 import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
 import {MovieFinder} from "../../repository/MovieFinder";
-import {SingleActorSpecific} from 'types'
+import {SingleActorSpecific} from 'types';
 import {Spinner} from "../Spinner";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import '../css/AllDataComponent.css'
+import '../css/AllDataComponent.css';
 import {BasicActorInfo} from "./BasicActorInfo";
 import {ActorStarredInComponent} from "./ActorStarredInComponent";
 import {MostKnownFor} from "./MostKnownFor";
@@ -20,7 +20,7 @@ interface StarredIn {
 }
 
 interface Props {
-    setSwitches: Dispatch<SetStateAction<Switches>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>,
     id: string,
     type: string,
 }
@@ -34,7 +34,7 @@ export const AllDataComponentActor = (props: Props) => {
         starredIn: false,
         mostKnownFor: false,
 
-    });
+    })
     const [foundData, setFoundData] = useState<SingleActorSpecific>()
 
     const handleFilterData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +46,7 @@ export const AllDataComponentActor = (props: Props) => {
             }
             const dataFiltered = foundData.castMovies.filter(el => {
                 return el.title.toUpperCase().includes(filter)
-            });
+            })
             setUnFilteredData(dataFiltered)
         }
     }

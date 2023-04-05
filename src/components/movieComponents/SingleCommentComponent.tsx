@@ -1,5 +1,5 @@
 import React, {Dispatch, SetStateAction, useContext} from "react";
-import {CommentsEntity, AnswerToComment, AnswersResponse} from 'types'
+import {CommentsEntity, AnswerToComment, AnswersResponse} from 'types';
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {MovieFinder} from "../../repository/MovieFinder";
 
@@ -21,7 +21,7 @@ export const SingleCommentComponent = (props: Props) => {
     const {comment, answer, handleDeleteComment, handleEditCommentFormOn, type, answerId, setAnswers} = props
     const {userData} = useContext(UserDataContext)
 
-    const handleLikeComment = async (e:any) => {
+    const handleLikeComment = async (e: any) => {
         const data = await MovieFinder.likeComment(e.target.parentElement.id, userData.name, e.target.parentElement.title)
         props.setResponse(data.message)
         await props.getComments()
@@ -30,7 +30,7 @@ export const SingleCommentComponent = (props: Props) => {
         }
     }
 
-    const handleDislikeComment = async (e:any) => {
+    const handleDislikeComment = async (e: any) => {
         const data = await MovieFinder.dislikeComment(e.target.parentElement.id, userData.name, e.target.parentElement.title)
         props.setResponse(data.message)
         await props.getComments()

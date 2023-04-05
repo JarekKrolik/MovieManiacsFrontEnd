@@ -1,6 +1,6 @@
 import React, {Dispatch, SetStateAction, useContext, useState} from "react";
 import {Switches} from "../LoginComponent";
-import '../css/WhatToWatch.css'
+import '../css/WhatToWatch.css';
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {MovieFinder} from "../../repository/MovieFinder";
 import {Spinner} from "../Spinner";
@@ -11,10 +11,10 @@ interface Props {
 }
 
 export interface ProposedMovie {
-    id: string;
-    imDbRating: string;
-    image: string;
-    title: string;
+    id: string,
+    imDbRating: string,
+    image: string,
+    title: string,
 }
 
 export const WhatToWatchComponent = (props: Props) => {
@@ -29,7 +29,7 @@ export const WhatToWatchComponent = (props: Props) => {
             const randomFavMovie = userData.favMovies[Math.floor(Math.random() * userData.favMovies.length)]
             const OneOfFavouriteMovies = await MovieFinder.getOneMovieById(randomFavMovie.movie_id);
             const whatToWatch = OneOfFavouriteMovies.similars[Math.floor(Math.random() * OneOfFavouriteMovies.similars.length)];
-            if (userData.favMovies.filter(el => el.movie_id === whatToWatch.id).length > 0||Math.floor(Number(whatToWatch.imDbRating))<6 ){
+            if (userData.favMovies.filter(el => el.movie_id === whatToWatch.id).length > 0 || Math.floor(Number(whatToWatch.imDbRating)) < 6) {
                 await handleFindMovie()
             } else {
                 setProposedMovie(whatToWatch)
@@ -51,7 +51,8 @@ export const WhatToWatchComponent = (props: Props) => {
             {!favListEmpty ?
                 <>
                     {displayMovie ? <h2>{answers[Math.floor(Math.random() * answers.length)]}</h2> : null}
-                    {displayMovie ? proposedMovie ? <ProposedMovieComponent seeMore={true} setSwitches={props.setSwitches} movie={proposedMovie}/> :
+                    {displayMovie ? proposedMovie ?
+                        <ProposedMovieComponent seeMore={true} setSwitches={props.setSwitches} movie={proposedMovie}/> :
                         <Spinner returnRoute={'/'}/> : null}
                     <button onClick={handleFindMovie}
                             className="goBack">{!displayMovie ? 'propose something...' : 'want something else?'}</button>

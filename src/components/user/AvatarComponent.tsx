@@ -1,5 +1,5 @@
 import React from "react";
-import '../css/UserPanel.css'
+import '../css/UserPanel.css';
 
 interface Props {
     handleRadioChange: (e: React.ChangeEvent<HTMLInputElement>) => void,

@@ -1,36 +1,36 @@
 import React, {Dispatch, SetStateAction, useContext} from "react";
-import '../css/MovieListElement.css'
-import {ActorsListEntity,FavouriteActorsList} from 'types'
+import '../css/MovieListElement.css';
+import {ActorsListEntity, FavouriteActorsList} from 'types';
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {FavouriteIcon} from "../FavouriteIcon";
 import {Switches} from "../LoginComponent";
 
 interface Props extends ActorsListEntity {
-    listOfData: ActorsListEntity[];
-    favList:FavouriteActorsList[]|undefined;
-    setSwitches: Dispatch<SetStateAction<Switches>>;
+    listOfData: ActorsListEntity[],
+    favList: FavouriteActorsList[] | undefined,
+    setSwitches: Dispatch<SetStateAction<Switches>>,
 }
 
 export const ActorsListComponent = (props: Props) => {
-    const {userData,setUserData} = useContext(UserDataContext)
-    const {id, description, image, title,favList} = props
-    const list = favList?.map(e=>e.actor_id)
+    const {userData, setUserData} = useContext(UserDataContext)
+    const {id, description, image, title, favList} = props
+    const list = favList?.map(e => e.actor_id)
 
-    const handleSeeMore = ()=>{
+    const handleSeeMore = () => {
         props.setSwitches({
-            favourites:false,
-            soonInCinemas:false,
-            nowInCinemas:false,
-            searchComponent:false,
-            allDataComponent:true,
-            whatToWatch:false,
+            favourites: false,
+            soonInCinemas: false,
+            nowInCinemas: false,
+            searchComponent: false,
+            allDataComponent: true,
+            whatToWatch: false,
 
         })
         setUserData(({
             ...userData,
-            selectedItem:{
-                id:id,
-                type:'actor',
+            selectedItem: {
+                id: id,
+                type: 'actor',
             }
         }))
 
@@ -38,7 +38,8 @@ export const ActorsListComponent = (props: Props) => {
 
 
     return (<li className={'element'} id={id}>
-        <FavouriteIcon image={image} switchedOn={list?list.includes(id):false}  id={id} user={userData.name} type={'actor'} title={title}/>
+        <FavouriteIcon image={image} switchedOn={list ? list.includes(id) : false} id={id} user={userData.name}
+                       type={'actor'} title={title}/>
         <h3>Name : <span>{title}</span></h3>
         <p>short description : <span>{description}</span></p>
         <div className="picture">

@@ -9,45 +9,45 @@ import {LoginForm} from "./components/forms/LoginForm";
 import {UserMainPage} from "./components/user/UserMainPage";
 import {UserPanel} from "./components/user/UserPanel";
 import {DataDelayComponent} from "./components/movieComponents/DataDelayComponent";
-import{UserData}from'types'
+import {UserData} from 'types';
 
 
 function App() {
 
-    const userDataObject:UserData = {
+    const userDataObject: UserData = {
 
+        name: '',
+        id: '',
+        avatar: 0,
+        date: '',
+        email: '',
+        movieId: '',
+        favMovies: [{
+            user: '',
+            movie_id: '',
             name: '',
-            id: '',
-            avatar: 0,
-            date: '',
-            email: '',
-            movieId: '',
-            favMovies: [{
-                user: '',
-                movie_id: '',
-                name: '',
-                image: '',
-            }],
-            favActors: [{
-                user: '',
-                actor_id: '',
-                name: '',
-                image: '',
-            }],
-            searchList: [
-                {
-                    id: '',
-                    title: '',
-                    description: '',
-                    image: '',
-                    resultType: '',
-                    errorMessage: '',
-                },
-            ],
-            selectedItem: {
+            image: '',
+        }],
+        favActors: [{
+            user: '',
+            actor_id: '',
+            name: '',
+            image: '',
+        }],
+        searchList: [
+            {
                 id: '',
-                type: '',
-            }
+                title: '',
+                description: '',
+                image: '',
+                resultType: '',
+                errorMessage: '',
+            },
+        ],
+        selectedItem: {
+            id: '',
+            type: '',
+        }
 
 
     }

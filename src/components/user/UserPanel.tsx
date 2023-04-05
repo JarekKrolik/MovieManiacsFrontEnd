@@ -1,13 +1,11 @@
 import React, {useContext, useState} from "react";
 import {Navigate} from "react-router-dom";
-import '../css/UserPanel.css'
-import {apiUrl} from "../../config/api";
+import '../css/UserPanel.css';
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {GoBackBtn} from "../GoBackBtn";
 import {AvatarComponent} from "./AvatarComponent";
 import {MovieFinder} from "../../repository/MovieFinder";
 import {DeleteAccountPanel} from "./DeleteAccountPanel";
-
 
 export const UserPanel = () => {
     const {userData, setUserData} = useContext(UserDataContext)
@@ -73,20 +71,10 @@ export const UserPanel = () => {
                 avatar: avatar,
             });
             setRedirect(true)
-            const res = await (fetch(`${apiUrl}/user/${userData.id}`, {
-
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({avatar})
-            }));
-            return await res.json()
+            await MovieFinder.changeUserAvatar(userData.id, avatar)
         } catch (e) {
             console.log(e)
         }
-
     }
 
     const date = new Date(userData.date)
@@ -135,10 +123,8 @@ export const UserPanel = () => {
                 }} className="goBack">{showNewPassword ? 'close' : 'change password'}</button>}
                 {userData.name === 'TestUser' ? null :
                     <button onClick={handleDeleteAccountPanel} className={'goBack'}>delete account</button>}
-
                 <GoBackBtn text={'go back'} path={'/userMain'}/>
             </div>
         </>
-
     )
 }

@@ -18,21 +18,21 @@ import {CommentsComponent} from "./CommentsComponent";
 import {ProposedMovieComponent} from "./ProposedMovieComponent";
 
 interface Props {
-    setSwitches: Dispatch<SetStateAction<Switches>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>,
     id: string,
     type: string,
 }
 
 export interface AllDataSwitches {
-    fullCast: boolean;
-    trailer: boolean;
-    photos: boolean;
-    posters: boolean;
-    similars: boolean;
-    wiki: boolean;
-    others: boolean;
-    comments: boolean;
-    streamingProviders: boolean;
+    fullCast: boolean,
+    trailer: boolean,
+    photos: boolean,
+    posters: boolean,
+    similars: boolean,
+    wiki: boolean,
+    others: boolean,
+    comments: boolean,
+    streamingProviders: boolean,
 }
 
 export const AllDataComponent = (props: Props) => {
@@ -47,21 +47,20 @@ export const AllDataComponent = (props: Props) => {
         comments: false,
         streamingProviders: false,
     });
-    const [foundData, setFoundData] = useState<SingleMovieSpecific>();
-    const [youTubeTrailer, setYouTubeTrailer] = useState<YoutubeTrailer>();
-    const {setUserData, userData} = useContext(UserDataContext);
+    const [foundData, setFoundData] = useState<SingleMovieSpecific>()
+    const [youTubeTrailer, setYouTubeTrailer] = useState<YoutubeTrailer>()
+    const {setUserData, userData} = useContext(UserDataContext)
     const [id, setId] = useState('');
 
     (async () => {
 
     })()
 
-
     useEffect(() => {
         (async () => {
             window.scrollTo(0, 0)
-            const res = await MovieFinder.getOneMovieById(props.id) as SingleMovieSpecific;
-            const youTubeTrailerRes = await MovieFinder.getYouTubeTrailer(props.id) as YoutubeTrailer;
+            const res = await MovieFinder.getOneMovieById(props.id) as SingleMovieSpecific
+            const youTubeTrailerRes = await MovieFinder.getYouTubeTrailer(props.id) as YoutubeTrailer
             if (res.errorMessage.includes('Invalid')) {
                 setUserData(({
                     ...userData,
@@ -76,8 +75,8 @@ export const AllDataComponent = (props: Props) => {
                 setYouTubeTrailer(undefined)
             }
             setYouTubeTrailer(youTubeTrailerRes)
-            setFoundData(res);
-            setId(res.id);
+            setFoundData(res)
+            setId(res.id)
 
 
         })()
@@ -200,6 +199,5 @@ export const AllDataComponent = (props: Props) => {
             </div>
         </>
     )
-
 
 }

@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import '../components/css/Footer.css'
+import '../components/css/Footer.css';
 
-export const Footer=()=>{
+export const Footer = () => {
     const currDate = new Date().getFullYear()
-const [date,setDate]=useState(currDate)
+    const [date] = useState(currDate)
 
     return (
         <footer className="footer">

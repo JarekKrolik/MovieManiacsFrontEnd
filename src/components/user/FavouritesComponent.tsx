@@ -1,13 +1,12 @@
 import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
-import {FavouriteMoviesList, FavouriteActorsList} from 'types'
-import "../css/Favourites.css"
+import {FavouriteMoviesList, FavouriteActorsList} from 'types';
+import "../css/Favourites.css";
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {GoUpArrow} from "../GoUpArrow";
 import {Switches} from "../LoginComponent";
 
 interface Props {
-    setSwitches: Dispatch<SetStateAction<Switches>>;
-
+    setSwitches: Dispatch<SetStateAction<Switches>>,
 }
 
 export const FavouritesComponent = (props: Props) => {

@@ -1,8 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import "./css/LoginComponent.css"
+import "./css/LoginComponent.css";
 import {Header} from "./Header";
-
 
 
 const quotes = require('popular-movie-quotes')
@@ -12,15 +11,15 @@ export interface Switches {
     nowInCinemas: boolean;
     soonInCinemas: boolean;
     favourites: boolean;
-    allDataComponent: boolean,
-    whatToWatch: boolean,
+    allDataComponent: boolean;
+    whatToWatch: boolean;
 }
 
 interface Quote {
-    movie: string,
-    quote: string,
-    type: string,
-    year: string,
+    movie: string;
+    quote: string;
+    type: string;
+    year: string;
 }
 
 export const LoginComponent = () => {

@@ -1,17 +1,32 @@
 import {imdbApiKey} from "../config/apiKeyConfig";
+
 import {
     ActorsListEntity,
+    AnswersResponse,
     CommentsResponse,
     MovieListEntity,
     NowInCinemasMovieEntity,
     Response,
     SingleMovieSpecific,
     YoutubeTrailer,
-    AnswersResponse,
-} from 'types'
+} from 'types';
+
 import {apiUrl} from "../config/api";
 
 export class MovieFinder {
+
+    static async changeUserAvatar(id: string, avatar: number) {
+        await fetch(`${apiUrl}/user/${id}`, {
+
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({avatar})
+        })
+
+    }
 
     static async deleteUserAccount(userName: string, userId: string) {
         const data = await fetch(`${apiUrl}/user`, {
@@ -309,8 +324,7 @@ export class MovieFinder {
     static async nowInCinemas(lang = 'en'): Promise<NowInCinemasMovieEntity[]> {
         const res = await fetch(`https://imdb-api.com/${lang}/API/InTheaters/${imdbApiKey}`);
         const result = await res.json();
-        const data = result.items as NowInCinemasMovieEntity[]
-        return data;
+        return result.items as NowInCinemasMovieEntity[];
     }
 
     static async getOneMovieById(id: string, lang = 'en'): Promise<SingleMovieSpecific> {
@@ -328,7 +342,7 @@ export class MovieFinder {
 
 
     static async findActorByName(name: string, lang = 'en'): Promise<Response> {
-        const res = await fetch(`https://imdb-api.com/en/API/SearchName/${imdbApiKey}/${name}`)
+        const res = await fetch(`https://imdb-api.com/${lang}/API/SearchName/${imdbApiKey}/${name}`)
         const data = await res.json();
 
 
@@ -337,9 +351,7 @@ export class MovieFinder {
 
     static async findActorById(id: string, lang = 'en'): Promise<any[]> {
         const res = await fetch(`https://imdb-api.com/${lang}/API/Name/${imdbApiKey}/${id}`);
-        const data = await res.json();
-
-        return data
+        return await res.json()
     }
 
 

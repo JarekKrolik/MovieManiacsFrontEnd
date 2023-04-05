@@ -1,6 +1,6 @@
 import React, {Dispatch, SetStateAction, useContext} from "react";
-import {SingleActorSpecific} from 'types'
-import '../css/MostKnownFor.css'
+import {SingleActorSpecific} from 'types';
+import '../css/MostKnownFor.css';
 import {FavouriteIcon} from "../FavouriteIcon";
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {Switches} from "../LoginComponent";
@@ -11,7 +11,7 @@ interface Props {
         mostKnownFor: boolean,
     }>>,
     foundData: SingleActorSpecific,
-    setSwitches: Dispatch<SetStateAction<Switches>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>,
 }
 
 export const MostKnownFor = (props: Props) => {
@@ -28,7 +28,7 @@ export const MostKnownFor = (props: Props) => {
             nowInCinemas: false,
             searchComponent: false,
             allDataComponent: true,
-            whatToWatch:false,
+            whatToWatch: false,
 
         })
         setUserData(({

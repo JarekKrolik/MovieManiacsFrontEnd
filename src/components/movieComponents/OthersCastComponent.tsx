@@ -1,15 +1,15 @@
 import React, {Dispatch, SetStateAction, useContext, useState} from "react";
 import {SingleMovieSpecific} from 'types';
-import '../css/OthersCastComponents.css'
+import '../css/OthersCastComponents.css';
 import {UserDataContext} from "../../contexts/UserDataContext";
 import {Switches} from "../LoginComponent";
 import {AllDataSwitches} from "./AllDataComponent";
 
 
 interface Props {
-    offButton: Dispatch<SetStateAction<AllDataSwitches>>;
+    offButton: Dispatch<SetStateAction<AllDataSwitches>>,
     foundData: SingleMovieSpecific,
-    setSwitches: Dispatch<SetStateAction<Switches>>;
+    setSwitches: Dispatch<SetStateAction<Switches>>,
 }
 
 export const OthersCastComponent = (props: Props) => {
@@ -28,7 +28,7 @@ export const OthersCastComponent = (props: Props) => {
             nowInCinemas: false,
             searchComponent: false,
             allDataComponent: true,
-            whatToWatch:false,
+            whatToWatch: false,
         })
         setUserData(({
             ...userData,
@@ -48,7 +48,7 @@ export const OthersCastComponent = (props: Props) => {
             </form>
             {listOfOthers ? <ul>{listOfOthers.map(el => {
                 return (
-                    <li key={Math.floor(Math.random()*1000)+el.job}>
+                    <li key={Math.floor(Math.random() * 1000) + el.job}>
                         <h2>{el.job}</h2>
                         <div>{el.items.map(el => {
                             return (<div>
