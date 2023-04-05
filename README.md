@@ -8,7 +8,7 @@ MovieManiac is a simple application for every movie lover.
  - There are comment section where you can share your opinions about movies with other MovieManiac users.
  - "Where to watch?" function allows you to search for the availability of a movie on streaming platforms and give a direct link.
  - "What to watch?"  based on the list of your favorite movies, function suggests a title that you should like.
- - Sections "now in cinemas" and "soon and cinemas" as the name suggests, the options allow you to check what is currently shown in cinemas and what will be soon
+ - Sections "now in cinemas" and "soon and cinemas" as the name suggests, allows you to check what is currently shown in cinemas and what will be soon
 
 
 # MovieManiac Front - End
