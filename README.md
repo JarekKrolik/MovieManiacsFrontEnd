@@ -1,3 +1,15 @@
+# MovieManiac project
+
+MovieManiac is a simple application for every movie lover.
+All you need to do is create an account to use it, only user name and email, you do not have to provide any additional personal information.
+The basic function of the application is a simple search engine that will allow you to find any movie, show or actress/actor that is in the vast IMDB database by title or name.
+When you find the object of your search, you will get all the information about it that is available in the IMDb database (plot, fullcast, box-office numbers, writers, directors, photos, posters, trailers, similar movies etc)
+You can create your own list of favorite movies and actors to always have quick access to data about them.
+There are comment section where you can share your opinions about movies with other MovieManiac users.
+"Where to watch?" function allows you to search for the availability of a movie on streaming platforms and give a direct link.
+"What to watch?"  based on the list of your favorite movies, function suggests a title that you should like.
+Sections "now in cinemas" and "soon and cinemas" as the name suggests, the options allow you to check what is currently shown in cinemas and what will be soon
+
 
 # MovieManiac Front - End
 [![My Skills](https://skillicons.dev/icons?i=js,html,css,react,ts)](https://skillicons.dev)
