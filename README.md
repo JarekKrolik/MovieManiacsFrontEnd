@@ -3,10 +3,10 @@
 [![My Skills](https://skillicons.dev/icons?i=js,html,css,react,ts)](https://skillicons.dev)
 
 Front-end for MovieManiac application.
-Created with Typescript and React.
+
 App functions :
- - creating and managing accounts in MovieManiac
- - gives quick and easy access to IMDb database, where you can find any kind of data about a movie or series (trailers, photos, posters, full cast with specific information about every included person , etc.)
+ - forms for logging, registering and managing accounts
+ - through search bar gives quick and easy access to IMDb database, where you can find any kind of data about a movie or series (trailers, photos, posters, full cast with specific information about every included person , etc.)
  - making and managing personal lists of favourite movies and actors
  - adding comments for movies with likes and dislikes option
  - "what to watch?" option that based on your favourite movies list suggests what movie you might like, and search for its streaming availability
@@ -28,9 +28,9 @@ password :TestUser
 
 ## Related
 
-Front - End for MovieManiac
+Back - End for MovieManiac
 
-https://github.com/JarekKrolik/MovieManiacsFrontEnd.git
+https://github.com/JarekKrolik/MovieManiacTool.git
 
 
 ## Run Locally
@@ -57,5 +57,11 @@ Start the server
 
 ```bash
   npm run start
+```
+
+Get Back-End part of the application
+
+```bash
+  https://github.com/JarekKrolik/MovieManiacTool.git
 ```
 
