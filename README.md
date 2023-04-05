@@ -48,6 +48,12 @@ Back - End for MovieManiac
 
 https://github.com/JarekKrolik/MovieManiacTool.git
 
+Used API :
+
+https://imdb-api.com/api
+
+https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability
+
 
 ## Run Locally
 
