@@ -29,11 +29,12 @@ export const SearchComponentForm = (props: Props) => {
                     {select === 'actor' ? null : <option value="actor">actor</option>}
                 </select>
                 <button type={'submit'}>start searching</button>
+                <div onClick={clearSearchHistory}
+                     className={'goBack search'}
+                >clear search history
+                </div>
             </form>
-            <button onClick={clearSearchHistory}
-                    className={'goBack'}
-            >clear search history
-            </button>
+
             {searchText ? <p className="result">you are looking for : <span>{searchText}</span></p> : null}
             {foundData?.length ?
                 <p className="result">found <span>{foundData.length}</span> matching results</p> : null}

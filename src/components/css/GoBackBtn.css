@@ -17,10 +17,25 @@
     line-height: 100%;
     transition: transform 0.3s,color 0.3s,background-color 0.3s;
 }
+.goBack.login{
+    width: 100%;
+}
 
 .seeMore{
     transition: transform 0.3s,color 0.3s,background-color 0.3s;
 }
+
+.goBack.search{
+    width: 100%;
+    padding: 1em;
+}
+@media (min-width: 740px) {
+
+    form.register button{
+        width: 100%;
+    }
+}
+
 
 @media (min-width: 1024px) {
     .loginForm .goBack{
