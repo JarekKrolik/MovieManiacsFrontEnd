@@ -33,6 +33,10 @@ App functions :
 
 
 
+
+
+![Zrzut ekranu (8)](https://user-images.githubusercontent.com/101992103/230477546-216a3e50-9307-45f2-af92-b6924c10510a.png)
+
 ## Working application on website address:
 
 https://madmaxlastv8.networkmanager.pl/
