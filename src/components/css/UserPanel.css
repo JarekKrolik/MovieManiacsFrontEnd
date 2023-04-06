@@ -1,4 +1,4 @@
-.userPanel{
+.userPanel {
     position: relative;
     width: 98%;
     display: flex;
@@ -6,48 +6,69 @@
     justify-content: space-around;
     align-items: center;
     border-radius: 25px;
-    box-shadow:0 0 15px cornflowerblue;
+    box-shadow: 0 0 15px cornflowerblue;
     margin: 1em auto;
     overflow: hidden;
-    background-color: #3f3a3a;
+    /*background-color: #3f3a3a;*/
 
 
 }
+.btns {
+    width: 100%;
+}
 
-.form{
+
+.text {
+    margin: 3em 2em;
+    padding: 2em;
+    border-radius: 25px;
+    box-shadow: 0 0 15px cornflowerblue;
+    flex-grow: 1;
+}
+form.form {
     border-radius: 8px;
-    border:1px solid cornflowerblue;
+    border: 1px solid cornflowerblue;
+    box-shadow: 5px 5px 10px black;
     overflow: hidden;
+    background-color: #3f3a3a;
 }
 
-.userPanel h3,p{
+.userPanel form.register.loginForm button {
+    width: 30%;
+
+}
+
+.text {
+    background-color: #3f3a3a;
+}
+
+.userPanel h3, p {
     text-align: center;
     font-size: 2.2rem;
     color: cornflowerblue;
 }
 
-.userPanel p{
+.userPanel p {
     font-size: 1.9rem;
 }
 
-.label{
+.label {
     display: flex;
     justify-content: center;
     align-items: center;
-    border:1px solid cornflowerblue;
+    border: 1px solid cornflowerblue;
 }
 
-.picture.input{
+.picture.input {
     width: 4.5rem;
     overflow: hidden;
     border-radius: 50%;
     flex-grow: 0;
 }
 
-.picture.input img{
+.picture.input img {
     width: 100%;
 }
-
 
 
 button {
@@ -60,4 +81,28 @@ button {
     font-size: 2rem;
     text-transform: uppercase;
     padding: 1em;
+}
+
+@media (min-width: 740px) {
+    .userPanel {
+
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: stretch;
+    }
+
+
+
+
+    .form {
+        margin: 2em
+    }
+
+    .userPanel h3, p {
+        text-align: left;
+
+    }
+
+
 }

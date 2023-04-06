@@ -24,6 +24,10 @@ export const SearchComponentLogic = (props: Props) => {
     const clearSearchHistory = () => {
         setShowList(false)
         setFoundData(undefined)
+        setUserData(({
+            ...userData,
+            searchList:[],
+        }))
     }
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {

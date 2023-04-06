@@ -8,7 +8,7 @@ export const Footer = () => {
     return (
         <footer className="footer">
             <p className="date">{date}</p>
-            <p className="text">MovieManiac &copy;</p>
+            <p>MovieManiac &copy;</p>
         </footer>
     )
 }

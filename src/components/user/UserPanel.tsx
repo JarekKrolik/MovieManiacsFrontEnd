@@ -105,11 +105,12 @@ export const UserPanel = () => {
                                                      handleRadioChange={handleRadioChange}/>)
                         })}
 
-                        <button>choose your avatar</button>
+                        <button className={'seeMore'}>choose your avatar</button>
                     </form>
                 </div>
+                <div className="btns">
                 {redirect ? <Navigate to={'/userMain'}/> : null}
-                {showNewPassword ? <form onSubmit={handlePasswordChange} className={'register loginForm'}>
+                {showNewPassword ? <form onSubmit={handlePasswordChange} className={'register loginForm userPanel'}>
                     <label className={'loginLabels'}>new password <input onChange={handlePasswordChangeValue}
                                                                          name={'password'} required={true}
                                                                          type={'password'}/></label>
@@ -124,6 +125,7 @@ export const UserPanel = () => {
                 {userData.name === 'TestUser' ? null :
                     <button onClick={handleDeleteAccountPanel} className={'goBack'}>delete account</button>}
                 <GoBackBtn text={'go back'} path={'/userMain'}/>
+                </div>
             </div>
         </>
     )
