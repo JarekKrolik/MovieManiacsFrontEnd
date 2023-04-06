@@ -8,11 +8,12 @@ interface Props {
     handleInput: (e: React.ChangeEvent<HTMLInputElement>) => void,
     handleSelect: (e: React.ChangeEvent<HTMLSelectElement>) => void,
     foundData: MovieListEntity[] | ActorsListEntity[] | undefined,
+    clearSearchHistory: () => void,
 
 }
 
 export const SearchComponentForm = (props: Props) => {
-    const {handleFind, searchText, handleInput, handleSelect, select, foundData} = props
+    const {handleFind, searchText, handleInput, handleSelect, select, foundData, clearSearchHistory} = props
 
     return (
 
@@ -29,6 +30,10 @@ export const SearchComponentForm = (props: Props) => {
                 </select>
                 <button type={'submit'}>start searching</button>
             </form>
+            <button onClick={clearSearchHistory}
+                    className={'goBack'}
+            >clear search history
+            </button>
             {searchText ? <p className="result">you are looking for : <span>{searchText}</span></p> : null}
             {foundData?.length ?
                 <p className="result">found <span>{foundData.length}</span> matching results</p> : null}

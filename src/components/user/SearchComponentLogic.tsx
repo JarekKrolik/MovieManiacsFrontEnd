@@ -21,11 +21,16 @@ export const SearchComponentLogic = (props: Props) => {
     const {setSearchText, setShowList, setFoundData, setSelect, setErrors, select, searchText, foundData} = props
     const {userData, setUserData} = useContext(UserDataContext)
 
+    const clearSearchHistory = () => {
+        setShowList(false)
+        setFoundData(undefined)
+    }
+
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-        setSearchText(e.target.value);
-        setShowList(false);
-        setFoundData(undefined);
+        setSearchText(e.target.value)
+        setShowList(false)
+        setFoundData(undefined)
 
     }
 
@@ -137,7 +142,13 @@ export const SearchComponentLogic = (props: Props) => {
         }
     }
 
-    return (<SearchComponentForm foundData={foundData} handleFind={handleFind} searchText={searchText}
-                                 handleInput={handleInput} handleSelect={handleSelect} select={select}/>)
+    return (<SearchComponentForm foundData={foundData}
+                                 handleFind={handleFind}
+                                 searchText={searchText}
+                                 clearSearchHistory={clearSearchHistory}
+                                 handleInput={handleInput}
+                                 handleSelect={handleSelect}
+                                 select={select}
+    />)
 
 }
