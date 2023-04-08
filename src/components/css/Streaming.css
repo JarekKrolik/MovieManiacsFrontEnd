@@ -1,0 +1,64 @@
+.streaming{
+    position: relative;
+    width: 100%;
+    text-align: center;
+    margin: 1em auto;
+    padding: 1em;
+}
+.proposed{
+    position: relative;
+    padding: 1em;
+    box-shadow: 0 0 3px cornflowerblue;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.proposed h2{
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.link{
+    width: 100%;
+    margin: 1em auto;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 3px cornflowerblue;
+    border-radius: 20px;
+}
+
+.link .seeMore.link{
+    width: 30%;
+    font-size: 1rem;
+    padding: 0.4em;
+}
+
+.link p{
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding: 0.6em;
+
+
+}
+
+@media (min-width: 913px) {
+
+.seeMore.streaming{
+    width: 98%;
+}
+    .link .seeMore.link{
+
+        font-size: 1.5rem;
+
+    }
+
+    .link p{
+        font-size: 1.4rem;
+
+
+
+    }
+}

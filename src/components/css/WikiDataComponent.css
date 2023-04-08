@@ -1,0 +1,56 @@
+.wikiData{
+    position: relative;
+    z-index: 4;
+    width: 98%;
+    border-radius: 25px;
+    box-shadow:0 0 15px cornflowerblue;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    padding: 3rem;
+
+}
+
+.wikiData h2,.wikiData p{
+    position: relative;
+    z-index: 4;
+    color: #adc4ee;
+}
+
+.wikiData h2{
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 2.6rem;
+    margin: 6rem auto;
+}
+
+.wikiData p {
+    background-color: rgba(0,0,0,0.8);
+    line-height: 170%;
+    padding: 0.6rem;
+    border-radius: 20px;
+   margin: 3rem auto;
+}
+ button.return{
+    position: fixed;
+     font-size: 1.4rem;
+    top: 4%;
+    right: 10%;
+    cursor: pointer;
+    padding: 1em;
+    border-radius: 20px;
+    z-index: 5;
+     width: auto;
+}
+
+ @media (min-width: 914px) {
+.wikiData p{
+    line-height: 250%;
+    margin: 6rem 4rem;
+    padding: 3rem ;
+}
+
+
+ }

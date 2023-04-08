@@ -1,0 +1,109 @@
+
+.element{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    z-index: 2;
+    width: 85%;
+    border-radius: 25px;
+    box-shadow:0 0 15px cornflowerblue;
+    margin: 2em;
+    padding: 2em;
+}
+.element.in-cinema .picture{
+    width:60%
+}
+
+.element h3,.element p {
+    text-align: center;
+    text-transform: uppercase;
+    color: cornflowerblue;
+    margin: 1em auto;
+}
+
+.element h3{
+    font-size: 2.2rem;
+    font-weight: bolder;
+}
+
+.element p{
+    font-size: 2rem;
+    font-weight: bolder;
+}
+
+.element span{
+    font-weight: lighter;
+
+}
+
+.picture{
+    width: 100%;
+    overflow: hidden;
+    border-radius: 22px;
+    flex-grow: 1;
+
+}
+
+.picture img{
+    width: 100%;
+}
+.container{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.delay{
+    text-align: center;
+    color: cornflowerblue;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-image: url("../../assets/img/data-2723105_640.jpg");
+    background-position: center;
+    background-size: cover;
+
+}
+
+.delay h2{
+    font-size: 3rem;
+    position: relative;
+    z-index: 2;
+}
+.seeMore {
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 2rem;
+    text-align: center;
+    line-height: 100%;
+    width: 100%;
+    padding: 1em;
+    color: #363636;
+    background-color: cornflowerblue;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 1em;
+
+}
+@media (min-width: 1024px) {
+    .element{
+        width:25%;
+        transition: transform 0.3s,box-shadow 0.3s linear;
+        justify-content: space-between;
+    }
+.delay{
+    width: 50%;
+
+}
+    .element:hover{
+        transform: scale(1.05);
+        box-shadow: 0 0 45px cornflowerblue;;
+    }
+}

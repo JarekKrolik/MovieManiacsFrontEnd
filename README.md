@@ -1,70 +1,94 @@
-# Getting Started with Create React App
+# MovieManiac project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+MovieManiac is a simple application for every movie lover.
+ - All you need to do is create an account to use it, only user name and email, you do not have to provide any additional personal information.
+ - The basic function of the application is a simple search engine that will allow you to find any movie, show or actress/actor that is in the vast IMDB database by title or name.
+ - When you find the object of your search, you will get all the information about it that is available in the IMDB database (plot, fullcast, box-office numbers, writers, directors, photos, posters, trailers, similar movies etc)
+ - You can create your own list of favorite movies and actors to always have quick access to data about them.
+ - There are comment section where you can share your opinions about movies with other MovieManiac users.
+ - "Where to watch?" function allows you to search for the availability of a movie on streaming platforms and give a direct link.
+ - "What to watch?"  based on the list of your favorite movies, function suggests a title that you should like.
+ - Sections "now in cinemas" and "soon and cinemas" as the name suggests, allows you to check what is currently shown in cinemas and what will be soon
 
-## Available Scripts
 
-In the project directory, you can run:
+# MovieManiac Front - End
+[![My Skills](https://skillicons.dev/icons?i=js,html,css,react,ts)](https://skillicons.dev)
 
-### `npm start`
+Front-end for MovieManiac application.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+App functions :
+ - forms for logging, registering and managing accounts
+ - through search bar gives quick and easy access to IMDb database, where you can find any kind of data about a movie or series (trailers, photos, posters, full cast with specific information about every included person , etc.)
+ - making and managing personal lists of favourite movies and actors
+ - adding comments for movies with likes and dislikes option
+ - "what to watch?" option that based on your favourite movies list suggests what movie you might like, and search for its streaming availability
+ 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[screenVideo.webm](https://user-images.githubusercontent.com/101992103/229602440-4ae578e7-b13d-4f5f-9f75-c0d86d3c2863.webm)
 
-### `npm run build`
+#
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+[screenVideo (1).webm](https://user-images.githubusercontent.com/101992103/230097346-d5447965-dc54-499f-90ab-0b27d0c6c15d.webm)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![Zrzut ekranu (8)](https://user-images.githubusercontent.com/101992103/230477546-216a3e50-9307-45f2-af92-b6924c10510a.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Working application on website address:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+https://madmaxlastv8.networkmanager.pl/
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## For testing without making account
+user : TestUser
+password :TestUser
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Related
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Back - End for MovieManiac
 
-### Code Splitting
+https://github.com/JarekKrolik/MovieManiacTool.git
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Used API :
 
-### Analyzing the Bundle Size
+https://imdb-api.com/api
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Run Locally
 
-### Advanced Configuration
+Clone the project
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+  git clone https://github.com/JarekKrolik/MovieManiacsFrontEnd.git
+```
 
-### Deployment
+Go to the project directory
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+  cd my-project
+```
 
-### `npm run build` fails to minify
+Install dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run start
+```
+
+Get Back-End part of the application
+
+```bash
+  https://github.com/JarekKrolik/MovieManiacTool.git
+```
+

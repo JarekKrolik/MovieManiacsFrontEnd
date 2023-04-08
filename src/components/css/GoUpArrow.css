@@ -1,0 +1,29 @@
+.arrow{
+    z-index: 6;
+    position: fixed;
+    bottom: 4%;
+    left: 50%;
+    transform: translateX(-50%);
+    width:5rem;
+    cursor: pointer;
+    transition: width 0.3s linear;
+    overflow: hidden;
+border-radius: 50%;
+    box-shadow: 0 0 15px cornflowerblue;
+}
+
+.arrow img{
+    width: 100%;
+}
+
+.arrow:hover{
+    width: 5.5rem;
+
+}
+
+.arrow.back{
+    transform: rotate(-90deg) translateX(-50%);
+    top: 50%;
+    left: 4%;
+    bottom:auto;
+}

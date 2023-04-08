@@ -1,0 +1,122 @@
+
+.userHeader{
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    background-color: #363636;
+    width: 98%;
+    border-radius: 25px;
+    box-shadow:0 0 15px cornflowerblue;
+    margin: 1em auto;
+}
+
+.avatar{
+    margin: 2em;
+    display: flex;
+    flex-direction: column;
+    width: 8.5rem;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: 1.3em;
+    border-radius: 50%;
+    box-shadow:0 0 6px black;
+
+}
+
+.logout{
+    border-radius: unset;
+    box-shadow: none;
+    cursor: pointer;
+
+}
+
+
+
+.avatar p {
+    font-size: 1.8rem;
+    color: cornflowerblue;
+    text-decoration:none;
+    text-align: center;
+}
+
+.avatar img{
+    width: 100%;
+    border-radius: 50%;
+
+}
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 60%;
+    margin-left: 0.9em;
+
+
+}
+
+.button{
+    padding: .7em;
+    font-size: 1.6rem;
+    margin-top: 1em;
+    text-align: center;
+    text-transform: uppercase;
+    color: cornflowerblue;
+    border-radius: 25px;
+    box-shadow:0 0 15px cornflowerblue;
+    text-decoration: none;
+
+
+
+}
+.links{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+@media (min-width: 1024px) {
+
+    .userHeader{
+        justify-content: space-around;
+    }
+
+    .links{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: flex-start;
+    }
+
+    .buttons{
+
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: stretch;
+        width: 70%;
+        margin-left: 0.9em;
+
+
+    }
+
+    .button{
+        flex-grow: 1;
+        cursor: pointer;
+        margin-top: 1em;
+        margin-right: 0.6em;
+        transition: color 0.3s, background-color 0.3s;
+        line-height: 100%;
+
+    }
+
+    .button:hover{
+        color: #363636;
+        background-color: cornflowerblue;
+    }
+
+}

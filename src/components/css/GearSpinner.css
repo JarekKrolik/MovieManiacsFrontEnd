@@ -1,0 +1,55 @@
+@keyframes right {
+    from{transform: rotate(0)}
+    to{transform: rotate(360deg)}
+
+}
+@keyframes left {
+    from{transform: rotate(0)}
+    to{transform: rotate(-360deg)}
+
+}
+
+
+
+.gearbox {
+    width: 70vw;
+    height: 70vw;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 25px;
+    overflow: hidden;
+    z-index: 10;
+    box-shadow: 0 0 20px cornflowerblue;
+    background-color: #adc4ee;
+    opacity: 0.7;
+}
+
+.picOne {
+    width: 55%;
+animation: left 5s infinite linear both;
+
+
+}
+
+.picTwo {
+    animation: right 5s infinite linear both;
+    width: 35%;
+    margin-right: 9em;
+    margin-bottom: 9em;
+}
+
+.picOne img, .picTwo img {
+    width: 100%;
+}
+
+@media (orientation: landscape) {
+    .gearbox{
+        width: 35vw;
+        height: 35vw;
+    }
+}

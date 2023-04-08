@@ -1,0 +1,444 @@
+.allDataElementBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 98%;
+    color: cornflowerblue;
+
+}
+
+.basicInfo {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    margin: 2em auto;
+    width: 100%;
+    padding: 2em;
+    border-radius: 25px;
+    box-shadow: 0 0 15px cornflowerblue;
+    background-attachment: fixed;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #97b8f6;
+
+}
+
+.basicInfo h2 {
+    position: relative;
+    z-index: 3;
+    font-size: 2.5rem;
+    font-weight: bolder;
+}
+
+.basicInfo h3 {
+    position: relative;
+    z-index: 3;
+    font-size: 1.5rem;
+    padding: 0.3em;
+    font-weight: bolder;;
+}
+
+.basicInfo h3 span, .basicInfoh2 span {
+    font-weight: lighter;
+}
+
+
+.main-slide {
+    width: 98%;
+    margin: 2em auto;
+}
+
+.carousel .slider-wrapper {
+    margin: 1.2rem auto;
+    width: 80%;
+    overflow: hidden;
+    border-radius: 25px;
+    box-shadow: 0 0 10px cornflowerblue;
+}
+
+.carousel.carousel-slider .control-arrow.control-prev {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+}
+
+.carousel.carousel-slider .control-arrow.control-prev:before, .carousel-root.main-slide .control-arrow.control-prev:before {
+    border-right: 25px solid cornflowerblue;
+
+}
+
+.carousel.carousel-slider .control-arrow.control-next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+}
+
+.carousel.carousel-slider .control-arrow.control-next:before, .carousel-root.main-slide .control-arrow.control-next:before {
+    border-left: 25px solid cornflowerblue;
+}
+
+.carousel-root.main-slide .control-arrow.control-prev {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+}
+
+/*.main-slide div.carousel{*/
+/*    display: none!important;*/
+/*}*/
+
+.carousel-root.main-slide .control-arrow.control-next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+}
+
+
+.carousel .slider-wrapper img {
+    width: 100%;
+}
+
+.carousel {
+    text-align: center;
+}
+
+.youtubeContainer {
+    width: 98%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 0 0 15px cornflowerblue;
+    overflow: hidden;
+
+}
+
+.youtubeContainer iframe {
+    width: 100%;
+    height: 40vh;
+
+}
+
+.frameContainer {
+    /*padding-bottom:56.25%;*/
+    /*padding-bottom: 100%;*/
+    padding-bottom: 66.66%;
+    margin: 1rem auto;
+    /*padding-bottom: 75%;*/
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 30vh;
+
+}
+
+.allDataElementBox .goBack:last-of-type{
+    margin-bottom: 3em;
+}
+
+h2.poster {
+    text-transform: uppercase;
+    text-align: center;
+    padding: 1em;
+    margin: 1em;
+    font-size: 2.6rem;
+}
+
+.frameContainer object {
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 15px cornflowerblue;
+
+
+}
+
+.carousel .slide .legend {
+    color: cornflowerblue;
+}
+
+.carousel .control-dots .dot {
+    background-color: cornflowerblue;
+}
+
+.carousel p.carousel-status {
+    color: cornflowerblue;
+    font-size: 1.4rem;
+}
+
+.video-player-frame.video-player-embedded {
+
+    height: 500px;
+}
+
+.cast {
+    list-style: none;
+
+}
+
+.cast li {
+    border-top: 1px solid cornflowerblue;
+    border-bottom: 1px solid cornflowerblue;
+    display: flex;
+    padding: 1em;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.cast h3 {
+    font-size: 1.6rem;
+}
+
+.cast li .picture.actor {
+    width: 10rem;
+    flex-grow: 0;
+    overflow: hidden;
+    margin: 0 0.7em;
+}
+
+.cast li .picture img {
+    width: 100%;
+}
+
+.goBack.actor {
+    font-size: 1.6rem;
+    width: 60%;
+    margin: 0.5em auto;
+}
+
+.text.actor h2, .text.actor h3 {
+    font-weight: bolder;
+}
+
+.text.actor span {
+    font-weight: lighter;
+}
+
+.text.actor {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    margin: 1em;
+    flex-grow: 1;
+}
+
+.picture.actor {
+    width: 85%;
+    margin: 2em auto;
+    box-shadow: 0 0 15px cornflowerblue;
+}
+
+.starredIn {
+    width: 98%;
+    max-width: 1200px;
+    box-shadow: 0 0 15px cornflowerblue;
+    overflow: hidden;
+    border-radius: 25px;
+    padding: 2em;
+    margin: 2em auto;
+}
+
+.roles {
+    padding: 2em;
+    border-bottom: 1px solid cornflowerblue;
+
+}
+.roles h3{
+    font-size: 1.7rem;
+}
+
+
+
+form.register.actor label {
+    margin: 0.6em auto;
+}
+
+text.actor.similars {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.similars.picture.actor {
+    font-size: 2.3rem;
+
+
+}
+
+.similars.picture.actor li {
+    border-bottom: 1px solid cornflowerblue;
+}
+
+.similars.picture.actor h2 {
+    margin-bottom: 1em;
+}
+
+@media (min-width: 914px) {
+
+    .similars.picture.actor {
+        width: 98%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: stretch;
+        align-items: stretch;
+        list-style: none;
+        font-size: 1.5rem;
+    }
+
+    text.actor.similars {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .seeMore{
+       width: auto;
+
+    }
+
+    .similars.picture.actor li {
+        width: 33.3%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+
+        border-bottom: none;
+    }
+
+    .youtubeContainer {
+        width: 70%;
+    }
+
+    .youtubeContainer iframe {
+        width: 100%;
+        height: 70vh;
+
+    }
+
+    .basicInfo h2 {
+        font-size: 3.2rem;
+    }
+
+    .basicInfo h3 {
+        font-size: 2.1rem;
+    }
+
+    .cast {
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+
+    .cast li {
+        width: 33%;
+
+    }
+.cast li:last-of-type{
+    width: 100%;
+    text-align: center;
+}
+.seeMore.cast{
+    margin: 0.5em auto;
+}
+    .basicInfo.actor {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+
+    .picture.actor {
+        width: 45%;
+        flex-grow: 0;
+
+    }
+
+    .text.actor {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        flex-grow: 1;
+
+    }
+
+
+
+    .goBack.actor {
+
+        width: 60%;
+        padding: 0.7em;
+        font-size: 2.2rem;
+
+    }
+.goBack.actor.movie{
+    width: auto;
+}
+
+}
+
+
+@media (min-width: 1024px) {
+
+    .roles {
+        padding: 2em;
+        border-bottom: 1px solid cornflowerblue;
+
+    }
+    .roles h3{
+        font-size: 2.2rem;
+        text-align: center;
+    }
+
+
+    .main-slide {
+        width: 70%;
+    }
+
+    .frameContainer {
+        width: 70%;
+    }
+    .basicInfo.actor {
+
+        flex-wrap: nowrap;
+    }
+
+    .goBack.actor.movie{
+        width: auto;
+    }
+    .goBack.actor {
+
+        width: 30%;
+        font-size: 1.8rem;
+
+    }
+    .goBack.actor.roles {
+        width: 30%;
+        font-size: 2.2rem;
+        padding: 0.7em 0;
+    }
+
+
+}

@@ -1,0 +1,54 @@
+
+.account_delete{
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1em;
+    width: 90%;
+    min-height: 40vh;
+    background-color: rgba(0,0,0,0.8);
+    border-radius: 25px;
+    border: 1px solid darkred;
+    overflow: hidden;
+
+}
+
+.account_delete h2{
+    color: cornflowerblue;
+    text-align: center;
+    text-transform: uppercase;
+}
+.account_delete h2:first-of-type{
+    margin-top: 1.5em;
+}
+
+.account_delete .buttons{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 1em auto;
+}
+
+
+
+.account_delete .buttons button{
+    width: 40%;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+}
+
+.account_delete .buttons button.confirm:hover{
+    box-shadow: 0 0 15px darkred;
+
+}
+.account_delete .buttons button.abort:hover{
+    box-shadow: 0 0 15px lime;
+
+}
