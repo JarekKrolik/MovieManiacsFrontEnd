@@ -28,7 +28,7 @@
 form.form {
     border-radius: 8px;
     border: 1px solid cornflowerblue;
-    box-shadow: 5px 5px 10px black;
+    box-shadow: 0 0 10px cornflowerblue;
     overflow: hidden;
     background-color: #3f3a3a;
 }

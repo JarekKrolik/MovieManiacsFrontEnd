@@ -96,7 +96,9 @@ export const UserPanel = () => {
                 }} className="textInfo">{showError.errorMessage}</p> : null}
                 <div className="text">
                     <h3>User : {userData.name}</h3>
+                    <p>e-mail : {userData.email}</p>
                     <p>MovieManiac account created at : <br/>{date.toLocaleDateString()}</p>
+
                 </div>
                 <div className="form">
                     <form className={'form'} onSubmit={handleAvatarSelect}>

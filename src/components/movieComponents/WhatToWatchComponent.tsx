@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useContext, useState} from "react";
+import React, {Dispatch, SetStateAction, useContext,useState} from "react";
 import {Switches} from "../LoginComponent";
 import '../css/WhatToWatch.css';
 import {UserDataContext} from "../../contexts/UserDataContext";
@@ -41,8 +41,10 @@ export const WhatToWatchComponent = (props: Props) => {
 
     const handleFindMovie = async () => {
         setDisplayMovie(true)
+
         await selectMovie();
     }
+
 
 
     return (

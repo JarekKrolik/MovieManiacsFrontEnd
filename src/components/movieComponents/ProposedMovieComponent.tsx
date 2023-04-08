@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useContext, useState} from "react";
+import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
 import {ProposedMovie} from "./WhatToWatchComponent";
 import '../css/ProposedMovieComponent.css';
 import {GoUpArrow} from "../GoUpArrow";
@@ -32,11 +32,12 @@ export const ProposedMovieComponent = (props: Props) => {
     const {movie, setSwitches} = props
     const {userData, setUserData} = useContext(UserDataContext)
     const [streamingPanelSwitch, setStreamingPanelSwitch] = useState(false)
-    const [streamingProvidersList, setStreamingProvidersList] = useState<string[]>()
+    const [streamingProvidersList, setStreamingProvidersList] = useState<string[]|null>(null)
     const [streamingAvailability, setStreamingAvailability] = useState<StreamingAvailability>()
 
     const whereToWatchHandler = async () => {
         setStreamingPanelSwitch(prev => !prev)
+
         const tempArray = []
         const streamingAvailability = await MovieFinder.whereToWatch(movie.title, movie.id, 'en', 'us') as StreamingAvailability
         if (streamingAvailability.us) {
@@ -53,6 +54,11 @@ export const ProposedMovieComponent = (props: Props) => {
 
     }
 
+    useEffect(() => {
+        (async () => {
+            await whereToWatchHandler()
+        })()
+    }, [movie.id])
 
     return (
         <div className="proposed">
@@ -63,12 +69,15 @@ export const ProposedMovieComponent = (props: Props) => {
             </div>
             {streamingPanelSwitch ? <div>
                 <h2>streaming available on:</h2>
-                {streamingProvidersList ? streamingProvidersList.length > 0 ? streamingProvidersList.map(el => {
-                    return (
 
-                        <StreamingLink key={Math.random() * 10} streamingAvailability={streamingAvailability} el={el}/>
-                    )
-                }) : <h2>sorry, no streaming available for this movie...</h2> : <Spinner returnRoute={'userMain'}/>}
+                {streamingProvidersList ?
+                    streamingProvidersList.length > 0 ? streamingProvidersList.map(el => {
+                        return (
+
+                            <StreamingLink key={Math.random() * 10} streamingAvailability={streamingAvailability}
+                                           el={el}/>
+                        )
+                    }) : <h2>sorry, no streaming available for this movie...</h2> : <Spinner returnRoute={'userMain'}/>}
             </div> : null}
             <button className={'seeMore'}
                     onClick={whereToWatchHandler}>{!streamingPanelSwitch ? 'where to watch ?' : 'close'}</button>
