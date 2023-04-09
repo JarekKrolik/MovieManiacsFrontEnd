@@ -94,7 +94,7 @@ export const UserPanel = () => {
                     })
                     setShowNewPassword(false)
                 }} className="textInfo">{showError.errorMessage}</p> : null}
-                <div className="text">
+                <div className="text_user">
                     <h3>User : {userData.name}</h3>
                     <p>e-mail : {userData.email}</p>
                     <p>MovieManiac account created at : <br/>{date.toLocaleDateString()}</p>

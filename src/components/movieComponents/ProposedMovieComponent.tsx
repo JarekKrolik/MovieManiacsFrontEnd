@@ -80,7 +80,7 @@ export const ProposedMovieComponent = (props: Props) => {
                     }) : <h2>sorry, no streaming available for this movie...</h2> : <Spinner returnRoute={'userMain'}/>}
             </div> : null}
             <button className={'seeMore'}
-                    onClick={whereToWatchHandler}>{!streamingPanelSwitch ? 'where to watch ?' : 'close'}</button>
+                    onClick={whereToWatchHandler}>{!streamingPanelSwitch ? 'where to watch ?' : 'close streaming services'}</button>
             <GoUpArrow/>
             {setSwitches && props.seeMore ? <button id={movie.id} onClick={(e: any) => {
                 setSwitches(prev => ({

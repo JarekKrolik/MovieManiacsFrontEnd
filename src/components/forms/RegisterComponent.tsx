@@ -26,6 +26,7 @@ export const FormAdd = () => {
         setErrorMsg(prev => ({
             ...prev,
             responseErrorMessage: '',
+            spinnerOn: false,
         }))
     }
 
@@ -46,12 +47,14 @@ export const FormAdd = () => {
             setErrorMsg((prev) => ({
                 ...prev,
                 passwordCheck: true,
+                spinnerOn: false,
 
             }));
         } else {
             setErrorMsg(prev => ({
                 ...prev,
                 passwordCheck: false,
+                spinnerOn: false,
             }));
         }
 
@@ -76,6 +79,7 @@ export const FormAdd = () => {
                         ...prev,
                         responseErrorMessage: 'user not verified',
                         notVerified: true,
+                        spinnerOn: false,
                     }))
                 }
                 if (data.message) {
@@ -86,6 +90,7 @@ export const FormAdd = () => {
                         ...prev,
                         responseErrorMessage: data.message,
                         responseOk: false,
+                        spinnerOn: false,
                     }))
                 } else {
                     setLoggedIn(true)
@@ -98,6 +103,7 @@ export const FormAdd = () => {
                         ...prev,
                         responseOk: true,
                         responseErrorMessage: '',
+                        spinnerOn: false,
                     }));
 
                 }
@@ -107,6 +113,7 @@ export const FormAdd = () => {
             setErrorMsg(prev => ({
                 ...prev,
                 passwordCheck: true,
+                spinnerOn: false,
             }));
             return
         }
