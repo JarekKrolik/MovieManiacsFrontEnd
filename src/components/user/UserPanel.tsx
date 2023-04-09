@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Navigate} from "react-router-dom";
 import '../css/UserPanel.css';
 import {UserDataContext} from "../../contexts/UserDataContext";
@@ -9,6 +9,7 @@ import {DeleteAccountPanel} from "./DeleteAccountPanel";
 
 export const UserPanel = () => {
     const {userData, setUserData} = useContext(UserDataContext)
+    const [backGroundImage,setBackgroundImage]=useState('')
     const [avatar, setAvatar] = useState(0)
     const [redirect, setRedirect] = useState(false)
     const [showDeleteAccountConfirmation, setShowDeleteAccountConfirmation] = useState(false)
@@ -22,6 +23,16 @@ export const UserPanel = () => {
         confirmPassword: '',
     })
     const avatarsArr = [0, 1, 2, 3, 4, 5, 6]
+
+    useEffect(()=>{
+        randomBackground()
+    },[])
+
+    const randomBackground = ()=>{
+        const random = Math.floor(Math.random() * userData.favMovies.length)
+        const backPic = userData.favMovies[random].image
+        setBackgroundImage(backPic)
+    }
 
     const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAvatar(Number(e.target.value))
@@ -94,8 +105,16 @@ export const UserPanel = () => {
                     })
                     setShowNewPassword(false)
                 }} className="textInfo">{showError.errorMessage}</p> : null}
-                <div className="text_user">
+                <div style={{
+                    backgroundImage:`url(${backGroundImage})`
+                }} className="text_user">
+                    <div className="shade"></div>
                     <h3>User : {userData.name}</h3>
+                    <div className="avatar">
+                        <img src={require(`../../assets/img/avatars/${userData.avatar}.png`)}
+                             alt="user avatar"/>
+                        {/*<p>{props.name}</p>*/}
+                    </div>
                     <p>e-mail : {userData.email}</p>
                     <p>MovieManiac account created at : <br/>{date.toLocaleDateString()}</p>
 
@@ -126,7 +145,7 @@ export const UserPanel = () => {
                 }} className="goBack">{showNewPassword ? 'close' : 'change password'}</button>}
                 {userData.name === 'TestUser' ? null :
                     <button onClick={handleDeleteAccountPanel} className={'goBack'}>delete account</button>}
-                <GoBackBtn text={'go back'} path={'/userMain'}/>
+                <GoBackBtn text={'exit user panel'} path={'/userMain'}/>
                 </div>
             </div>
         </>
