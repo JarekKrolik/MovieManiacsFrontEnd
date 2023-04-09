@@ -89,13 +89,13 @@ export const UserHeader = (props: Props) => {
                         <div className="avatar">
                             <img src={require(`../../assets/img/avatars/${props.avatar}.png`)}
                                  alt="user avatar"/>
-                            <p>{props.name}</p>
+                            {/*<p>{props.name}</p>*/}
                         </div>
                     </Link>
 
                     <div onClick={logOut} className="avatar logout">
                         <img src={require(`../../assets/img/log-out-2355227_640.png`)} alt="logout icon"/>
-                        <p>log out</p>
+                        {/*<p>log out</p>*/}
                     </div>
 
                 </div>
