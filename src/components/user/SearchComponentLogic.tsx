@@ -24,6 +24,7 @@ export const SearchComponentLogic = (props: Props) => {
     const clearSearchHistory = () => {
         setShowList(false)
         setFoundData(undefined)
+        setSearchText('')
         setUserData(({
             ...userData,
             searchList:[],

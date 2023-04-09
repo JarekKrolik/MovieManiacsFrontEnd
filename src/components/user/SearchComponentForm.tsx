@@ -15,6 +15,8 @@ interface Props {
 export const SearchComponentForm = (props: Props) => {
     const {handleFind, searchText, handleInput, handleSelect, select, foundData, clearSearchHistory} = props
 
+
+
     return (
 
         <div className="formContainer">
