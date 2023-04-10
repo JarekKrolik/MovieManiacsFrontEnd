@@ -20,16 +20,18 @@ export const SearchComponentForm = (props: Props) => {
     return (
 
         <div className="formContainer">
-            <form onSubmit={handleFind} className={'register'}>
+            <form onSubmit={handleFind} className={'register search'}>
                 <label>search for :
                     <input required value={searchText} onChange={handleInput} type="text"/>
                 </label>
+                <label>choose search category
                 <select defaultValue={select} onChange={handleSelect} name="option">
                     <option value={select}>{select}</option>
                     {select === 'movie' ? null : <option value="movie">movie</option>}
                     {select === 'series' ? null : <option value="series">series</option>}
                     {select === 'actor' ? null : <option value="actor">actor</option>}
                 </select>
+                </label>
                 <button type={'submit'}>start searching</button>
                 <div onClick={clearSearchHistory}
                      className={'goBack search'}

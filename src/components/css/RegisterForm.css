@@ -160,6 +160,11 @@ h3.loginForm{
     form.register.loginForm button{
         width: 100%;
     }
+
+    form.register.search{
+        flex-direction: column;
+    }
+
     form.register{
         display: flex;
         flex-direction: row;

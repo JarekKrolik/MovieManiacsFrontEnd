@@ -113,7 +113,6 @@ export const UserPanel = () => {
                     <div className="avatar">
                         <img src={require(`../../assets/img/avatars/${userData.avatar}.png`)}
                              alt="user avatar"/>
-                        {/*<p>{props.name}</p>*/}
                     </div>
                     <p>e-mail : {userData.email}</p>
                     <p>MovieManiac account created at : <br/>{date.toLocaleDateString()}</p>
@@ -142,7 +141,7 @@ export const UserPanel = () => {
                 </form> : null}
                 {userData.name === 'TestUser' ? null : <button onClick={() => {
                     setShowNewPassword(prev => !prev)
-                }} className="goBack">{showNewPassword ? 'close' : 'change password'}</button>}
+                }} className="goBack">{showNewPassword ? 'abort password change' : 'change password'}</button>}
                 {userData.name === 'TestUser' ? null :
                     <button onClick={handleDeleteAccountPanel} className={'goBack'}>delete account</button>}
                 <GoBackBtn text={'exit user panel'} path={'/userMain'}/>

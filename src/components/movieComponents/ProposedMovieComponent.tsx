@@ -48,7 +48,7 @@ export const ProposedMovieComponent = (props: Props) => {
                 setStreamingProvidersList(tempArray)
             }
         } else {
-            setStreamingProvidersList([])
+            setStreamingProvidersList(null)
         }
 
 
