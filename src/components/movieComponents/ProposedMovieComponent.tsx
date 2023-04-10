@@ -39,16 +39,17 @@ export const ProposedMovieComponent = (props: Props) => {
         setStreamingPanelSwitch(prev => !prev)
 
         const tempArray = []
-        const streamingAvailability = await MovieFinder.whereToWatch(movie.title, movie.id, 'en', 'us') as StreamingAvailability
-        if (streamingAvailability.us) {
-            setStreamingAvailability(streamingAvailability)
-            for (const [key] of Object.entries(streamingAvailability.us)) {
+        const streaming = await MovieFinder.whereToWatch(movie.title, movie.id, 'en', 'us') as StreamingAvailability
+        if (streaming?.us) {
+            setStreamingAvailability(streaming)
+            for (const [key] of Object.entries(streaming.us)) {
 
                 tempArray.push(key)
                 setStreamingProvidersList(tempArray)
             }
         } else {
-            setStreamingProvidersList(null)
+            setStreamingProvidersList(['no streaming data available'])
+
         }
 
 
@@ -77,7 +78,7 @@ export const ProposedMovieComponent = (props: Props) => {
                             <StreamingLink key={Math.random() * 10} streamingAvailability={streamingAvailability}
                                            el={el}/>
                         )
-                    }) : <h2>sorry, no streaming available for this movie...</h2> : <Spinner returnRoute={'userMain'}/>}
+                    }) : <h2>sorry, no streaming available for this movie...</h2> : <Spinner returnRoute={'/userMain'}/>}
             </div> : null}
             <button className={'seeMore'}
                     onClick={whereToWatchHandler}>{!streamingPanelSwitch ? 'where to watch ?' : 'close streaming services'}</button>
