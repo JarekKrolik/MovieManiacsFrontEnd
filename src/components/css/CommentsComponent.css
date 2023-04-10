@@ -97,6 +97,7 @@ h3.comments {
 .comments-area .avatar {
     width: 6rem;
     box-shadow: none;
+    overflow: visible;
 }
 
 .comments-area .avatar p {
