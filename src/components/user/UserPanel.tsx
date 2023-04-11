@@ -9,7 +9,7 @@ import {DeleteAccountPanel} from "./DeleteAccountPanel";
 
 export const UserPanel = () => {
     const {userData, setUserData} = useContext(UserDataContext)
-    const [backGroundImage,setBackgroundImage]=useState('')
+    const [backGroundImage, setBackgroundImage] = useState('')
     const [avatar, setAvatar] = useState(0)
     const [redirect, setRedirect] = useState(false)
     const [showDeleteAccountConfirmation, setShowDeleteAccountConfirmation] = useState(false)
@@ -24,14 +24,18 @@ export const UserPanel = () => {
     })
     const avatarsArr = [0, 1, 2, 3, 4, 5, 6]
 
-    useEffect(()=>{
+    useEffect(() => {
         randomBackground()
-    },[])
+    }, [])
 
-    const randomBackground = ()=>{
-        const random = Math.floor(Math.random() * userData.favMovies.length)
-        const backPic = userData.favMovies[random].image
-        setBackgroundImage(backPic)
+    const randomBackground = () => {
+        if (userData.favMovies.length > 0) {
+            const random = Math.floor(Math.random() * userData.favMovies.length)
+            const backPic = userData.favMovies[random].image
+            setBackgroundImage(backPic)
+        } else {
+            setBackgroundImage('../../assets/img/cinema-strip-2713352_640.jpg')
+        }
     }
 
     const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,7 +110,7 @@ export const UserPanel = () => {
                     setShowNewPassword(false)
                 }} className="textInfo">{showError.errorMessage}</p> : null}
                 <div style={{
-                    backgroundImage:`url(${backGroundImage})`
+                    backgroundImage: `url(${backGroundImage})`
                 }} className="text_user">
                     <div className="shade"></div>
                     <h3>User : {userData.name}</h3>
@@ -129,22 +133,23 @@ export const UserPanel = () => {
                     </form>
                 </div>
                 <div className="btns">
-                {redirect ? <Navigate to={'/userMain'}/> : null}
-                {showNewPassword ? <form onSubmit={handlePasswordChange} className={'register loginForm userPanel'}>
-                    <label className={'loginLabels'}>new password <input onChange={handlePasswordChangeValue}
-                                                                         name={'password'} required={true}
-                                                                         type={'password'}/></label>
-                    <label className={'loginLabels'}>repeat new password <input onChange={handlePasswordChangeValue}
-                                                                                name={'confirmPassword'} required={true}
-                                                                                type={'password'}/></label>
-                    <button>send</button>
-                </form> : null}
-                {userData.name === 'TestUser' ? null : <button onClick={() => {
-                    setShowNewPassword(prev => !prev)
-                }} className="goBack">{showNewPassword ? 'abort password change' : 'change password'}</button>}
-                {userData.name === 'TestUser' ? null :
-                    <button onClick={handleDeleteAccountPanel} className={'goBack'}>delete account</button>}
-                <GoBackBtn text={'exit user panel'} path={'/userMain'}/>
+                    {redirect ? <Navigate to={'/userMain'}/> : null}
+                    {showNewPassword ? <form onSubmit={handlePasswordChange} className={'register loginForm userPanel'}>
+                        <label className={'loginLabels'}>new password <input onChange={handlePasswordChangeValue}
+                                                                             name={'password'} required={true}
+                                                                             type={'password'}/></label>
+                        <label className={'loginLabels'}>repeat new password <input onChange={handlePasswordChangeValue}
+                                                                                    name={'confirmPassword'}
+                                                                                    required={true}
+                                                                                    type={'password'}/></label>
+                        <button>send</button>
+                    </form> : null}
+                    {userData.name === 'TestUser' ? null : <button onClick={() => {
+                        setShowNewPassword(prev => !prev)
+                    }} className="goBack">{showNewPassword ? 'abort password change' : 'change password'}</button>}
+                    {userData.name === 'TestUser' ? null :
+                        <button onClick={handleDeleteAccountPanel} className={'goBack'}>delete account</button>}
+                    <GoBackBtn text={'exit user panel'} path={'/userMain'}/>
                 </div>
             </div>
         </>
