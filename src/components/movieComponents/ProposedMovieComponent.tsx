@@ -32,12 +32,21 @@ export const ProposedMovieComponent = (props: Props) => {
     const {movie, setSwitches} = props
     const {userData, setUserData} = useContext(UserDataContext)
     const [streamingPanelSwitch, setStreamingPanelSwitch] = useState(false)
-    const [streamingProvidersList, setStreamingProvidersList] = useState<string[]|null>(null)
+    const [streamingProvidersList, setStreamingProvidersList] = useState<string[] | null>(null)
     const [streamingAvailability, setStreamingAvailability] = useState<StreamingAvailability>()
 
-    const whereToWatchHandler = async () => {
-        setStreamingPanelSwitch(prev => !prev)
+    const streamingPlatforms = async () => {
+        if (streamingPanelSwitch) {
+            setStreamingPanelSwitch(false)
+        }
+        if (!streamingPanelSwitch) {
+            setStreamingPanelSwitch(true)
+            await whereToWatchHandler()
+        }
+    }
 
+    const whereToWatchHandler = async () => {
+        setStreamingProvidersList(null)
         const tempArray = []
         const streaming = await MovieFinder.whereToWatch(movie.title, movie.id, 'en', 'us') as StreamingAvailability
         if (streaming?.us) {
@@ -58,6 +67,7 @@ export const ProposedMovieComponent = (props: Props) => {
     useEffect(() => {
         (async () => {
             await whereToWatchHandler()
+
         })()
     }, [movie.id])
 
@@ -78,10 +88,11 @@ export const ProposedMovieComponent = (props: Props) => {
                             <StreamingLink key={Math.random() * 10} streamingAvailability={streamingAvailability}
                                            el={el}/>
                         )
-                    }) : <h2>sorry, no streaming available for this movie...</h2> : <Spinner returnRoute={'/userMain'}/>}
+                    }) : <h2>sorry, no streaming available for this movie...</h2> :
+                    <Spinner returnRoute={'/userMain'}/>}
             </div> : null}
             <button className={'seeMore'}
-                    onClick={whereToWatchHandler}>{!streamingPanelSwitch ? 'where to watch ?' : 'close streaming services'}</button>
+                    onClick={streamingPlatforms}>{!streamingPanelSwitch ? 'where to watch ?' : 'close streaming services'}</button>
             <GoUpArrow/>
             {setSwitches && props.seeMore ? <button id={movie.id} onClick={(e: any) => {
                 setSwitches(prev => ({
