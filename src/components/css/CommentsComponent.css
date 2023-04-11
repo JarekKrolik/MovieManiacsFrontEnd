@@ -91,12 +91,14 @@ h3.comments {
 
 .comments-area p {
     font-size: 1.5rem;
+    z-index: 1;
 
 }
 
 .comments-area .avatar {
     width: 6rem;
     box-shadow: none;
+    overflow: visible;
 }
 
 .comments-area .avatar p {

@@ -27,8 +27,8 @@
 }
 
 .logout{
-    border-radius: unset;
-    box-shadow: none;
+    /*border-radius: unset;*/
+    /*box-shadow: none;*/
     cursor: pointer;
 
 }
@@ -54,7 +54,7 @@
     justify-content: space-between;
     align-items: stretch;
     width: 60%;
-    margin-left: 0.9em;
+    margin: 0.9em;
 
 
 }
@@ -81,6 +81,8 @@
 }
 
 @media (min-width: 1024px) {
+
+
 
     .userHeader{
         justify-content: space-around;

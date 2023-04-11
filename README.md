@@ -26,17 +26,18 @@ App functions :
 
 
 
-[screenVideo.webm](https://user-images.githubusercontent.com/101992103/229602440-4ae578e7-b13d-4f5f-9f75-c0d86d3c2863.webm)
 
+[screenVideo (2).webm](https://user-images.githubusercontent.com/101992103/231056423-cd7b96ca-4395-4a53-bfc9-2ce3868539c1.webm)
 #
 
-[screenVideo (1).webm](https://user-images.githubusercontent.com/101992103/230097346-d5447965-dc54-499f-90ab-0b27d0c6c15d.webm)
+[screenVideo (3).webm](https://user-images.githubusercontent.com/101992103/231056456-90deac18-b035-4dfa-8e50-0bc88bf19c91.webm)
 
 #
+![Zrzut ekranu (11)](https://user-images.githubusercontent.com/101992103/231056500-5eda21d2-338c-4f41-9876-ab6ab3d79298.png)
 
 
 
-![Zrzut ekranu (8)](https://user-images.githubusercontent.com/101992103/230477546-216a3e50-9307-45f2-af92-b6924c10510a.png)
+
 
 ## Working application on website address:
 

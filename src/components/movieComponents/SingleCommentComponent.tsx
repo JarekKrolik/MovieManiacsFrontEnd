@@ -6,6 +6,7 @@ import {MovieFinder} from "../../repository/MovieFinder";
 interface Props {
     comment?: CommentsEntity,
     answer?: AnswerToComment,
+    getAnswers: (id: string) => Promise<void>,
     handleDeleteComment: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>,
     handleEditCommentFormOn: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>,
     type: string,
@@ -18,7 +19,7 @@ interface Props {
 }
 
 export const SingleCommentComponent = (props: Props) => {
-    const {comment, answer, handleDeleteComment, handleEditCommentFormOn, type, answerId, setAnswers} = props
+    const {comment, answer, handleDeleteComment, handleEditCommentFormOn, type, answerId} = props
     const {userData} = useContext(UserDataContext)
 
     const handleLikeComment = async (e: any) => {
@@ -26,7 +27,7 @@ export const SingleCommentComponent = (props: Props) => {
         props.setResponse(data.message)
         await props.getComments()
         if (e.target.parentElement.title === 'answer') {
-            setAnswers(await MovieFinder.getAnswersForComments(answerId))
+            await props.getAnswers(answerId)
         }
     }
 
@@ -35,7 +36,7 @@ export const SingleCommentComponent = (props: Props) => {
         props.setResponse(data.message)
         await props.getComments()
         if (e.target.parentElement.title === 'answer') {
-            setAnswers(await MovieFinder.getAnswersForComments(answerId))
+            await props.getAnswers(answerId)
         }
     }
     return (

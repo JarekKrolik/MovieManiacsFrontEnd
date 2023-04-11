@@ -36,6 +36,12 @@ export const CommentsComponent = (props: Props) => {
     const [numberOfDisplayedAnswers, setNumberOfDisplayedAnswers] = useState(5)
 
 
+   const getAnswers = async (id:string)=>{
+       const responseAnswers = await MovieFinder.getAnswersForComments(id)
+       const answersSlicedArray = responseAnswers.result.slice(0, numberOfDisplayedAnswers)
+       setPaginatedAnswers(answersSlicedArray)
+    }
+
     const getComments = async () => {
         setComment('')
         const comments = await MovieFinder.getComments(props.id, 'movie')
@@ -198,6 +204,7 @@ export const CommentsComponent = (props: Props) => {
                                                     handleTextChange={handleTextChange}
                                                     comment={comment}
                                                     handleSendAnswerToComment={handleSendAnswerToComment}
+
             /> : null}
 
             {editCommentOn ? <CommentEditComponent comment={comment}
@@ -229,6 +236,7 @@ export const CommentsComponent = (props: Props) => {
                                         getComments={getComments}
                                         setResponse={setResponse}
                                         key={el.id}
+                                        getAnswers={getAnswers}
                                     />
 
                                     {answeredId.includes(el.id) ? <div className="comments-area">
@@ -258,6 +266,7 @@ export const CommentsComponent = (props: Props) => {
                                                                                 getComments={getComments}
                                                                                 setResponse={setResponse}
                                                                                 key={el.id}
+                                                                                getAnswers={getAnswers}
 
                                                         />
                                                     )

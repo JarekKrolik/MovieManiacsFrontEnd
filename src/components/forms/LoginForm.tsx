@@ -35,6 +35,7 @@ export const LoginForm = (props: Props) => {
                 ...prev,
                 errorMessage: 'verification code correct.',
                 notVerified: false,
+                spinnerOn: false,
             }))
 
         } else {
@@ -42,6 +43,7 @@ export const LoginForm = (props: Props) => {
                 ...prev,
                 errorMessage: 'wrong verification number !',
                 notVerified: true,
+                spinnerOn: false,
             }))
 
         }
@@ -60,6 +62,7 @@ export const LoginForm = (props: Props) => {
         setLoginData(prev => ({
             ...prev,
             errorMessage: '',
+            spinnerOn: false,
         }))
     }
 
