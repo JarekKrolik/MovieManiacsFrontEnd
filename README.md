@@ -1,5 +1,7 @@
 # MovieManiac project
 
+# Due to imdb disabling free api accounts, my app stopped working 😒
+
 MovieManiac is a simple application for every movie lover.
  - All you need to do is create an account to use it, only user name and email, you do not have to provide any additional personal information.
  - The basic function of the application is a simple search engine that will allow you to find any movie, show or actress/actor that is in the vast IMDB database by title or name.
